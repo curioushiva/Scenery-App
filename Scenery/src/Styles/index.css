@@ -1,0 +1,206 @@
+/* Base layout */
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Tailwind */
+@import "tailwindcss";
+
+/* Custom fonts */
+@font-face {
+  font-family: "Netflix_Sans_Regular_Bold";
+  src: url("../assets/fonts/NSansRb.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Netflix_Sans_Medium_Bold";
+  src: url("../assets/fonts/NSansMb.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Netflix_Sans_Bold_Bold";
+  src: url("../assets/fonts/NSansBb.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "OGG_Cursive";
+  src: url("../assets/fonts/OGCursive.otf") format("opentype");
+}
+
+/* Custom theme for tailwind */
+@theme {
+  /* Fonts */
+  --font-regular: "Netflix_Sans_Regular_Bold", sans-serif;
+  --font-medium: "Netflix_Sans_Medium_Bold", sans-serif;
+  --font-bold: "Netflix_Sans_Bold_Bold", sans-serif;
+  --font-cursive: "OGG_Cursive", sans-serif;
+
+
+  /* Colors */
+
+  /* Body */
+  --color-bgcolor-primary: #000000;
+  --color-bgcolor-secondary: #111112aa;
+  --color-bgcolor-ternary: #161616;
+  --color-bgcolor-fourth: #141414;
+
+  /* UI */
+  --color-uicolor-primary: #E50914;
+
+  /* Text */
+  --color-textcolor-primary: #ffffff;
+  --color-textcolor-secondary: #B3B3B3;
+
+  /* Border */
+  --color-brcolor-primary: #5F5E5E;
+  --color-brcolor-secondary: #ffffff;
+
+
+  /* Breakpoints */
+  --breakpoint-xus: 17.5rem;
+  /* 280px extra extra small */
+  --breakpoint-xxs: 20rem;
+  /* 310px extra extra small */
+  --breakpoint-xs: 21.875rem;
+  /* 350px extra small */
+  --breakpoint-xls: 24.688rem;
+  /* 395px extra little small */
+  --breakpoint-xxm: 26.875rem;
+  /* 430px extra extra small */
+  --breakpoint-xm: 34.375rem;
+  /* 550px extra medium */
+  --breakpoint-sl: 60.000rem;
+  /* 960px small large */
+}
+
+/* To hide scrollbars (mainly used in hiding y autoflows) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/* Custom scroll bar for comments scroll */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+
+/* Dropdown for Movie Genre */
+.moviesGenreDropdown {
+  position: absolute;
+  top: 120%;
+  left: 0px;
+  margin-top: 6px;
+  transform: none;
+}
+
+.moviesGenreDropdown::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 20px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #5F5E5E;
+}
+
+@media (min-width:280px) {
+  .moviesGenreDropdown {
+    top: 180%;
+    left: 75px;
+  }
+
+  .moviesGenreDropdown::before {
+    top: -8px;
+    left: 108px;
+  }
+}
+
+@media (min-width:1024px) {
+  .moviesGenreDropdown {
+    left: 105px;
+  }
+}
+
+/* Dropdown for Shows Genre */
+.showsGenreDropdown {
+  position: absolute;
+  top: 120%;
+  left: 0px;
+  margin-top: 6px;
+  transform: none;
+}
+
+.showsGenreDropdown::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 20px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #5F5E5E;
+}
+
+@media (min-width:350px) {
+  .showsGenreDropdown {
+    top: 180%;
+    left: 115px;
+  }
+
+  .showsGenreDropdown::before {
+    top: -8px;
+    left: 108px;
+  }
+}
+
+@media (min-width:1024px) {
+  .showsGenreDropdown {
+    left: 155px;
+  }
+}
+
+/* Desktop and mobile navbars */
+.mobile-layout {
+  display: none;
+}
+
+.mobileNavPad {
+  padding-top: 32px;
+}
+
+@media (max-width: 500px),
+(max-height: 500px) {
+  .desktop-layout {
+    display: none;
+  }
+
+  .mobile-layout {
+    display: block;
+  }
+
+  .mobileNavPad {
+    padding-top: 110px;
+  }
+}
