@@ -17,7 +17,7 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  /* User's Info */
+  /* User's Profile Info */
   const { usersProfileType, usersAvatarNum } = useSelector((store) => store.user.account)
 
   /* To open & close navbar is mobile */
@@ -60,7 +60,10 @@ const Header = () => {
                 <Link to="/browse/popular"><RiFireLine className="w-[1.45rem] h-[1.45rem] text-textcolor-secondary" /></Link>
                 <Link to="/search"><RiSearchLine className="w-[1.45rem] h-[1.45rem] text-textcolor-secondary" /></Link>
                 <Link to="/askai"><RiShiningLine className="w-[1.45rem] h-[1.45rem] text-textcolor-secondary" /></Link>
-                {/* {usersProfileType === "guest" ? <Link to="/account"><img src={Guest} alt="avatar" className="w-9" /></Link> : <Link to="/account"><img src={AvatarsMockData[usersAvatarNum].avatar} alt="avatar" className="w-[1.40rem]" /></Link>} */}
+                {usersProfileType === "Guest" ?
+                  <Link to="/account"><img src={Guest} alt="Guest" className="w-7" /></Link> :
+                  <Link to="/account"><img src={AvatarsMockData[usersAvatarNum].avatar} alt="Avatar" className="w-[1.8rem]" /></Link>
+                }
               </div>
             </div>
           </div >

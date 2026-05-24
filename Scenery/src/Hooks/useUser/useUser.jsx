@@ -1,5 +1,5 @@
 import { onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
-import { doc, setDoc, collection, getDocs } from "firebase/firestore";
+import { doc, setDoc, collection, getDoc, getDocs } from "firebase/firestore";
 import { auth, database } from "../../Utils/Firebase/Firebase"
 import axios from 'axios';
 import { useEffect } from "react";
@@ -36,33 +36,45 @@ const useUser = () => {
                 dispatch(updateAccount({
                     usersUID: user.uid,
                     usersEmail: user.email,
-                    usersName: user.displayName,
+                    usersName: user.displayName || '',
                 }));
 
-                /* Fetch Cur User's account from google firebase cloud (mainly avatarNum) */
+                /* Fetch Cur User's account from google firebase cloud (mainly avatarNum) & then navigate */
                 if (!isUsersAvatarNumFetched) {
                     (async () => {
                         try {
-                            const account = await getDocs(collection(database, "users", (user?.uid), "user"))
-                            const fetchedUserAccount = account.docs.map(doc => doc.data());
-                            dispatch(updateAccount({ usersAvatarNum: fetchedUserAccount?.[0]?.userAvatar }));
+                            const fetchedUserAccount = (await getDoc(doc(database, "users", user.uid, "user", "account"))).data();
+                            dispatch(updateAccount({ usersAvatarNum: fetchedUserAccount?.usersAvatar || 0, }));
                             dispatch(setIsUsersAvatarNumFetched(true));
                         } catch (error) {
                             console.log("User account fetch failed", error);
+
+                            /* Navigaation based on Signed-in User */
+                        } finally {
+                            const authRoutes = ['/signin', '/signup', '/'];
+                            if (usersProfileType === null) {
+                                /* Profile not choosen yet */
+                                navigate('/account/profile');
+                            } else {
+                                /* Profile already choosen */
+                                if (authRoutes.includes(location.pathname)) {
+                                    navigate('/browse');
+                                }
+                            }
                         }
                     })();
 
-                }
-
-                /* Navigaation based on Signed-in User */
-                const authRoutes = ['/signin', '/signup', '/'];
-                if (usersProfileType === null) {
-                    /* Profile not choosen yet */
-                    navigate('/account/profile');
+                    /* Navigaation based on Signed-in User */
                 } else {
-                    /* Profile already choosen */
-                    if (authRoutes.includes(location.pathname)) {
-                        navigate('/browse');
+                    const authRoutes = ['/signin', '/signup', '/'];
+                    if (usersProfileType === null) {
+                        /* Profile not choosen yet */
+                        navigate('/account/profile');
+                    } else {
+                        /* Profile already choosen */
+                        if (authRoutes.includes(location.pathname)) {
+                            navigate('/browse');
+                        }
                     }
                 }
 
@@ -131,14 +143,13 @@ const useUser = () => {
     }, []);
 
     /* Save user's account (mainly AvatarNum) */
-    const saveUsersAccount = async (num) => {
-        console.log("ok")
+    const saveUsersAccount = async (avatarNum) => {
         try {
             await setDoc(doc(database, "users", (account?.usersUID), "user", "account"),
                 {
                     usersEmail: account?.usersEmail,
                     usersName: account?.usersName,
-                    userAvatar: num,
+                    usersAvatar: avatarNum,
                     createdAt: Date.now()
                 }
             );
