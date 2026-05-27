@@ -1,17 +1,17 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import DefaultLayout from "./DefaultLayout/DefaultLayout";
+import DefaultLayout from "../Layouts/DefaultLayout/DefaultLayout";
 import Home from '../Pages/Home/Home'
 import Signup from "../Pages/Auth/Signup/Signup";
 import Signin from "../Pages/Auth/Signin/Signin";
-import BrowseLayout from "./BrowseLayout/BrowseLayout";
-import Account from "../Pages/User/Account";
+import BrowseLayout from "../Layouts/BrowseLayout/BrowseLayout";
+import Account from "../Pages/User/Account/Account";
 import Profile from "../Pages/User/Profile/Profile";
-import Browse from "../Pages/Browse/Browse";
+import Browse from "../Pages/Browse/Browse/Browse";
 import Movies from "../Pages/Browse/Movies/Movies";
 import TVShows from "../Pages/Browse/TVShows/TVShows"
 import Popular from "../Pages/Browse/Popular/Popular";
-import MovieInfo from "../Pages/Browse/MediaInfo/MovieInfo";
-import TVShowInfo from "../Pages/Browse/MediaInfo/TVShowInfo";
+import MovieInfo from "../Pages/Browse/MediaInfo/MovieInfo/MovieInfo";
+import TVShowInfo from "../Pages/Browse/MediaInfo/TVShowInfo/TVShowInfo";
 import useUser from "../Hooks/useUser/useUser";
 import useContent from "../Hooks/useContent/useContent";
 import { useSelector } from "react-redux";
@@ -23,7 +23,7 @@ const Layout = () => {
 
     /* Main layout for the app */
     return (
-        <div className="w-full h-screen min-h-screen text-textcolor-primary overflow-x-hidden overflow-y-auto no-scrollbar">
+        <div className="text-textcolor-primary bg-bgcolor-fourth">
             <Outlet />
         </div>
     )
@@ -83,9 +83,7 @@ const App = () => {
         },
     ]);
     return (
-        <div>
-            <RouterProvider router={appRouter} />
-        </div>
+        <RouterProvider router={appRouter} />
     )
 }
 

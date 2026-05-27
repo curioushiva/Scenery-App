@@ -6,8 +6,8 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
+  scrollbar-width: none;
 }
-
 
 /* Tailwind */
 @import "tailwindcss";
@@ -79,7 +79,7 @@ body,
   /* 960px small large */
 }
 
-/* To hide scrollbars (mainly used in hiding y autoflows) */
+/* To hide scrollbars (mainly used in hiding x autoflows) */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -105,7 +105,6 @@ body,
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.4);
 }
-
 
 /* Dropdown for Movie Genre */
 .moviesGenreDropdown {
@@ -181,25 +180,9 @@ body,
   }
 }
 
-/* Desktop and mobile navbars */
-.mobile-layout {
-  display: none;
-}
-
-.mobileNavPad {
-  padding-top: 32px;
-}
-
+/* Padding from top when mobile layout */
 @media (max-width: 500px),
 (max-height: 500px) {
-  .desktop-layout {
-    display: none;
-  }
-
-  .mobile-layout {
-    display: block;
-  }
-
   .mobileNavPad {
     padding-top: 110px;
   }

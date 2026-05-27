@@ -13,7 +13,6 @@ const initialState = {
     },
     mediaID: null,
     mediaInfo: {},
-
 };
 
 const MediaSlice = createSlice({

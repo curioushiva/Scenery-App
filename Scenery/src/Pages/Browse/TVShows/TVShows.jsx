@@ -12,14 +12,6 @@ import { addMediaID } from '../../../Redux/Slices/MediaSlice/MediaSlice';
 
 const TVShows = () => {
 
-    useEffect(() => {
-  console.log("MOUNTED");
-
-  return () => {
-    console.log("UNMOUNTED");
-  };
-}, []);
-
     /* To access Tv show's genre */
     const tvShowsGenre = useSelector((store) => store.content.tvShowsGenre)
 
@@ -94,9 +86,9 @@ const TVShows = () => {
         return tvShowsCat?.length === 0 ?
             <div></div>
             :
-            <div>
+            <div className='overflow-hidden'>
                 {/* Page 1 : video & content */}
-                <div className={`relative w-full min-h-[75dvh] overflow-hidden`}>
+                <div className='relative w-full min-h-[75dvh] overflow-hidden'>
                     {/* Bottom Layer */}
                     <div className="absolute inset-0 z-0">
                         {/* Image */}

@@ -1,15 +1,15 @@
-import useContent from '../../Hooks/useContent/useContent';
-import { IMG_BACKDROP_BASE_URL, IMG_POSTER_BASE_URL } from '../../Utils/SceneryApi/SceneryApi';
-import useMedia from '../../Hooks/useMedia/useMedia'
+import useContent from '../../../Hooks/useContent/useContent';
+import { IMG_BACKDROP_BASE_URL, IMG_POSTER_BASE_URL } from '../../../Utils/SceneryApi/SceneryApi';
+import useMedia from '../../../Hooks/useMedia/useMedia'
 import { useDispatch, useSelector } from 'react-redux';
 import { RiBookmarkLine, RiHeartLine, RiInformationLine, RiPauseCircleLine, RiPlayFill } from '@remixicon/react';
 import { Info } from 'react-bootstrap-icons';
 import { Outlet, useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
-import { addMediaID } from '../../Redux/Slices/MediaSlice/MediaSlice';
+import { addMediaID } from '../../../Redux/Slices/MediaSlice/MediaSlice';
 
 const Browse = () => {
-
+  
   /* To get All genres & explore Categorie's data */
   const { getExploreCat, getAllGenres } = useContent();
   useEffect(() => {
@@ -65,9 +65,9 @@ const Browse = () => {
     return (exploreCat?.length === 0) ?
       <div></div>
       :
-      <div>
+      <div className='overflow-hidden'>
         {/* Page 1 : Video & content */}
-        <div className={`relative w-full min-h-[75dvh] overflow-hidden`}>
+        <div className='relative w-full min-h-[75dvh] overflow-hidden'>
           {/* Background Media */}
           <div className="absolute inset-0 z-0">
             {/* Image */}
@@ -79,14 +79,14 @@ const Browse = () => {
             }
             {/* Video */}
             {exploreBGVideo?.videoKey &&
-              <iframe className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.77vh] h-[56.25vw] min-w-full min-h-full pointer-events-none scale-135 transition-opacity duration-500 no-scrollbar ${isBgVideoPlaying ? "opacity-100" : "opacity-0"}`}
+              <iframe className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.77vh] h-[56.25vw] min-w-full min-h-full pointer-events-none scale-135 transition-opacity duration-500 ${isBgVideoPlaying ? "opacity-100" : "opacity-0"}`}
                 src={`https://www.youtube.com/embed/${exploreBGVideo?.videoKey}?autoplay=1&mute=1&loop=1&playlist=${exploreBGVideo?.videoKey}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&fs=0&disablekb=1&start=10`}
                 title="video"
                 frameBorder="0"
                 allow="autoplay"
                 allowFullScreen
-              />}
-
+              />
+            }
             {/* Fades top & bottoms */}
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/90 via-transparent to-transparent" />
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-bgcolor-fourth via-bgcolor-fourth/10 to-transparent" />

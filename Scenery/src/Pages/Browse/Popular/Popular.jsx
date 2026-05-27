@@ -59,7 +59,7 @@ const Popular = () => {
         return popularCat?.length === 0 ?
             <div></div>
             :
-            <div className='relative flex flex-col gap-10 p-8 mobileNavPad'>
+            <div className='relative flex flex-col gap-10 p-8 mobileNavPad overflow-hidden'>
                 {/* Now Playing */}
                 {(popularCat.filter((categorie) => categorie.content.length > 5)).slice(0, 1).map((categorie) => {
                     return (

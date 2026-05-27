@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { addMediaInfo } from "../../Redux/Slices/MediaSlice/MediaSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { addSavedMovies, addSavedTVShows } from "../../Redux/Slices/MediaSlice/MediaSlice";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, deleteDoc } from "firebase/firestore";
 import { database } from "../../Utils/Firebase/Firebase"
 
 const useMedia = () => {
@@ -103,7 +103,7 @@ const useMedia = () => {
             }, {});
             dispatch(addMediaInfo(movieInfoList));
         } catch (error) {
-
+            console.log("Failed to fetch media info", error)
         }
 
     };
@@ -127,76 +127,204 @@ const useMedia = () => {
 
     /* Function to save user's media */
     const saveUsersMedia = async (getMedia, getMediaType, getCollectionType) => {
+        /* If user dont exists return */
         if (!(account?.usersUID)) return;
-        /* Check if data exists if yes the dispatching user's watchlater and fav for movies & tvshows in local storage for faster access */
-        if (getMediaType === "movies" && getCollectionType === "watchLater") {
-            const ifExists = savedMovies?.watchLater?.some((val) => val?.media?.id === getMedia?.id)
-            if (ifExists) {
-                return
-            } else {
-                dispatch(addSavedMovies({
-                    type: "watchLater",
-                    data: [{
-                        media: getMedia,
-                        createdAt: Date.now()
-                    }],
-                    append: true
-                }));
-            };
-        } else if (getMediaType === "movies" && getCollectionType === "favourite") {
-            const ifExists = savedMovies?.favourite?.some((val) => val?.media?.id === getMedia?.id)
-            if (ifExists) {
-                return
-            } else {
-                dispatch(addSavedMovies({
-                    type: "favourite",
-                    data: [{
-                        media: getMedia,
-                        createdAt: Date.now()
-                    }],
-                    append: true
-                }));
-            };
-        } else if (getMediaType === "tvshows" && getCollectionType === "watchLater") {
-            const ifExists = savedTVShows?.watchLater?.some((val) => val?.media?.id === getMedia?.id)
-            if (ifExists) {
-                return
-            } else {
-                dispatch(addSavedTVShows({
-                    type: "watchLater",
-                    data: [{
-                        media: getMedia,
-                        createdAt: Date.now()
-                    }],
-                    append: true
-                }));
-            };
-        } else if (getMediaType === "tvshows" && getCollectionType === "favourite") {
-            const ifExists = savedTVShows?.favourite?.some((val) => val?.media?.id === getMedia?.id)
-            if (ifExists) {
-                return
-            } else {
-                dispatch(addSavedTVShows({
-                    type: "favourite",
-                    data: [{
-                        media: getMedia,
-                        createdAt: Date.now()
-                    }],
-                    append: true
-                }));
-            };
-        }
 
-        /* Function to save for curr user's watchlater and fav for movies & tvshows in google firebase cloud */
-        try {
-            await setDoc(doc(database, "users", (account?.usersUID), getMediaType, getCollectionType, "items", String(getMedia?.id)),
-                {
-                    media: getMedia,
-                    createdAt: Date.now()
-                }
-            );
-        } catch (error) {
-            console.log("Post Media failed", error);
+        /* Reference for media doc path */
+        const mediaRef = doc(database, "users", account?.usersUID, getMediaType, getCollectionType, "items", String(getMedia?.id));
+
+        /* Check media & collection type : 1. If exists, remove & update local and firestore : 2. If do not exists, add & update local and firestore */
+        if (getMediaType === "movies") {
+            if (getCollectionType === "watchLater") {
+                /* 1 */
+                const isMovieInWatchLater = savedMovies?.watchLater?.find((movie) => movie?.media?.id === getMedia?.id)
+                if (isMovieInWatchLater) {
+                    const updatedWatchLaterMovieArr = savedMovies?.watchLater?.filter((movie) => movie?.media?.id !== isMovieInWatchLater?.media?.id)
+                    dispatch(addSavedMovies({
+                        type: "watchLater",
+                        data: updatedWatchLaterMovieArr
+                    }));
+                    try {
+                        await deleteDoc(mediaRef);
+                    } catch (error) {
+                        console.log("Failed to delete movie from watch later", error);
+                        /* If error , prevent updation */
+                        dispatch(addSavedMovies({
+                            type: "watchLater",
+                            data: savedMovies?.watchLater
+                        }));
+                    }
+                    return;
+                    /* 2 */
+                } else {
+                    dispatch(addSavedMovies({
+                        type: "watchLater",
+                        data: [{
+                            media: getMedia,
+                            createdAt: Date.now()
+                        }],
+                        append: true
+                    }));
+                    try {
+                        await setDoc(mediaRef,
+                            {
+                                media: getMedia,
+                                createdAt: Date.now()
+                            }
+                        );
+                    } catch (error) {
+                        console.log("Failed to add movie to watch later", error);
+                        /* If error , prevent updation */
+                        dispatch(addSavedMovies({
+                            type: "watchLater",
+                            data: savedMovies?.watchLater
+                        }));
+                    }
+                };
+            }
+            else if (getCollectionType === "favourite") {
+                /* 1 */
+                const isMovieInFavourite = savedMovies?.favourite?.find((movie) => movie?.media?.id === getMedia?.id)
+                if (isMovieInFavourite) {
+                    const updatedFavouriteMovieArr = savedMovies?.favourite?.filter((movie) => movie?.media?.id !== isMovieInFavourite?.media?.id)
+                    dispatch(addSavedMovies({
+                        type: "favourite",
+                        data: updatedFavouriteMovieArr
+                    }));
+                    try {
+                        await deleteDoc(mediaRef);
+                    } catch (error) {
+                        console.log("Failed to remove movie from favourite", error);
+                        /* If error , prevent updation */
+                        dispatch(addSavedMovies({
+                            type: "favourite",
+                            data: savedMovies?.favourite
+                        }));
+                    }
+                    return;
+                    /* 2 */
+                } else {
+                    dispatch(addSavedMovies({
+                        type: "favourite",
+                        data: [{
+                            media: getMedia,
+                            createdAt: Date.now()
+                        }],
+                        append: true
+                    }));
+                    try {
+                        await setDoc(mediaRef,
+                            {
+                                media: getMedia,
+                                createdAt: Date.now()
+                            }
+                        );
+                    } catch (error) {
+                        console.log("Failed to add movie to favourite", error);
+                        /* If error , prevent updation */
+                        dispatch(addSavedMovies({
+                            type: "favourite",
+                            data: savedMovies?.favourite
+                        }));
+                    }
+                };
+            }
+
+        } else if (getMediaType === "tvshows") {
+            if (getCollectionType === "watchLater") {
+                /* 1 */
+                const isTvShowInWatchLater = savedTVShows?.watchLater?.find((tvshow) => tvshow?.media?.id === getMedia?.id)
+                if (isTvShowInWatchLater) {
+                    const updatedWatchLaterTvShowArr = savedTVShows?.watchLater?.filter((tvShow) => tvShow?.media?.id !== isTvShowInWatchLater?.media?.id)
+                    dispatch(addSavedTVShows({
+                        type: "watchLater",
+                        data: updatedWatchLaterTvShowArr
+                    }));
+                    try {
+                        await deleteDoc(mediaRef);
+                    } catch (error) {
+                        console.log("Failed to remove TV Show from watch later", error);
+                        /* If error , prevent updation */
+                        dispatch(addSavedTVShows({
+                            type: "watchLater",
+                            data: savedTVShows?.watchLater
+                        }));
+                    }
+                    return;
+                    /* 2 */
+                } else {
+                    dispatch(addSavedTVShows({
+                        type: "watchLater",
+                        data: [{
+                            media: getMedia,
+                            createdAt: Date.now()
+                        }],
+                        append: true
+                    }));
+                    try {
+                        await setDoc(mediaRef,
+                            {
+                                media: getMedia,
+                                createdAt: Date.now()
+                            }
+                        );
+                    } catch (error) {
+                        console.log("Failed to add TV Show to watch later", error);
+                        /* If error , prevent updation */
+                        dispatch(addSavedTVShows({
+                            type: "watchLater",
+                            data: savedTVShows?.watchLater
+                        }));
+                    }
+                };
+            }
+            else if (getCollectionType === "favourite") {
+                /* 1 */
+                const isInFavouriteTvShow = savedTVShows?.favourite?.find((tvShow) => tvShow?.media?.id === getMedia?.id)
+                if (isInFavouriteTvShow) {
+                    const updatedFavouriteTvShowArr = savedTVShows?.favourite?.filter((tvShow) => tvShow?.media?.id !== isInFavouriteTvShow?.media?.id)
+                    dispatch(addSavedTVShows({
+                        type: "favourite",
+                        data: updatedFavouriteTvShowArr
+                    }));
+                    try {
+                        await deleteDoc(mediaRef);
+                    } catch (error) {
+                        console.log("Failed to remove TV Show from favourite", error);
+                        /* If error , prevent updation */
+                        dispatch(addSavedTVShows({
+                            type: "favourite",
+                            data: savedTVShows?.favourite
+                        }));
+                    }
+                    return;
+                    /* 2 */
+                } else {
+                    dispatch(addSavedTVShows({
+                        type: "favourite",
+                        data: [{
+                            media: getMedia,
+                            createdAt: Date.now()
+                        }],
+                        append: true
+                    }));
+                    try {
+                        await setDoc(mediaRef,
+                            {
+                                media: getMedia,
+                                createdAt: Date.now()
+                            }
+                        );
+                    } catch (error) {
+                        console.log("Failed to add TV Show to favourite", error);
+                        /* If error , prevent updation */
+                        dispatch(addSavedTVShows({
+                            type: "favourite",
+                            data: savedTVShows?.favourite
+                        }));
+                    }
+                };
+            }
         }
     }
 

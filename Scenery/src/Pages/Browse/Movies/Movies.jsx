@@ -87,9 +87,9 @@ const Movies = () => {
         return moviesCat?.length === 0 ?
             <div></div>
             :
-            <div>
+            <div className='overflow-hidden'>
                 {/* Page 1 : video & content */}
-                <div className="relative w-full min-h-[75dvh] overflow-hidden">
+                <div className='relative w-full min-h-[75dvh] overflow-hidden'>
                     {/* Bottom Layer */}
                     <div className="absolute inset-0 z-0">
                         {/* Image */}
