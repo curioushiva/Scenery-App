@@ -10,6 +10,9 @@ import Browse from "../Pages/Browse/Browse/Browse";
 import Movies from "../Pages/Browse/Movies/Movies";
 import TVShows from "../Pages/Browse/TVShows/TVShows"
 import Popular from "../Pages/Browse/Popular/Popular";
+import Library from "../Pages/Library/Library";
+import Search from "../Pages/Search/Search"
+import Askai from "../Pages/Askai/Askai"
 import MovieInfo from "../Pages/Browse/MediaInfo/MovieInfo/MovieInfo";
 import TVShowInfo from "../Pages/Browse/MediaInfo/TVShowInfo/TVShowInfo";
 import useUser from "../Hooks/useUser/useUser";
@@ -56,6 +59,21 @@ const App = () => {
                                 { path: "tvshows", element: <TVShows /> },
                                 { path: "popular", element: <Popular /> },
                             ],
+                        },
+
+                        {
+                            path: "library",
+                            element: <Library />
+                        },
+
+                        {
+                            path: "search",
+                            element: <Search />
+                        },
+
+                        {
+                            path: "askai",
+                            element: <Askai />
                         },
 
                         {

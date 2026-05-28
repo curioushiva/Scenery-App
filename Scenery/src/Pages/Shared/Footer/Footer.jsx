@@ -41,6 +41,9 @@ const Footer = () => {
 
     /* For Browse & options and Media - (movies and tvshows) */
     case location.pathname.startsWith('/browse'):
+    case location.pathname.startsWith('/library'):
+    case location.pathname.startsWith('/search'):
+    case location.pathname.startsWith('/askai'):
     case location.pathname.startsWith('/account'):
     case location.pathname.startsWith('/movie'):
     case location.pathname.startsWith('/tvshow'):

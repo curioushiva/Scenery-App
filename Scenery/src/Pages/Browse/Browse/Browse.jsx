@@ -2,24 +2,18 @@ import useContent from '../../../Hooks/useContent/useContent';
 import { IMG_BACKDROP_BASE_URL, IMG_POSTER_BASE_URL } from '../../../Utils/SceneryApi/SceneryApi';
 import useMedia from '../../../Hooks/useMedia/useMedia'
 import { useDispatch, useSelector } from 'react-redux';
-import { RiBookmarkLine, RiHeartLine, RiInformationLine, RiPauseCircleLine, RiPlayFill } from '@remixicon/react';
+import { RiBookmarkFill, RiBookmarkLine, RiHeartFill, RiHeartLine, RiInformationLine, RiPauseCircleLine, RiPlayFill } from '@remixicon/react';
 import { Info } from 'react-bootstrap-icons';
-import { Outlet, useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
-import { addMediaID } from '../../../Redux/Slices/MediaSlice/MediaSlice';
 
 const Browse = () => {
-  
+
   /* To get All genres & explore Categorie's data */
   const { getExploreCat, getAllGenres } = useContent();
   useEffect(() => {
     getAllGenres();
     getExploreCat();
   }, []);
-
-  /* To dispatch actions and navigate */
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   /* To access movie, shows, all genres & bg video */
   const exploreCat = useSelector((store) => store.content.exploreCat);
@@ -29,36 +23,8 @@ const Browse = () => {
   /* To play and pause the background video , def-pause */
   const [isBgVideoPlaying, setIsBgVideoPlaying] = useState(false)
 
-  /* Navigate based on media type - movie or tvshow */
-  const mediaType = (media) => {
-    if (media?.title) {
-      dispatch(addMediaID(media?.id))
-      navigate(`/movie/${media?.id}`)
-    } else if (media?.name) {
-      dispatch(addMediaID(media?.id))
-      navigate(`/tvshow/${media?.id}`)
-    } else {
-      null;
-    }
-  }
-
-  /* To get Media's Props and call for save - (watchLater & fav) */
-  const { saveUsersMedia } = useMedia();
-  const getMediaProp = ({ media, collectionType }) => {
-    if (media?.title) {
-      if (collectionType === "watchLater") {
-        saveUsersMedia(media, "movies", collectionType);
-      } else if (collectionType === "favourite") {
-        saveUsersMedia(media, "movies", collectionType);
-      }
-    } else if (media?.name) {
-      if (collectionType === "watchLater") {
-        saveUsersMedia(media, "tvshows", collectionType);
-      } else if (collectionType === "favourite") {
-        saveUsersMedia(media, "tvshows", collectionType);
-      }
-    }
-  }
+  /* Media type (for info), save media (for saving watchlater & fav) & check if saved */
+  const { mediaType, saveUsersMedia, showSavedUsersMedia } = useMedia();
 
   /* Rendering on basis of categories loaded */
   {
@@ -148,26 +114,20 @@ const Browse = () => {
                         {/* About movie or show - on hover drop down */}
                         <div className='absolute z-10 bottom-0 bg-black/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200'>
                           <div className='flex justify-between items-center'>
-                            <div onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                            }} className='flex gap-1'>
-                              <div onClick={() => {
-                                getMediaProp({
-                                  media: content,
-                                  collectionType: "watchLater"
-                                });
-                              }}
-                                className='p-[0.1rem]'>
-                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] text-[#A9A9A9] lg:w-[1.9rem] sm:h-[1.9rem]' />
+                            <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
+                              <div onClick={() => saveUsersMedia(content, 'watchLater')} className='p-[0.1rem]'>
+                                {(showSavedUsersMedia(content, 'watchLater')) ?
+                                  <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                  :
+                                  <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                }
                               </div>
-                              <div onClick={() => {
-                                getMediaProp({
-                                  media: content,
-                                  collectionType: "favourite"
-                                });
-                              }} className='p-[0.1rem]'>
-                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] text-[#A9A9A9] lg:w-[1.9rem] sm:h-[1.9rem]' />
+                              <div onClick={() => saveUsersMedia(content, 'favourite')} className='p-[0.1rem]'>
+                                {(showSavedUsersMedia(content, 'favourite')) ?
+                                  <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                  :
+                                  <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                }
                               </div>
                             </div>
                             <div className='rounded-full border-[#A9A9A9] border p-[0.1rem]'>
@@ -203,7 +163,7 @@ const Browse = () => {
             )
           })}
         </div>
-      </div>
+      </div >
   }
 }
 

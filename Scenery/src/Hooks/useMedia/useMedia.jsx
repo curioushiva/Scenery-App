@@ -1,58 +1,24 @@
 import { SCENERY_API_BASE_URL, SCENERY_API_HEADERS } from "../../Utils/SceneryApi/SceneryApi";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { addMediaInfo } from "../../Redux/Slices/MediaSlice/MediaSlice";
+import { useNavigate } from 'react-router';
+import { addMediaID, addMediaInfo } from "../../Redux/Slices/MediaSlice/MediaSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { addSavedMovies, addSavedTVShows } from "../../Redux/Slices/MediaSlice/MediaSlice";
 import { doc, setDoc, deleteDoc } from "firebase/firestore";
 import { database } from "../../Utils/Firebase/Firebase"
 
 const useMedia = () => {
-    /* To dispatch actions */
+    /* To dispatch actions and navigate */
     const dispatch = useDispatch();
-
-    /* To select saved movies & tvshows from store */
-    const savedMovies = useSelector((store) => store.media.savedMovies)
-    const savedTVShows = useSelector((store) => store.media.savedTVShows)
+    const navigate = useNavigate();
 
     /* User's details */
     const account = useSelector((store) => store.user.account)
 
-    /* TV Show info data */
-    const tvShowInfoData = [
-        {
-            type: "details",
-            url: ``
-        },
-        {
-            type: "credits",
-            url: `/aggregate_credits`
-        },
-        {
-            type: "videos",
-            url: `/videos`
-        },
-        {
-            type: "reviews",
-            url: `/reviews`
-        },
-        {
-            type: "recommendations",
-            url: `/recommendations`
-        },
-        {
-            type: "external_ids",
-            url: `/external_ids`
-        },
-        {
-            type: "watch_providers",
-            url: `/watch/providers`
-        },
-        {
-            type: "certifications",
-            url: "/content_ratings"
-        },
-    ]
+    /* To select saved movies & tvshows from store */
+    const savedMovies = useSelector((store) => store.media.savedMovies)
+    const savedTVShows = useSelector((store) => store.media.savedTVShows)
 
     /* Movie Info data */
     const movieInfoData = [
@@ -90,6 +56,55 @@ const useMedia = () => {
         },
     ]
 
+    /* TV Show info data */
+    const tvShowInfoData = [
+        {
+            type: "details",
+            url: ``
+        },
+        {
+            type: "credits",
+            url: `/aggregate_credits`
+        },
+        {
+            type: "videos",
+            url: `/videos`
+        },
+        {
+            type: "reviews",
+            url: `/reviews`
+        },
+        {
+            type: "recommendations",
+            url: `/recommendations`
+        },
+        {
+            type: "external_ids",
+            url: `/external_ids`
+        },
+        {
+            type: "watch_providers",
+            url: `/watch/providers`
+        },
+        {
+            type: "certifications",
+            url: "/content_ratings"
+        },
+    ]
+
+    /* Navigate based on media type - movie or tvshow */
+    const mediaType = (media) => {
+        if (media?.title) {
+            dispatch(addMediaID(media?.id))
+            navigate(`/movie/${media?.id}`)
+        } else if (media?.name) {
+            dispatch(addMediaID(media?.id))
+            navigate(`/tvshow/${media?.id}`)
+        } else {
+            null;
+        }
+    }
+
     /* Calling getMovieInfo */
     const getMovieInfo = async (mediaID) => {
         try {
@@ -126,18 +141,16 @@ const useMedia = () => {
     };
 
     /* Function to save user's media */
-    const saveUsersMedia = async (getMedia, getMediaType, getCollectionType) => {
+    const saveUsersMedia = async (media, collectionType) => {
         /* If user dont exists return */
         if (!(account?.usersUID)) return;
 
-        /* Reference for media doc path */
-        const mediaRef = doc(database, "users", account?.usersUID, getMediaType, getCollectionType, "items", String(getMedia?.id));
-
-        /* Check media & collection type : 1. If exists, remove & update local and firestore : 2. If do not exists, add & update local and firestore */
-        if (getMediaType === "movies") {
-            if (getCollectionType === "watchLater") {
+        if (media?.title) {
+            if (collectionType === 'watchLater') {
+                /* Reference for media doc path */
+                const mediaRef = doc(database, "users", account?.usersUID, 'movies', 'watchLater', "items", String(media?.id));
                 /* 1 */
-                const isMovieInWatchLater = savedMovies?.watchLater?.find((movie) => movie?.media?.id === getMedia?.id)
+                const isMovieInWatchLater = savedMovies?.watchLater?.find((movie) => movie?.media?.id === media?.id)
                 if (isMovieInWatchLater) {
                     const updatedWatchLaterMovieArr = savedMovies?.watchLater?.filter((movie) => movie?.media?.id !== isMovieInWatchLater?.media?.id)
                     dispatch(addSavedMovies({
@@ -160,7 +173,7 @@ const useMedia = () => {
                     dispatch(addSavedMovies({
                         type: "watchLater",
                         data: [{
-                            media: getMedia,
+                            media: media,
                             createdAt: Date.now()
                         }],
                         append: true
@@ -168,7 +181,7 @@ const useMedia = () => {
                     try {
                         await setDoc(mediaRef,
                             {
-                                media: getMedia,
+                                media: media,
                                 createdAt: Date.now()
                             }
                         );
@@ -181,10 +194,11 @@ const useMedia = () => {
                         }));
                     }
                 };
-            }
-            else if (getCollectionType === "favourite") {
+            } else if (collectionType === 'favourite') {
+                /* Reference for media doc path */
+                const mediaRef = doc(database, "users", account?.usersUID, 'movies', 'favourite', "items", String(media?.id));
                 /* 1 */
-                const isMovieInFavourite = savedMovies?.favourite?.find((movie) => movie?.media?.id === getMedia?.id)
+                const isMovieInFavourite = savedMovies?.favourite?.find((movie) => movie?.media?.id === media?.id)
                 if (isMovieInFavourite) {
                     const updatedFavouriteMovieArr = savedMovies?.favourite?.filter((movie) => movie?.media?.id !== isMovieInFavourite?.media?.id)
                     dispatch(addSavedMovies({
@@ -207,7 +221,7 @@ const useMedia = () => {
                     dispatch(addSavedMovies({
                         type: "favourite",
                         data: [{
-                            media: getMedia,
+                            media: media,
                             createdAt: Date.now()
                         }],
                         append: true
@@ -215,7 +229,7 @@ const useMedia = () => {
                     try {
                         await setDoc(mediaRef,
                             {
-                                media: getMedia,
+                                media: media,
                                 createdAt: Date.now()
                             }
                         );
@@ -229,11 +243,12 @@ const useMedia = () => {
                     }
                 };
             }
-
-        } else if (getMediaType === "tvshows") {
-            if (getCollectionType === "watchLater") {
+        } else if (media?.name) {
+            if (collectionType === 'watchLater') {
+                /* Reference for media doc path */
+                const mediaRef = doc(database, "users", account?.usersUID, 'tvshows', 'watchLater', "items", String(media?.id));
                 /* 1 */
-                const isTvShowInWatchLater = savedTVShows?.watchLater?.find((tvshow) => tvshow?.media?.id === getMedia?.id)
+                const isTvShowInWatchLater = savedTVShows?.watchLater?.find((tvshow) => tvshow?.media?.id === media?.id)
                 if (isTvShowInWatchLater) {
                     const updatedWatchLaterTvShowArr = savedTVShows?.watchLater?.filter((tvShow) => tvShow?.media?.id !== isTvShowInWatchLater?.media?.id)
                     dispatch(addSavedTVShows({
@@ -256,7 +271,7 @@ const useMedia = () => {
                     dispatch(addSavedTVShows({
                         type: "watchLater",
                         data: [{
-                            media: getMedia,
+                            media: media,
                             createdAt: Date.now()
                         }],
                         append: true
@@ -264,7 +279,7 @@ const useMedia = () => {
                     try {
                         await setDoc(mediaRef,
                             {
-                                media: getMedia,
+                                media: media,
                                 createdAt: Date.now()
                             }
                         );
@@ -277,10 +292,11 @@ const useMedia = () => {
                         }));
                     }
                 };
-            }
-            else if (getCollectionType === "favourite") {
+            } else if (collectionType === 'favourite') {
+                /* Reference for media doc path */
+                const mediaRef = doc(database, "users", account?.usersUID, 'tvshows', 'favourite', "items", String(media?.id));
                 /* 1 */
-                const isInFavouriteTvShow = savedTVShows?.favourite?.find((tvShow) => tvShow?.media?.id === getMedia?.id)
+                const isInFavouriteTvShow = savedTVShows?.favourite?.find((tvShow) => tvShow?.media?.id === media?.id)
                 if (isInFavouriteTvShow) {
                     const updatedFavouriteTvShowArr = savedTVShows?.favourite?.filter((tvShow) => tvShow?.media?.id !== isInFavouriteTvShow?.media?.id)
                     dispatch(addSavedTVShows({
@@ -303,7 +319,7 @@ const useMedia = () => {
                     dispatch(addSavedTVShows({
                         type: "favourite",
                         data: [{
-                            media: getMedia,
+                            media: media,
                             createdAt: Date.now()
                         }],
                         append: true
@@ -311,7 +327,7 @@ const useMedia = () => {
                     try {
                         await setDoc(mediaRef,
                             {
-                                media: getMedia,
+                                media: media,
                                 createdAt: Date.now()
                             }
                         );
@@ -326,10 +342,22 @@ const useMedia = () => {
                 };
             }
         }
+
     }
 
-    /* returing it to be called somehwere else */
-    return { getMovieInfo, getTVShowInfo, saveUsersMedia };
+    /* Function to check for saved media for user */
+    const showSavedUsersMedia = (media, collectionType) => {
+        if (!media) return null;
+        const typeOfMedia = media?.title;
+        const typeOfCollection = typeOfMedia ? savedMovies : savedTVShows;
+        const isSaved = typeOfCollection[collectionType].some((val) => val.media.id === media.id);
+        if (collectionType === "watchLater") { return isSaved ? true : false }
+        if (collectionType === 'favourite') { return isSaved ? true : false }
+        return null;
+    }
+
+    /* Returing it for getting called from somehwere else */
+    return { mediaType, getMovieInfo, getTVShowInfo, saveUsersMedia, showSavedUsersMedia };
 };
 
 export default useMedia;

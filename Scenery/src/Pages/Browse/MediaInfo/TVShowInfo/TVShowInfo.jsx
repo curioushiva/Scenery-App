@@ -7,9 +7,11 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Profile from "../../../User/Profile/Profile";
 import {
-    RiBookmarkLine, RiHeartLine, RiAddFill, RiHeartFill, RiPlayFill, RiCalendarEventLine, RiSlideshowView,
-    RiFilmAiLine, RiPlayLargeFill, RiChatQuoteLine, RiMovie2Line, RiHashtag, RiInstagramLine, RiFacebookLine,
-    RiTwitterXLine, RiFilmLine, RiGlobalLine, RiCloseFill, RiSlideshow4Line, RiVideoLine, RiHourglass2Line
+    RiAddFill, RiBookmarkFill, RiBookmarkLine, RiHeartFill, RiHeartLine,
+    RiPlayFill, RiCalendarEventLine, RiSlideshowView, RiFilmAiLine, RiPlayLargeFill,
+    RiChatQuoteLine, RiMovie2Line, RiHashtag, RiInstagramLine, RiFacebookLine, RiTwitterXLine,
+    RiFilmLine, RiGlobalLine, RiCloseFill, RiSlideshow4Line, RiVideoLine, RiHourglass2Line,
+    RiCheckboxMultipleLine
 } from "@remixicon/react";
 import { Info, Wikipedia } from 'react-bootstrap-icons';
 import NoProfile from "../../../../Assets/Imgs/Avatars/NoProfile.png"
@@ -35,9 +37,9 @@ const TVShowInfo = () => {
     const allGenres = useSelector((store) => store.content.allGenres);
     const usersCurRegion = useSelector((store) => store.user.account.usersCurRegion)
 
-    /* Selcting & calling getTVShowInfo from dispatched MediaID */
+    /* Selcting & calling getMovieInfo from dispatched MediaID, media type (for info), save media (for saving watchlater & fav) & check if saved */
     const mediaInfo = useSelector((store) => store.media.mediaInfo)
-    const { getTVShowInfo } = useMedia();
+    const { mediaType, getTVShowInfo, saveUsersMedia, showSavedUsersMedia } = useMedia();
     useEffect(() => {
         getTVShowInfo(mediaIDFromURL);
         dispatch(addMediaID(mediaIDFromURL));
@@ -132,38 +134,8 @@ const TVShowInfo = () => {
     })();
 
     /* Media's Socials Check */
-    const mediasSocialsCheck = mediaInfo?.external_ids?.facebook_id || mediaInfo?.external_ids?.imdb_id || mediaInfo?.external_ids?.instagram_id || mediaInfo?.external_ids?.twitter_id || mediaInfo?.external_ids?.wikidata_id || mediaInfo?.details?.homepage
+    const mediasSocialsCheck = mediaInfo?.external_ids?.facebook_id || mediaInfo?.external_ids?.imdb_id || mediaInfo?.external_ids?.instagram_id || mediaInfo?.external_ids?.twitter_id || mediaInfo?.external_ids?.wikidata_id || mediaInfo?.details?.homepage;
 
-    /* Navigate based on media type - movie or tvshow */
-    const mediaType = (media) => {
-        if (media?.title) {
-            dispatch(addMediaID(media?.id))
-            navigate(`/movie/${media?.id}`)
-        } else if (media?.name) {
-            dispatch(addMediaID(media?.id))
-            navigate(`/tvshow/${media?.id}`)
-        } else {
-            null;
-        }
-    }
-
-    /* To get Media's Props and call for save - (watchLater & fav) */
-    const { saveUsersMedia } = useMedia();
-    const getMediaProp = ({ media, collectionType }) => {
-        if (media?.title) {
-            if (collectionType === "watchLater") {
-                saveUsersMedia(media, "movies", collectionType);
-            } else if (collectionType === "favourite") {
-                saveUsersMedia(media, "movies", collectionType);
-            }
-        } else if (media?.name) {
-            if (collectionType === "watchLater") {
-                saveUsersMedia(media, "tvshows", collectionType);
-            } else if (collectionType === "favourite") {
-                saveUsersMedia(media, "tvshows", collectionType);
-            }
-        }
-    }
 
     /* Rendering on the basis of avail of mediaInfo */
     return Object.keys(mediaInfo).length === 0 ?
@@ -302,26 +274,28 @@ const TVShowInfo = () => {
                                     }
 
                                     {/* Watch later - saved to google cloud firebase */}
-                                    <div
-                                        onClick={() => {
-                                            getMediaProp({
-                                                media: mediaInfo,
-                                                collectionType: "watchLater"
-                                            });
-                                        }} className="flex justify-center items-center gap-2 border-1 border-textcolor-secondary text-white pl-3 pr-6 py-2 rounded cursor-pointer active:scale-[0.95]">
-                                        <RiAddFill />
-                                        <span className="font-semibold">Watch Later</span>
+                                    <div onClick={() => saveUsersMedia(mediaInfo?.details, 'watchLater')} className="flex justify-center items-center gap-2 border-1 border-textcolor-secondary text-white pl-3 pr-6 py-2 rounded cursor-pointer active:scale-[0.95]">
+                                        {
+                                            (showSavedUsersMedia(mediaInfo?.details, 'watchLater')) ?
+                                                <>
+                                                    <RiCheckboxMultipleLine />
+                                                    <span className="font-semibold">Saved</span>
+                                                </>
+                                                :
+                                                <>
+                                                    <RiAddFill />
+                                                    <span className="font-semibold">Watch Later</span>
+                                                </>
+                                        }
                                     </div>
 
                                     {/* Add to fav - saved to google cloud firebase */}
-                                    <div
-                                        onClick={() => {
-                                            getMediaProp({
-                                                media: mediaInfo,
-                                                collectionType: "favourite"
-                                            });
-                                        }} className="flex justify-center items-center gap-2 border-1 border-textcolor-secondary px-3 py-2 rounded cursor-pointer active:scale-[0.95]">
-                                        <RiHeartFill />
+                                    <div onClick={() => saveUsersMedia(mediaInfo?.details, 'favourite')} className="flex justify-center items-center gap-2 border-1 border-textcolor-secondary px-3 py-2 rounded cursor-pointer active:scale-[0.95]">
+                                        {(showSavedUsersMedia(mediaInfo?.details, 'favourite')) ?
+                                            <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                            :
+                                            <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -995,15 +969,20 @@ const TVShowInfo = () => {
                                                     {/* About movie or show - on hover drop down */}
                                                     <div className='absolute z-1 bottom-0 bg-black/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200'>
                                                         <div className='flex justify-between items-center'>
-                                                            <div onClick={(e) => {
-                                                                e.preventDefault();
-                                                                e.stopPropagation();
-                                                            }} className='flex gap-1'>
-                                                                <div className='p-[0.1rem]'>
-                                                                    <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] text-[#A9A9A9] sm:w-[1.80rem] sm:h-[1.80rem]' />
+                                                            <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
+                                                                <div onClick={() => saveUsersMedia(content, 'watchLater')} className='p-[0.1rem]'>
+                                                                    {(showSavedUsersMedia(content, 'watchLater')) ?
+                                                                        <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        :
+                                                                        <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                    }
                                                                 </div>
-                                                                <div className='p-[0.1rem]'>
-                                                                    <RiHeartLine className='w-[1.80rem] h-[1.80rem] text-[#A9A9A9] sm:w-[1.80rem] sm:h-[1.80rem]' />
+                                                                <div onClick={() => saveUsersMedia(content, 'favourite')} className='p-[0.1rem]'>
+                                                                    {(showSavedUsersMedia(content, 'favourite')) ?
+                                                                        <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                        :
+                                                                        <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                    }
                                                                 </div>
                                                             </div>
                                                             <div className='rounded-full border-[#A9A9A9] border p-[0.1rem]'>

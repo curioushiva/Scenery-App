@@ -3,7 +3,7 @@ import logo2 from '../../../Assets/Imgs/Logo/logo2.png'
 import logo1 from '../../../Assets/Imgs/Logo/logo1.png'
 import { useDispatch, useSelector } from "react-redux";
 import { AvatarsMockData } from "../../../Utils/Mockdata/Mockdata";
-import { RiArrowDropDownFill, RiPencilLine, RiUserLine, RiQuestionLine, RiHome5Line, RiVideoOnLine, RiTvLine, RiFireLine, RiCopyrightLine, RiEyeCloseLine, RiSearchLine, RiShiningLine } from "@remixicon/react";
+import { RiArrowDropDownFill, RiPencilLine, RiUserLine, RiQuestionLine, RiHome5Line, RiVideoOnLine, RiTvLine, RiFireLine, RiCopyrightLine, RiEyeCloseLine, RiSearchLine, RiShiningLine, RiBookShelfLine } from "@remixicon/react";
 import { Layers } from "react-bootstrap-icons"
 import { useState, useEffect } from "react";
 import { useAuth } from "../../../Hooks/useAuth/useAuth";
@@ -59,6 +59,9 @@ const Header = () => {
       break;
 
     case location.pathname.startsWith('/browse'):
+    case location.pathname.startsWith('/library'):
+    case location.pathname.startsWith('/search'):
+    case location.pathname.startsWith('/askai'):
     case location.pathname.startsWith('/account'):
     case location.pathname.startsWith('/movie'):
     case location.pathname.startsWith('/tvshow'):
@@ -69,17 +72,15 @@ const Header = () => {
             <div className="w-[88px] h-[100dvh] sticky top-0 z-[100]">
               <div className="w-full h-full flex flex-col items-center gap-5 bg-bgcolor-fourth p-6">
                 <Link to="/browse"><img src={logo1} alt="logo1" className="w-10" /></Link>
-                <div className="w-full flex-1 flex flex-col justify-center items-center gap-10">
+                <div className="w-full flex-1 flex flex-col justify-center items-center gap-9">
                   <Link to="/browse"><RiHome5Line className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" /></Link>
                   <Link to="/browse/movies"><RiVideoOnLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" /></Link>
                   <Link to="/browse/tvshows"><RiTvLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" /></Link>
                   <Link to="/browse/popular"><RiFireLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" /></Link>
+                  <Link to="/library"><RiBookShelfLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" /></Link>
                   <Link to="/search"><RiSearchLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" /></Link>
                   <Link to="/askai"><RiShiningLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" /></Link>
-                  {usersProfileType === "Guest" ?
-                    <Link to="/account"><img src={Guest} alt="Guest" className="w-7" /></Link> :
-                    <Link to="/account"><img src={AvatarsMockData[usersAvatarNum].avatar} alt="Avatar" className="w-[1.65rem]" /></Link>
-                  }
+                  <Link to="/account">{usersProfileType === "Guest" ? <img src={Guest} alt="Guest" className="w-7" /> : <img src={AvatarsMockData[usersAvatarNum].avatar} alt="Avatar" className="w-[1.65rem]" />}</Link>
                 </div>
               </div>
             </div >
@@ -102,6 +103,7 @@ const Header = () => {
                       <Link to="/browse/movies" className="text-lg font-semibold transition-transform duration-200 hover:scale-95">Movies</Link>
                       <Link to="/browse/tvshows" className="text-lg font-semibold transition-transform duration-200 hover:scale-95">TV Shows</Link>
                       <Link to="/browse/popular" className="text-lg font-semibold transition-transform duration-200 hover:scale-95">Popular</Link>
+                      <Link to="/library" className="text-lg font-semibold transition-transform duration-200 hover:scale-95">My Library</Link>
                       <Link to="/search" className="text-lg font-semibold transition-transform duration-200 hover:scale-95">Search</Link>
                       <Link to="/askai" className="text-lg font-semibold transition-transform duration-200 hover:scale-95">Ask AI</Link>
                       <Link to="/account" className="text-lg font-semibold transition-transform duration-200 hover:scale-95">Account</Link>
