@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SCENERY_API_BASE_URL, SCENERY_API_HEADERS } from '@/Utils/SceneryApi/SceneryApi';
+import { SCENERY_API_BASE_URL, SCENERY_API_HEADERS } from '@/Utils/SceneryAPI/SceneryAPI';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import {

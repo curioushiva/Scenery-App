@@ -1,7 +1,7 @@
 import useMedia from "@/Utils/Hooks/useMedia/useMedia";
 import {
     IMG_POSTER_BASE_URL, IMG_HERO_BACKDROP_BASE_URL, IMG_HERO_POSTER_BASE_URL
-} from "@/Utils/SceneryApi/SceneryApi";
+} from "@/Utils/SceneryAPI/SceneryAPI";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -9,7 +9,7 @@ import {
     RiPlayFill, RiCalendarEventLine, RiSlideshowView, RiFilmAiLine, RiPlayLargeFill,
     RiChatQuoteLine, RiMovie2Line, RiHashtag, RiInstagramLine, RiFacebookLine, RiTwitterXLine,
     RiFilmLine, RiGlobalLine, RiCloseFill, RiSlideshow4Line, RiVideoLine, RiHourglass2Line,
-    RiCheckboxMultipleLine
+    RiCheckboxMultipleLine, RiArrowUpWideLine, RiArrowDownWideLine,
 } from "@remixicon/react";
 import { Info, Wikipedia } from 'react-bootstrap-icons';
 import NoProfile from "@/Assets/Imgs/Avatars/NoProfile.png"
@@ -89,8 +89,8 @@ const TVShowInfo = () => {
         }
     }, [showTrailer]);
 
-    /* To set the section type */
-    const [sectionOneType, setSectionOneType] = useState("Seasons")
+    /* To set the section one type */
+    const [sectionOneType, setSectionOneType] = useState(null)
 
     /* Networks check */
     const NetworkProvider = (() => {
@@ -102,8 +102,8 @@ const TVShowInfo = () => {
         }
     })();
 
-    /* To set the section type */
-    const [sectionTwoType, setSectionTwoType] = useState("Reviews")
+    /* To set the section two type */
+    const [sectionTwoType, setSectionTwoType] = useState(null)
 
     const regionalWatchProvider = (() => {
         const results = mediaInfo?.watch_providers?.results;
@@ -185,13 +185,13 @@ const TVShowInfo = () => {
             }
 
             {/* Media Info */}
-            <div className="relative flex flex-col gap-10 pt-35 p-8">
+            <div className="relative flex flex-col gap-10 pt-30 p-8">
                 {mediaInfo?.details &&
                     <div className="w-full h-full flex flex-col gap-12">
                         {/* Part 1 & 2 */}
-                        <div className="w-full h-full flex gap-12 items-stretch">
+                        <div className="w-full h-full flex flex-col gap-12 items-stretch 880:flex-row">
                             {/* Part 1 : Media Poster */}
-                            <div className="w-[18rem] flex flex-col flex-shrink-0">
+                            <div className="hidden w-full flex-col flex-shrink-0 880:flex 880:w-[18rem]">
                                 <img src={mediaInfo?.details?.poster_path ? `${IMG_HERO_POSTER_BASE_URL}${mediaInfo?.details?.poster_path}` : NoPoster} alt="Poster" className={`w-full flex-1 min-h-0 aspect-[4/5] object-cover ${regionalWatchProviderFirstValue?.length > 0 ? "rounded-t-sm" : "rounded-sm"}`} />
                                 {regionalWatchProviderFirstValue?.length > 0 &&
                                     <div className="w-full flex justify-center items-center gap-3 bg-black py-3 rounded-b-sm">
@@ -206,29 +206,32 @@ const TVShowInfo = () => {
 
                             {/* Part 2 : Genric Info */}
                             <div className="flex flex-col gap-4 max-w-2xl">
-                                <h1 className="text-4xl font-medium">{mediaInfo?.details?.name || "N/A"}</h1>
-                                <div className="flex items-center text-sm">
+                                <h1 className="text-3xl font-medium sm:text-4xl">{mediaInfo?.details?.name || "N/A"}</h1>
+                                <div className="flex items-center flex-wrap text-sm gap-2">
+
                                     {/* Certification */}
-                                    {mediaCertification && <h2 className="text-textcolor-secondary border-1 rounded-sm px-[6px]">{mediaCertification}</h2>}
+                                    {mediaCertification && <h2 className="text-textcolor-secondary border-1 rounded-sm px-[6px] whitespace-nowrap">{mediaCertification}</h2>}
 
-                                    {/* Release / First Air Date - for movies & tv shows */}
-                                    {mediaInfo?.details?.first_air_date && <h2 className="pl-2">{mediaInfo?.details?.first_air_date?.slice(0, 4)}</h2>}
-
-                                    {/* Origin country */}
-                                    {mediaInfo?.details?.origin_country?.[0] && <span className="pl-1">({mediaInfo?.details?.origin_country?.[0]})</span>}
+                                    {/* Release / First Air Date - for movies & tv shows & Origin country */}
+                                    {(mediaInfo?.details?.first_air_date || mediaInfo?.details?.origin_country?.[0]) &&
+                                        <div className="flex gap-1">
+                                            <span>{mediaInfo?.details?.first_air_date?.slice(0, 4)}</span>
+                                            {mediaInfo?.details?.origin_country?.[0] && <span>({mediaInfo?.details?.origin_country?.[0]})</span>}
+                                        </div>
+                                    }
 
                                     {/* Genres */}
                                     {mediaInfo?.details?.genres?.length > 0 &&
-                                        <div className="flex">
-                                            <h2 className="pl-2">•</h2>
-                                            {mediaInfo?.details?.genres?.slice(0, 2)?.map((val) => <h2 className="pl-2" key={val.id}> {val?.name === "Science Fiction" ? "Sci-Fi" : (val?.name)?.split(' ')[0]}</h2>)}
+                                        <div className="flex gap-2">
+                                            <h2>•</h2>
+                                            {mediaInfo?.details?.genres?.slice(0, 2)?.map((val) => <h2 key={val.id}>{val?.name === "Science Fiction" ? "Sci-Fi" : (val?.name)?.split(' ')[0]}</h2>)}
                                         </div>
                                     }
                                 </div>
 
                                 {/* Ratings and Votes */}
                                 {(mediaInfo?.details?.vote_average !== null || mediaInfo?.details?.vote_count !== null) &&
-                                    <div className="flex gap-4 items-center pt-4 text-base">
+                                    <div className="flex gap-4 items-center text-base">
                                         {mediaInfo?.details?.vote_average !== null && <h3 className="font-medium"><span className="text-yellow-400">★</span> {(mediaInfo?.details?.vote_average)?.toFixed(1) || "N/A"}</h3>}
 
                                         {mediaInfo?.details?.vote_count !== null && <h3 className="text-sm">({`${mediaInfo?.details?.vote_count} Votes`})</h3>}
@@ -242,7 +245,7 @@ const TVShowInfo = () => {
                                 {mediaInfo?.details?.overview &&
                                     <div className="flex flex-col gap-2">
                                         <h1 className="text-lg font-medium">Overview</h1>
-                                        <p>{mediaInfo?.details?.overview}</p>
+                                        <p className="text-sm sm:text-base">{mediaInfo?.details?.overview}</p>
                                     </div>
                                 }
 
@@ -262,60 +265,61 @@ const TVShowInfo = () => {
                                 }
 
                                 {/* Trailer, Watch later & fav */}
-                                <div className="flex gap-4 pt-5">
+                                <div className="flex gap-4 pt-5 flex-wrap 430:flex-nowrap">
                                     {/* Play video trailer */}
                                     {videoTrailer?.length > 0 &&
-                                        < div onClick={() => { setPlayTrailerVideoKey(playTrailerInitialVideoKey?.[0]?.key); setShowTrailer(true); }} className="flex justify-center items-center gap-1 bg-uicolor-primary text-white pl-3 pr-6 py-2 rounded cursor-pointer active:scale-[0.95]">
+                                        < div onClick={() => { setPlayTrailerVideoKey(playTrailerInitialVideoKey?.[0]?.key); setShowTrailer(true); }} className="w-full flex justify-center items-center gap-1 bg-uicolor-primary text-white pl-2 pr-3 py-2 rounded cursor-pointer active:scale-[0.95]">
                                             <RiPlayFill />
-                                            <span className="font-semibold">Play Trailer</span>
+                                            <span className="font-semibold whitespace-nowrap">Play Trailer</span>
                                         </div>
                                     }
+                                    <div className="w-full flex gap-4 flex-wrap 295:flex-nowrap">
+                                        {/* Watch later - saved to google cloud firebase */}
+                                        <div onClick={() => saveUsersMedia(mediaInfo?.details, 'watchLater')} className="w-full flex justify-center items-center gap-2 border-1 border-textcolor-secondary text-white pl-2 pr-3 py-2 rounded cursor-pointer active:scale-[0.95]">
+                                            {
+                                                (showSavedUsersMedia(mediaInfo?.details, 'watchLater')) ?
+                                                    <>
+                                                        <RiCheckboxMultipleLine />
+                                                        <span className="font-semibold">Saved</span>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <RiAddFill />
+                                                        <span className="font-semibold whitespace-nowrap">Watch Later</span>
+                                                    </>
+                                            }
+                                        </div>
 
-                                    {/* Watch later - saved to google cloud firebase */}
-                                    <div onClick={() => saveUsersMedia(mediaInfo?.details, 'watchLater')} className="flex justify-center items-center gap-2 border-1 border-textcolor-secondary text-white pl-3 pr-6 py-2 rounded cursor-pointer active:scale-[0.95]">
-                                        {
-                                            (showSavedUsersMedia(mediaInfo?.details, 'watchLater')) ?
-                                                <>
-                                                    <RiCheckboxMultipleLine />
-                                                    <span className="font-semibold">Saved</span>
-                                                </>
+                                        {/* Add to fav - saved to google cloud firebase */}
+                                        <div onClick={() => saveUsersMedia(mediaInfo?.details, 'favourite')} className="w-full flex justify-center items-center gap-2 border-1 border-textcolor-secondary px-3 py-2 rounded cursor-pointer active:scale-[0.95]">
+                                            {(showSavedUsersMedia(mediaInfo?.details, 'favourite')) ?
+                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] text-[#f14049]' />
                                                 :
-                                                <>
-                                                    <RiAddFill />
-                                                    <span className="font-semibold">Watch Later</span>
-                                                </>
-                                        }
-                                    </div>
-
-                                    {/* Add to fav - saved to google cloud firebase */}
-                                    <div onClick={() => saveUsersMedia(mediaInfo?.details, 'favourite')} className="flex justify-center items-center gap-2 border-1 border-textcolor-secondary px-3 py-2 rounded cursor-pointer active:scale-[0.95]">
-                                        {(showSavedUsersMedia(mediaInfo?.details, 'favourite')) ?
-                                            <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
-                                            :
-                                            <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
-                                        }
+                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] text-[#A9A9A9]' />
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Part 3 : More about tv show */}
-                        <div className="w-full flex justify-around bg-black/40 py-7 rounded-lg">
+                        <div className="w-full flex flex-col gap-5 880:flex-row 880:gap-10">
                             {/* First air date */}
                             {(mediaInfo?.details?.first_air_date) &&
-                                <div className="flex justify-center items-center gap-2">
+                                <div className="w-full flex gap-2 p-4 bg-black/40 [clip-path:polygon(12px_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%,0_12px)] 880:justify-center">
                                     <div className="flex justify-center items-center">
                                         <RiCalendarEventLine className="w-7 h-7" />
                                     </div>
                                     <div className="flex flex-col">
-                                        <h1 className="text-sm font-medium">Release Date</h1>
+                                        <h1 className="text-sm font-medium whitespace-nowrap">Release Date</h1>
                                         <h2 className="text-base">{mediaInfo?.details?.first_air_date?.replaceAll('-', '/') || "N/A"}</h2>
                                     </div>
                                 </div>
                             }
 
                             {/* Total seasons */}
-                            <div className="flex justify-center items-center gap-2">
+                            <div className="w-full flex gap-2 p-4 bg-black/40 [clip-path:polygon(12px_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%,0_12px)]">
                                 <div className="flex justify-center items-center">
                                     <RiSlideshowView className="w-7 h-7" />
                                 </div>
@@ -326,7 +330,7 @@ const TVShowInfo = () => {
                             </div>
 
                             {/* Total Episodes */}
-                            <div className="flex justify-center items-center gap-2">
+                            <div className="w-full flex gap-2 p-4 bg-black/40 [clip-path:polygon(12px_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%,0_12px)]">
                                 <div className="flex justify-center items-center">
                                     <RiVideoLine className="w-7 h-7" />
                                 </div>
@@ -337,7 +341,7 @@ const TVShowInfo = () => {
                             </div>
 
                             {/* Status */}
-                            {mediaInfo?.details?.status && <div className="flex justify-center items-center gap-2">
+                            {mediaInfo?.details?.status && <div className="w-full flex gap-2 p-4 bg-black/40 [clip-path:polygon(12px_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%,0_12px)]">
                                 <div className="flex justify-center items-center">
                                     <RiFilmAiLine className="w-7 h-7" />
                                 </div>
@@ -357,7 +361,7 @@ const TVShowInfo = () => {
                                 </div>
                                 <div className="grid grid-flow-col auto-cols-[10rem] gap-4 overflow-x-auto no-scrollbar items-stretch">
                                     {mediaInfo?.credits?.cast?.slice(0, 20)?.map((cast) => {
-                                        const castRoles = (cast?.roles?.length > 0 ? cast?.roles?.slice(0, 3)?.map((roles) => roles?.character)?.join(", ") : null);
+                                        const castRoles = (cast?.roles?.length > 0 ? cast?.roles?.slice(0, 1)?.map((roles) => roles?.character)?.join(", ") : null);
                                         const query = (cast?.name && castRoles && mediaInfo?.details?.name) ? (encodeURIComponent(`${cast?.name} as ${castRoles} of ${mediaInfo?.details?.name}`))?.replace(/%20/g, "+") : null;
                                         return (
                                             <div onClick={() => query && window.open(`https://www.google.com/search?q=${query}`, '_blank')} target="_blank" key={cast?.id} className="cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out h-full flex flex-col">
@@ -374,303 +378,308 @@ const TVShowInfo = () => {
                             </div>
                         }
 
-                        {/* Part 5 : Seasons & episodes */}
-                        <div className="flex flex-col gap-4">
-                            <div className="w-full flex justify-around items-center bg-black/40 py-7 rounded-lg cursor-pointer">
-                                <div onClick={() => setSectionOneType("Networks")} className={`flex justify-center items-start gap-2 ${sectionOneType === "Networks" && "underline text-gray-400"}`}>
-                                    <RiChatQuoteLine className="w-7 h-7" />
-                                    <h1 className="text-lg font-semibold leading-[1.3]">Networks</h1>
-                                </div>
-                                <div onClick={() => setSectionOneType("Seasons")} className={`flex justify-center items-start gap-2 ${sectionOneType === "Seasons" && "underline text-gray-400"}`}>
-                                    <RiChatQuoteLine className="w-7 h-7" />
-                                    <h1 className="text-lg font-semibold leading-[1.3]">Seasons</h1>
-                                </div>
-                                <div onClick={() => setSectionOneType("AiringStatus")} className={`flex justify-center items-start gap-2 ${sectionOneType === "AiringStatus" && "underline text-gray-400"}`}>
-                                    <RiHourglass2Line className="w-7 h-7" />
-                                    <h1 className="text-lg font-semibold leading-[1.3]">Airing Status</h1>
-                                </div>
+                        {/* Part 5 : Netwrok, Seasons & Airing status */}
+                        <div className="flex flex-col gap-5">
+                            <div className="font-medium text-xl">
+                                <h1>Series Details</h1>
                             </div>
+                            <div className="w-full flex flex-col justify-around gap-5 rounded-lg cursor-pointer">
 
-                            {/* Rendering Networks */}
-                            {(sectionOneType === "Networks") &&
-                                (mediaInfo?.details?.networks?.length > 0 ?
-                                    (<div className="flex flex-row gap-5">
-                                        <div className="w-full bg-black/40 flex-shrink-0 flex flex-col gap-8 p-8 pt-12 rounded-md" style={{ clipPath: 'polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)' }}>
-                                            <h1 className="text-lg font-semibold underline">The Networks Behind <span className="italic">{mediaInfo?.details?.name ? mediaInfo?.details?.name : "Show"}</span></h1>
-                                            <div className="w-full max-h-70 overflow-y-auto custom-scrollbar flex flex-col gap-5 cursor-pointer">
-                                                {mediaInfo?.details?.networks?.map((network) => {
-                                                    return (
-                                                        <div key={network.id} onClick={() => (network?.name && mediaInfo?.details?.name) && window.open(`https://www.google.com/search?q=${network?.name}+Networks+${mediaInfo?.details?.name}`, '_blank')} className="w-full flex gap-5 items-center">
-                                                            <div className="w-[7rem] h-13 bg-white rounded-sm p-2 flex items-center justify-center overflow-hidden">
-                                                                <img src={network?.logo_path ? `${IMG_POSTER_BASE_URL}${network.logo_path}` : NoStudio} alt="NetworksLogo" className="max-w-full max-h-full object-contain" />
-                                                            </div>
-                                                            {network?.name &&
-                                                                <div className="flex flex-col gap-1">
-                                                                    {network?.name && <h1 className="text-base font-semibold">⸺  {network?.name} {network?.origin_country && <span className="text-sm">{`(${network?.origin_country})`}</span>}</h1>}
+                                {/* Rendering Networks */}
+                                <div onClick={() => setSectionOneType(prev => prev === "Networks" ? null : "Networks")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionOneType === "Networks" && "underline text-gray-400"}`}>
+                                    <div className="flex gap-2">
+                                        <RiChatQuoteLine className="w-7 h-7" />
+                                        <h1 className="text-lg font-semibold leading-[1.3]">Networks</h1>
+                                    </div>
+                                    {sectionOneType === "Networks" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
+                                </div>
+                                {(sectionOneType === "Networks") &&
+                                    (mediaInfo?.details?.networks?.length > 0 ?
+                                        (<div className="flex flex-row gap-5">
+                                            <div className="w-full bg-black/40 flex flex-col gap-8 p-8 pt-12 rounded-md" style={{ clipPath: 'polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)' }}>
+                                                <h1 className="text-base font-semibold underline">The Networks Behind <span className="italic">{mediaInfo?.details?.name ? mediaInfo?.details?.name : "this TV Show"}</span></h1>
+                                                <div className="w-full max-h-70 overflow-y-auto custom-scrollbar flex flex-col gap-6 pr-6 cursor-pointer">
+                                                    {mediaInfo?.details?.networks?.map((network) => {
+                                                        return (
+                                                            <div key={network.id} onClick={() => (network?.name && mediaInfo?.details?.name) && window.open(`https://www.google.com/search?q=${network?.name}+Networks+${mediaInfo?.details?.name}`, '_blank')} className="w-full flex flex-col gap-2 items-start 460:items-center 460:flex-row">
+                                                                <div className="w-full h-13 bg-white rounded-sm p-2 flex items-center justify-center overflow-hidden 460:max-w-[7rem]">
+                                                                    <img src={network?.logo_path ? `${IMG_POSTER_BASE_URL}${network.logo_path}` : NoStudio} alt="NetworksLogo" className="max-w-full max-h-full object-contain" />
                                                                 </div>
-                                                            }
-                                                        </div>
-                                                    )
-                                                })}
+                                                                {network?.name &&
+                                                                    <div className="flex flex-col gap-1">
+                                                                        {network?.name && <h1 className="text-sm font-semibold">— {network?.name} {network?.origin_country && <span className="text-sm">{`(${network?.origin_country})`}</span>}</h1>}
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
                                             </div>
                                         </div>
+                                        )
+                                        :
+                                        (
+                                            <div className="w-full text-center py-20 px-10 bg-black/40 rounded-sm">
+                                                <h1 className="text-base font-semibold sm:text-base">Network information unavailable</h1>
+                                            </div>
+                                        )
+                                    )}
+
+
+                                {/* Rendering Seasons */}
+                                <div onClick={() => setSectionOneType(prev => prev === "Seasons" ? null : "Seasons")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionOneType === "Seasons" && "underline text-gray-400"}`}>
+                                    <div className="flex gap-2">
+                                        <RiChatQuoteLine className="w-7 h-7" />
+                                        <h1 className="text-lg font-semibold leading-[1.3]">Seasons</h1>
                                     </div>
-                                    )
-                                    :
-                                    (
-                                        <div className="w-full flex justify-center items-center gap-2 py-40 bg-black/40 rounded-sm">
-                                            <h1 className="text-xl font-semibold">Network information unavailable</h1>
-                                        </div>
-                                    )
-                                )}
+                                    {sectionOneType === "Seasons" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
+                                </div>
+                                {(sectionOneType === "Seasons") &&
+                                    (mediaInfo?.details?.seasons?.length > 0 ?
+                                        (<div className="flex flex-row gap-5" style={{ clipPath: 'polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)' }}>
+                                            <div className="w-full bg-black/40 flex flex-col gap-8 py-8 px-3 pt-12 rounded-md 430:px-8 430:py-8 430:pt-12">
+                                                <h1 className="text-base font-semibold underline">All seasons of <span className="italic">{mediaInfo?.details?.name ? mediaInfo?.details?.name : "this TV Show"}</span></h1>
+                                                <div className="w-full max-h-120 pr-3 overflow-y-auto custom-scrollbar flex flex-col gap-8 430:pr-5">
+                                                    {/* All seasons */}
+                                                    {mediaInfo?.details?.seasons?.map((season) => {
+                                                        return (
+                                                            <div key={season.id} className="flex flex-col gap-5 border-[0.1px] border-white/30 rounded-2xl">
+                                                                <div className="p-5 border-b-[0.1px] border-white/30">
+                                                                    <h1 className="text-lg font-semibold">{season?.name}</h1>
+                                                                </div>
+                                                                <div className="w-full flex flex-col gap-5 p-5">
+                                                                    <div className="w-full h-full flex flex-col gap-8 700:flex-row">
+                                                                        {/* Season's poster */}
+                                                                        <div className="relative w-full overflow-hidden rounded-sm flex-shrink-0 700:w-[14rem]">
+                                                                            <img src={(season?.poster_path || mediaInfo?.details?.poster_path) ? `${IMG_POSTER_BASE_URL}${(season?.poster_path || mediaInfo?.details?.poster_path)}` : NoPoster} alt="SeasonPoster" className="w-full aspect-[1/1] object-cover object-top 700:h-full 700:aspect-auto" />
+                                                                        </div>
 
-                            {/* Rendering Seasons */}
-                            {(sectionOneType === "Seasons") &&
-                                (mediaInfo?.details?.seasons?.length > 0 ?
-                                    (<div className="flex flex-row gap-5">
-                                        <div className="w-full bg-black/40 flex flex-col gap-10 p-8 rounded-md">
-                                            <h1 className="text-lg font-semibold underline">All seasons of <span className="italic">{mediaInfo?.details?.name ? mediaInfo?.details?.name : "Show"}</span></h1>
-                                            <div className="w-full max-h-120 pr-5 overflow-y-auto custom-scrollbar flex flex-col gap-10">
-                                                {/* All seasons */}
-                                                {mediaInfo?.details?.seasons?.map((season) => {
-                                                    return (
-                                                        <div key={season.id} className="flex flex-col gap-5 border-[0.1px] border-white/30 rounded-2xl">
-                                                            <div className="p-5 border-b-[0.1px] border-white/30">
-                                                                <h1 className="text-lg font-semibold">{season?.name}</h1>
-                                                            </div>
-                                                            <div className="w-full flex flex-col gap-5 p-5">
-                                                                <div className="w-full h-full flex gap-12">
-                                                                    {/* Season's poster */}
-                                                                    <div className="relative w-[14rem] overflow-hidden rounded-sm flex-shrink-0">
-                                                                        <img src={(season?.poster_path || mediaInfo?.details?.poster_path) ? `${IMG_POSTER_BASE_URL}${(season?.poster_path || mediaInfo?.details?.poster_path)}` : NoPoster} alt="SeasonPoster" className="w-full h-full object-cover" />
-                                                                    </div>
+                                                                        {/* Season's genric info */}
+                                                                        <div className="flex flex-col gap-4 max-w-2xl">
+                                                                            {/* Epsode's name */}
+                                                                            <h1 className="text-2xl font-medium">{season?.name || "N/A"}</h1>
 
-                                                                    {/* Season's genric info */}
-                                                                    <div className="flex flex-col gap-4 max-w-2xl">
-                                                                        {/* Epname */}
-                                                                        <h1 className="text-2xl font-medium">{season?.name || "N/A"}</h1>
-                                                                        <div className="flex items-center gap-4 text-sm">
                                                                             {/* Seasons's air date */}
-                                                                            {(season?.air_date) && <h2 className="text-textcolor-secondary border-1 rounded-2xl px-[10px] py-[2px]">Premiered : {season?.air_date?.replaceAll('-', '/')}</h2>}
+                                                                            {(season?.air_date) &&
+                                                                                <div className="flex text-sm">
+                                                                                    <h2 className="text-xs text-textcolor-secondary border-[0.5px] rounded-2xl px-[10px] py-[2px]"><span className="hidden 295:inline-block">Premiered : </span> {season?.air_date?.replaceAll('-', '/')}</h2>
+                                                                                </div>
+                                                                            }
+
+                                                                            {/* Season's ratings and votes */}
+                                                                            {(season?.vote_average !== null) &&
+                                                                                <div className="flex gap-4 items-center text-base">
+                                                                                    {season?.vote_average !== null && <h3 className="font-medium text-base"><span className="text-yellow-400">★</span> {(season?.vote_average)?.toFixed(1) || "N/A"}</h3>}
+                                                                                </div>
+                                                                            }
+
+                                                                            {/* Season number & episode count */}
+                                                                            {(season?.season_number !== null || season?.episode_count !== null) &&
+                                                                                <div className="flex gap-2 items-center text-sm flex-wrap">
+                                                                                    {season?.season_number !== null && <h3 className='text-xs px-2 py-[0.10rem] rounded-4xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-nowrap'>Season : {season?.season_number || "N/A"}</h3>}
+                                                                                    {season?.episode_count !== null && <h3 className='text-xs px-2 py-[0.10rem] rounded-4xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-nowrap'>Episodes : {season?.episode_count || "N/A"}</h3>}
+                                                                                </div>
+                                                                            }
+
+                                                                            {/* If season's poster unavailable */}
+                                                                            {season?.poster_path === null && <h4 className="italic text-textcolor-secondary text-sm">(Season's poster unavailable)</h4>}
+
+
+                                                                            {/* Season's overview */}
+                                                                            {season?.overview &&
+                                                                                <div className="flex flex-col gap-2">
+                                                                                    <h1 className="text-base font-medium">Overview</h1>
+                                                                                    <p className="text-sm">{season?.overview}</p>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        )
+                                        :
+                                        (
+                                            <div className="w-full text-center py-20 px-10 bg-black/40 rounded-sm">
+                                                <h1 className="text-base font-semibold sm:text-base">Seasons's information unavailable</h1>
+                                            </div>
+                                        )
+                                    )}
+
+
+                                {/* Airing Status */}
+                                <div onClick={() => setSectionOneType(prev => prev === "AiringStatus" ? null : "AiringStatus")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionOneType === "AiringStatus" && "underline text-gray-400"}`}>
+                                    <div className="flex gap-2">
+                                        <RiHourglass2Line className="w-7 h-7" />
+                                        <h1 className="text-lg font-semibold leading-[1.3]">Airing Status</h1>
+                                    </div>
+                                    {sectionOneType === "AiringStatus" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
+                                </div>
+                                {(sectionOneType === "AiringStatus") &&
+                                    ((mediaInfo?.details?.last_episode_to_air || mediaInfo?.details?.next_episode_to_air) !== null ?
+                                        (<div className="flex flex-row gap-5" style={{ clipPath: 'polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)' }}>
+                                            <div className="w-full bg-black/40 py-8 px-3 pt-18 rounded-md overflow-y-auto custom-scrollbar 430:px-8 430:py-8 430:pt-18">
+                                                <div className="w-full flex flex-col py-2 gap-8 max-h-110 pr-3 overflow-y-auto custom-scrollbar 430:pr-5">
+                                                    {/* Last episode to air */}
+                                                    {mediaInfo?.details?.last_episode_to_air !== null ?
+                                                        <div className="flex flex-col gap-5 border-[0.1px] border-white/30 rounded-2xl">
+                                                            <div className="p-5 border-b-[0.1px] border-white/30">
+                                                                <h1 className="text-lg font-semibold"><span className="italic">{`${mediaInfo?.details?.name ? mediaInfo?.details?.name : "Show"}'s`}</span> last episode</h1>
+                                                            </div>
+                                                            <div className="w-full flex flex-col gap-5 cursor-pointer p-5">
+                                                                <div className="w-full h-full flex flex-col gap-8 840:flex-row">
+                                                                    {/* Episode's poster */}
+                                                                    <div className="relative w-full aspect-video overflow-hidden rounded-sm flex-shrink-0 840:w-[20rem]">
+                                                                        <img src={(mediaInfo?.details?.last_episode_to_air?.still_path || mediaInfo?.details?.backdrop_path) ? `${IMG_POSTER_BASE_URL}${(mediaInfo?.details?.last_episode_to_air?.still_path || mediaInfo?.details?.backdrop_path)}` : NoBackdrop} alt="SeasonPoster" className="w-full h-full object-cover" />
+                                                                    </div>
+
+                                                                    {/* Episode's genric info */}
+                                                                    <div className="flex flex-col gap-4 max-w-2xl">
+                                                                        {/* Episode name */}
+                                                                        <h1 className="text-2xl font-medium">{mediaInfo?.details?.last_episode_to_air?.name || "N/A"}</h1>
+
+                                                                        <div className="flex items-center gap-2 flex-wrap text-sm">
+                                                                            {/* Episode's air date */}
+                                                                            {(mediaInfo?.details?.last_episode_to_air?.air_date) && <h2>({mediaInfo?.details?.last_episode_to_air?.air_date?.replaceAll('-', '/')})</h2>}
+
+                                                                            {/* Episode's type */}
+                                                                            {(mediaInfo?.details?.last_episode_to_air?.episode_type) &&
+                                                                                <div className="flex">
+                                                                                    <h2>• {(mediaInfo?.details?.last_episode_to_air?.episode_type)?.charAt(0)?.toUpperCase() + mediaInfo?.details?.last_episode_to_air?.episode_type?.slice(1)}</h2>
+                                                                                </div>
+                                                                            }
+
+                                                                            {/* Episode's runtime */}
+                                                                            {(mediaInfo?.details?.last_episode_to_air?.runtime !== 0 && mediaInfo?.details?.last_episode_to_air?.runtime) &&
+                                                                                <div className="flex">
+                                                                                    <h2>• {`${(Math.floor(mediaInfo?.details?.last_episode_to_air?.runtime / 60)) === 0 ? "" : Math.floor(mediaInfo?.details?.last_episode_to_air?.runtime / 60)}${(Math.floor(mediaInfo?.details?.last_episode_to_air?.runtime / 60)) === 0 ? "" : "h"} ${(mediaInfo?.details?.last_episode_to_air?.runtime % 60)?.toString()?.padStart(2, '0')}m`}</h2>
+                                                                                </div>
+                                                                            }
                                                                         </div>
 
-                                                                        {/* Season's ratings and votes */}
-                                                                        {(season?.vote_average !== null) &&
-                                                                            <div className="flex gap-4 items-center text-base">
-                                                                                {season?.vote_average !== null && <h3 className="font-medium"><span className="text-yellow-400">★</span> {(season?.vote_average)?.toFixed(1) || "N/A"}</h3>}
+                                                                        {/* Episode's ratings and votes */}
+                                                                        {(mediaInfo?.details?.last_episode_to_air?.vote_average !== null || mediaInfo?.details?.last_episode_to_air?.vote_count !== null) &&
+                                                                            <div className="flex gap-2 items-center text-base flex-wrap">
+                                                                                {mediaInfo?.details?.last_episode_to_air?.vote_average !== null && <h3 className="font-medium text-nowrap"><span className="text-yellow-400">★</span> {(mediaInfo?.details?.last_episode_to_air?.vote_average)?.toFixed(1) || "N/A"}</h3>}
+                                                                                {mediaInfo?.details?.last_episode_to_air?.vote_count !== null && <h3 className="text-sm text-nowrap">({`${mediaInfo?.details?.last_episode_to_air?.vote_count} Votes`})</h3>}
                                                                             </div>
                                                                         }
 
-                                                                        {/* Season number & episode count */}
-                                                                        {(season?.season_number !== null || season?.episode_count !== null) &&
+                                                                        {/* Season & episode number */}
+                                                                        {(mediaInfo?.details?.last_episode_to_air?.season_number !== null || mediaInfo?.details?.last_episode_to_air?.episode_number !== null) &&
                                                                             <div className="flex gap-4 items-center text-base">
-                                                                                {season?.season_number !== null && <h3 className="className='text-xs px-2 py-[0.10rem] rounded-4xl bg-white/10 backdrop-blur-md border border-white/20 text-white">Season : {season?.season_number || "N/A"}</h3>}
-                                                                                {season?.episode_count !== null && <h3 className="className='text-xs px-2 py-[0.10rem] rounded-4xl bg-white/10 backdrop-blur-md border border-white/20 text-white">Episodes : {season?.episode_count || "N/A"}</h3>}
+                                                                                {mediaInfo?.details?.last_episode_to_air?.season_number !== null && <h3 className='text-sm px-2 py-[0.10rem] rounded-4xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-nowrap'>S{mediaInfo?.details?.last_episode_to_air?.season_number || "N/A"} {mediaInfo?.details?.last_episode_to_air?.episode_number !== null && <span> • E{mediaInfo?.details?.last_episode_to_air?.episode_number || "N/A"}</span>}</h3>}
                                                                             </div>
                                                                         }
 
-                                                                        {/* If season's poster unavailable */}
-                                                                        {season?.poster_path === null && <h4 className="italic text-textcolor-secondary ">(Season's poster unavailable)</h4>}
+                                                                        {/* If episode's poster unavailable */}
+                                                                        {mediaInfo?.details?.last_episode_to_air?.still_path === null && <h4 className="italic text-textcolor-secondary text-sm">(Episode's poster unavailable)</h4>}
 
-
-                                                                        {/* Season's overview */}
-                                                                        {season?.overview &&
+                                                                        {/* Episodes's overview */}
+                                                                        {mediaInfo?.details?.last_episode_to_air?.overview &&
                                                                             <div className="flex flex-col gap-2">
-                                                                                <h1 className="text-lg font-medium">Overview</h1>
-                                                                                <p>{season?.overview}</p>
+                                                                                <h1 className="text-base font-medium">Overview</h1>
+                                                                                <p className="text-sm">{mediaInfo?.details?.last_episode_to_air?.overview}</p>
                                                                             </div>
                                                                         }
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                         </div>
-                                                    )
-                                                })}
+                                                        :
+                                                        <div className="w-full text-center py-20 px-10 bg-black/40 rounded-sm border-[0.1px] border-white/30">
+                                                            <h1 className="text-base font-semibold sm:text-base">Last episode information unavailable</h1>
+                                                        </div>
+                                                    }
+                                                    {/* Next episode to air */}
+                                                    {mediaInfo?.details?.next_episode_to_air !== null ?
+                                                        <div className="flex flex-col gap-5 border-[0.1px] border-white/30 rounded-2xl">
+                                                            <div className="p-5 border-b-[0.1px] border-white/30">
+                                                                <h1 className="text-lg font-semibold"><span className="italic">{`${mediaInfo?.details?.name ? mediaInfo?.details?.name : "Show"}'s`}</span> next episode</h1>
+                                                            </div>
+                                                            <div className="w-full flex flex-col gap-5 cursor-pointer p-5">
+                                                                <div className="w-full h-full flex flex-col gap-8 840:flex-row">
+                                                                    {/* Episode's poster */}
+                                                                    <div className="relative w-full aspect-video overflow-hidden rounded-sm flex-shrink-0 840:w-[20rem]">
+                                                                        <img src={(mediaInfo?.details?.next_episode_to_air?.still_path || mediaInfo?.details?.backdrop_path) ? `${IMG_POSTER_BASE_URL}${(mediaInfo?.details?.next_episode_to_air?.still_path || mediaInfo?.details?.backdrop_path)}` : NoBackdrop} alt="SeasonPoster" className="w-full h-full object-cover" />
+                                                                    </div>
+
+                                                                    {/* Episode's genric info */}
+                                                                    <div className="flex flex-col gap-4 max-w-2xl">
+                                                                        {/* Episode name */}
+                                                                        <h1 className="text-2xl font-medium">{mediaInfo?.details?.next_episode_to_air?.name || "N/A"}</h1>
+
+                                                                        <div className="flex items-center gap-2 flex-wrap text-sm">
+                                                                            {/* Episode's air date */}
+                                                                            {(mediaInfo?.details?.next_episode_to_air?.air_date) && <h2>({mediaInfo?.details?.next_episode_to_air?.air_date?.replaceAll('-', '/')})</h2>}
+
+                                                                            {/* Episode's type */}
+                                                                            {(mediaInfo?.details?.next_episode_to_air?.episode_type) &&
+                                                                                <div className="flex">
+                                                                                    <h2>• {(mediaInfo?.details?.next_episode_to_air?.episode_type)?.charAt(0)?.toUpperCase() + mediaInfo?.details?.next_episode_to_air?.episode_type?.slice(1)}</h2>
+                                                                                </div>
+                                                                            }
+
+                                                                            {/* Episode's runtime */}
+                                                                            {(mediaInfo?.details?.next_episode_to_air?.runtime !== 0 && mediaInfo?.details?.next_episode_to_air?.runtime) &&
+                                                                                <div className="flex">
+                                                                                    <h2>• {`${(Math.floor(mediaInfo?.details?.next_episode_to_air?.runtime / 60)) === 0 ? "" : Math.floor(mediaInfo?.details?.next_episode_to_air?.runtime / 60)}${(Math.floor(mediaInfo?.details?.next_episode_to_air?.runtime / 60)) === 0 ? "" : "h"} ${(mediaInfo?.details?.next_episode_to_air?.runtime % 60)?.toString()?.padStart(2, '0')}m`}</h2>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+
+                                                                        {/* Episode's ratings and votes */}
+                                                                        {(mediaInfo?.details?.next_episode_to_air?.vote_average !== null || mediaInfo?.details?.next_episode_to_air?.vote_count !== null) &&
+                                                                            <div className="flex gap-2 items-center text-base flex-wrap">
+                                                                                {mediaInfo?.details?.next_episode_to_air?.vote_average !== null && <h3 className="font-medium text-nowrap"><span className="text-yellow-400">★</span> {(mediaInfo?.details?.next_episode_to_air?.vote_average)?.toFixed(1) || "N/A"}</h3>}
+                                                                                {mediaInfo?.details?.next_episode_to_air?.vote_count !== null && <h3 className="text-sm text-nowrap">({`${mediaInfo?.details?.next_episode_to_air?.vote_count} Votes`})</h3>}
+                                                                            </div>
+                                                                        }
+
+                                                                        {/* Season & episode number */}
+                                                                        {(mediaInfo?.details?.next_episode_to_air?.season_number !== null || mediaInfo?.details?.next_episode_to_air?.episode_number !== null) &&
+                                                                            <div className="flex gap-4 items-center text-base">
+                                                                                {mediaInfo?.details?.next_episode_to_air?.season_number !== null && <h3 className='text-sm px-2 py-[0.10rem] rounded-4xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-nowrap'>S{mediaInfo?.details?.next_episode_to_air?.season_number || "N/A"} {mediaInfo?.details?.next_episode_to_air?.episode_number !== null && <span> • E{mediaInfo?.details?.next_episode_to_air?.episode_number || "N/A"}</span>}</h3>}
+                                                                            </div>
+                                                                        }
+
+                                                                        {/* If episode's poster unavailable */}
+                                                                        {mediaInfo?.details?.next_episode_to_air?.still_path === null && <h4 className="italic text-textcolor-secondary text-sm">(Episode's poster unavailable)</h4>}
+
+                                                                        {/* Episodes's overview */}
+                                                                        {mediaInfo?.details?.next_episode_to_air?.overview &&
+                                                                            <div className="flex flex-col gap-2">
+                                                                                <h1 className="text-base font-medium">Overview</h1>
+                                                                                <p className="text-sm">{mediaInfo?.details?.next_episode_to_air?.overview}</p>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        :
+                                                        <div className="w-full text-center py-20 px-10 bg-black/40 rounded-sm border-[0.1px] border-white/30">
+                                                            <h1 className="text-base font-semibold sm:text-base">No upcoming episode available</h1>
+                                                        </div>
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
-
-                                    </div>
-                                    )
-                                    :
-                                    (
-                                        <div className="w-full flex justify-center items-center gap-2 py-40 bg-black/40 rounded-sm">
-                                            <h1 className="text-xl font-semibold">Seasons's information unavailable</h1>
-                                        </div>
-                                    )
-                                )}
-
-                            {/* Airing Status */}
-                            {(sectionOneType === "AiringStatus") &&
-                                ((mediaInfo?.details?.last_episode_to_air || mediaInfo?.details?.next_episode_to_air) !== null ?
-                                    (<div className="flex flex-row gap-5">
-                                        <div className="w-full bg-black/40 p-8 rounded-md overflow-y-auto custom-scrollbar">
-                                            <div className="w-full flex flex-col gap-10 max-h-110 pr-5 overflow-y-auto custom-scrollbar">
-                                                {/* Last episode to air */}
-                                                {mediaInfo?.details?.last_episode_to_air !== null ?
-                                                    <div className="flex flex-col gap-5 border-[0.1px] border-white/30 rounded-2xl">
-                                                        <div className="p-5 border-b-[0.1px] border-white/30">
-                                                            <h1 className="text-lg font-semibold"><span className="italic">{`${mediaInfo?.details?.name ? mediaInfo?.details?.name : "Show"}'s`}</span> last episode</h1>
-
-                                                        </div>
-                                                        <div className="w-full flex flex-col gap-5 cursor-pointer p-5">
-                                                            <div className="w-full h-full flex gap-12">
-                                                                {/* Episode's poster */}
-                                                                <div className="relative w-[27rem] aspect-video overflow-hidden rounded-sm flex-shrink-0">
-                                                                    <img src={(mediaInfo?.details?.last_episode_to_air?.still_path || mediaInfo?.details?.backdrop_path) ? `${IMG_POSTER_BASE_URL}${(mediaInfo?.details?.last_episode_to_air?.still_path || mediaInfo?.details?.backdrop_path)}` : NoBackdrop} alt="SeasonPoster" className="w-full h-full object-cover" />
-                                                                </div>
-
-                                                                {/* Episode's genric info */}
-                                                                <div className="flex flex-col gap-4 max-w-2xl">
-                                                                    {/* Episode name */}
-                                                                    <h1 className="text-2xl font-medium">{mediaInfo?.details?.last_episode_to_air?.name || "N/A"}</h1>
-
-                                                                    <div className="flex items-center text-sm">
-                                                                        {/* Episode's air date */}
-                                                                        {(mediaInfo?.details?.last_episode_to_air?.air_date) && <h2 className="">({mediaInfo?.details?.last_episode_to_air?.air_date?.replaceAll('-', '/')})</h2>}
-
-                                                                        {/* Episode's type */}
-                                                                        {(mediaInfo?.details?.last_episode_to_air?.episode_type) &&
-                                                                            <div className="flex">
-                                                                                <h2 className="pl-2">•</h2>
-                                                                                <h2 className="pl-2">{(mediaInfo?.details?.last_episode_to_air?.episode_type)?.charAt(0)?.toUpperCase() + mediaInfo?.details?.last_episode_to_air?.episode_type?.slice(1)}</h2>
-                                                                            </div>
-                                                                        }
-
-                                                                        {/* Episode's runtime */}
-                                                                        {(mediaInfo?.details?.last_episode_to_air?.runtime !== 0 && mediaInfo?.details?.last_episode_to_air?.runtime) &&
-                                                                            <div className="flex">
-                                                                                <h2 className="pl-2">•</h2>
-                                                                                <h2 className="pl-2">{`${(Math.floor(mediaInfo?.details?.last_episode_to_air?.runtime / 60)) === 0 ? "" : Math.floor(mediaInfo?.details?.last_episode_to_air?.runtime / 60)}${(Math.floor(mediaInfo?.details?.last_episode_to_air?.runtime / 60)) === 0 ? "" : "h"} ${(mediaInfo?.details?.last_episode_to_air?.runtime % 60)?.toString()?.padStart(2, '0')}m`}</h2>
-                                                                            </div>
-                                                                        }
-                                                                    </div>
-
-                                                                    {/* Episode's ratings and votes */}
-                                                                    {(mediaInfo?.details?.last_episode_to_air?.vote_average !== null || mediaInfo?.details?.last_episode_to_air?.vote_count !== null) &&
-                                                                        <div className="flex gap-4 items-center text-base">
-                                                                            {mediaInfo?.details?.last_episode_to_air?.vote_average !== null && <h3 className="font-medium"><span className="text-yellow-400">★</span> {(mediaInfo?.details?.last_episode_to_air?.vote_average)?.toFixed(1) || "N/A"}</h3>}
-
-                                                                            {mediaInfo?.details?.last_episode_to_air?.vote_count !== null && <h3 className="text-sm">({`${mediaInfo?.details?.last_episode_to_air?.vote_count} Votes`})</h3>}
-                                                                        </div>
-                                                                    }
-
-                                                                    {/* Season & episode number */}
-                                                                    {(mediaInfo?.details?.last_episode_to_air?.season_number !== null || mediaInfo?.details?.last_episode_to_air?.episode_number !== null) &&
-                                                                        <div className="flex gap-4 items-center text-base">
-                                                                            {mediaInfo?.details?.last_episode_to_air?.season_number !== null && <h3 className="className='text-xs px-2 py-[0.10rem] rounded-4xl bg-white/10 backdrop-blur-md border border-white/20 text-white">S{mediaInfo?.details?.last_episode_to_air?.season_number || "N/A"} {mediaInfo?.details?.last_episode_to_air?.episode_number !== null && <span> • E{mediaInfo?.details?.last_episode_to_air?.episode_number || "N/A"}</span>}</h3>}
-                                                                        </div>
-                                                                    }
-
-                                                                    {/* If episode's poster unavailable */}
-                                                                    {mediaInfo?.details?.last_episode_to_air?.still_path === null && <h4 className="italic text-textcolor-secondary ">(Episode's poster unavailable)</h4>}
-
-                                                                    {/* Episodes's overview */}
-                                                                    {mediaInfo?.details?.last_episode_to_air?.overview &&
-                                                                        <div className="flex flex-col gap-2">
-                                                                            <h1 className="text-lg font-medium">Overview</h1>
-                                                                            <p>{mediaInfo?.details?.last_episode_to_air?.overview}</p>
-                                                                        </div>
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-                                                    :
-                                                    <div className="flex justify-center items-center gap-5 p-20 border-[0.1px] border-white/30 rounded-2xl">
-                                                        <h1 className="text-base font-semibold">Last episode information unavailable</h1>
-                                                    </div>
-                                                }
-                                                {/* Next episode to air */}
-                                                {mediaInfo?.details?.next_episode_to_air !== null ?
-                                                    <div className="flex flex-col gap-5 border-[0.1px] border-white/30 rounded-2xl">
-                                                        <div className="p-5 border-b-[0.1px] border-white/30">
-                                                            <h1 className="text-lg font-semibold"><span className="italic">{`${mediaInfo?.details?.name ? mediaInfo?.details?.name : "Show"}'s`}</span> next episode</h1>
-
-                                                        </div>
-                                                        <div className="w-full flex flex-col gap-5 cursor-pointer p-5">
-                                                            <div className="w-full h-full flex gap-12">
-                                                                {/* Episode's poster */}
-                                                                <div className="relative w-[27rem] aspect-video overflow-hidden rounded-sm flex-shrink-0">
-                                                                    <img src={(mediaInfo?.details?.next_episode_to_air?.still_path || mediaInfo?.details?.backdrop_path) ? `${IMG_POSTER_BASE_URL}${(mediaInfo?.details?.next_episode_to_air?.still_path || mediaInfo?.details?.backdrop_path)}` : NoBackdrop} alt="SeasonPoster" className="w-full h-full object-cover" />
-                                                                </div>
-
-                                                                {/* Episode's genric info */}
-                                                                <div className="flex flex-col gap-4 max-w-2xl">
-                                                                    {/* Episode name */}
-                                                                    <h1 className="text-2xl font-medium">{mediaInfo?.details?.next_episode_to_air?.name || "N/A"}</h1>
-
-                                                                    <div className="flex items-center text-sm">
-                                                                        {/* Episode's air date */}
-                                                                        {(mediaInfo?.details?.next_episode_to_air?.air_date) && <h2 className="">({mediaInfo?.details?.next_episode_to_air?.air_date?.replaceAll('-', '/')})</h2>}
-
-                                                                        {/* Episode's type */}
-                                                                        {(mediaInfo?.details?.next_episode_to_air?.episode_type) &&
-                                                                            <div className="flex">
-                                                                                <h2 className="pl-2">•</h2>
-                                                                                <h2 className="pl-2">{(mediaInfo?.details?.next_episode_to_air?.episode_type)?.charAt(0)?.toUpperCase() + mediaInfo?.details?.next_episode_to_air?.episode_type?.slice(1)}</h2>
-                                                                            </div>
-                                                                        }
-
-                                                                        {/* Episode's runtime */}
-                                                                        {(mediaInfo?.details?.next_episode_to_air?.runtime !== 0 && mediaInfo?.details?.next_episode_to_air?.runtime) &&
-                                                                            <div className="flex">
-                                                                                <h2 className="pl-2">•</h2>
-                                                                                <h2 className="pl-2">{`${(Math.floor(mediaInfo?.details?.next_episode_to_air?.runtime / 60)) === 0 ? "" : Math.floor(mediaInfo?.details?.next_episode_to_air?.runtime / 60)}${(Math.floor(mediaInfo?.details?.next_episode_to_air?.runtime / 60)) === 0 ? "" : "h"} ${(mediaInfo?.details?.next_episode_to_air?.runtime % 60)?.toString()?.padStart(2, '0')}m`}</h2>
-                                                                            </div>
-                                                                        }
-                                                                    </div>
-
-                                                                    {/* Episode's ratings and votes */}
-                                                                    {(mediaInfo?.details?.next_episode_to_air?.vote_average !== null || mediaInfo?.details?.next_episode_to_air?.vote_count !== null) &&
-                                                                        <div className="flex gap-4 items-center text-base">
-                                                                            {mediaInfo?.details?.next_episode_to_air?.vote_average !== null && <h3 className="font-medium"><span className="text-yellow-400">★</span> {(mediaInfo?.details?.next_episode_to_air?.vote_average)?.toFixed(1) || "N/A"}</h3>}
-
-                                                                            {mediaInfo?.details?.next_episode_to_air?.vote_count !== null && <h3 className="text-sm">({`${mediaInfo?.details?.next_episode_to_air?.vote_count} Votes`})</h3>}
-                                                                        </div>
-                                                                    }
-
-                                                                    {/* Season & episode number */}
-                                                                    {(mediaInfo?.details?.next_episode_to_air?.season_number !== null || mediaInfo?.details?.next_episode_to_air?.episode_number !== null) &&
-                                                                        <div className="flex gap-4 items-center text-base">
-                                                                            {mediaInfo?.details?.next_episode_to_air?.season_number !== null && <h3 className="className='text-xs px-2 py-[0.10rem] rounded-4xl bg-white/10 backdrop-blur-md border border-white/20 text-white">S{mediaInfo?.details?.next_episode_to_air?.season_number || "N/A"} {mediaInfo?.details?.next_episode_to_air?.episode_number !== null && <span> • E{mediaInfo?.details?.next_episode_to_air?.episode_number || "N/A"}</span>}</h3>}
-                                                                        </div>
-                                                                    }
-
-
-                                                                    {/* If episode's poster unavailable */}
-                                                                    {mediaInfo?.details?.next_episode_to_air?.still_path === null && <h4 className="italic text-textcolor-secondary ">(Episode's poster unavailable)</h4>}
-
-                                                                    {/* Episode's overview */}
-                                                                    {mediaInfo?.details?.next_episode_to_air?.overview &&
-                                                                        <div className="flex flex-col gap-2">
-                                                                            <h1 className="text-lg font-medium">Overview</h1>
-                                                                            <p>{mediaInfo?.details?.next_episode_to_air?.overview}</p>
-                                                                        </div>
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    :
-                                                    <div className="flex justify-center items-center gap-5 p-20 border-[0.1px] border-white/30 rounded-2xl">
-                                                        <h1 className="text-base font-semibold">No upcoming episode available</h1>
-                                                    </div>
-                                                }
+                                        )
+                                        :
+                                        (
+                                            <div className="w-full text-center py-20 px-10 bg-black/40 rounded-sm">
+                                                <h1 className="text-base font-semibold sm:text-base">Airing information unavailable</h1>
                                             </div>
-                                        </div>
+                                        )
+                                    )}
 
-                                    </div>
-                                    )
-                                    :
-                                    (
-                                        <div className="w-full flex justify-center items-center gap-2 py-40 bg-black/40 rounded-sm">
-                                            <h1 className="text-xl font-semibold">Airing information unavailable</h1>
-                                        </div>
-                                    )
-                                )}
+                            </div>
                         </div>
 
                         {/* Part 6 : Trailers & Videos */}
@@ -682,17 +691,17 @@ const TVShowInfo = () => {
                                 <div className="flex flex-row gap-4 no-scrollbar overflow-x-scroll">
                                     {videoTrailer?.map((video) => {
                                         return (
-                                            <div onClick={() => { setPlayTrailerVideoKey(video?.key); setShowTrailer(true); }} key={video?.key} className="relative w-[27rem] aspect-video overflow-hidden rounded-sm flex-shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out">
+                                            <div onClick={() => { setPlayTrailerVideoKey(video?.key); setShowTrailer(true); }} key={video?.key} className="relative w-[16rem] aspect-video overflow-hidden rounded-sm flex-shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out 880:w-[24rem] 460:w-[20rem]">
                                                 <img
                                                     src={`https://img.youtube.com/vi/${video?.key}/sddefault.jpg`}
                                                     alt="thumbnail"
                                                     className="w-full h-full object-cover"
                                                 />
                                                 <div className="absolute m-1 right-1 top-1 rounded-2xl px-3 py-1 bg-black/60 border-sm opacity-0 group-hover:opacity-100">
-                                                    {video?.name && <h1 className="text-sm font-semibold">{video?.name}</h1>}
+                                                    {video?.name && <h1 className="text-xs font-semibold 460:text-sm">{video?.name}</h1>}
                                                 </div>
                                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                                    <div className="p-3 rounded-full bg-black/60 border-sm">
+                                                    <div className="p-1 rounded-full bg-black/60 border-sm 460:p-2">
                                                         <RiPlayLargeFill />
                                                     </div>
                                                 </div>
@@ -705,281 +714,305 @@ const TVShowInfo = () => {
 
                         {/* Part 7 : Reviews, Production Companies, Watch Providers  & Socials */}
                         <div className="flex flex-col gap-4">
-                            <div className="w-full flex justify-around items-center bg-black/40 py-7 rounded-lg cursor-pointer">
-                                <div onClick={() => setSectionTwoType("Reviews")} className={`flex justify-center items-start gap-2 ${sectionTwoType === "Reviews" && "underline text-gray-400"}`}>
-                                    <RiChatQuoteLine className="w-7 h-7" />
-                                    <h1 className="text-lg font-semibold leading-[1.3]">Reviews</h1>
-                                </div>
-                                <div onClick={() => setSectionTwoType("Studios")} className={`flex justify-center items-start gap-2 ${sectionTwoType === "Studios" && "underline text-gray-400"}`}>
-                                    <RiFilmLine className="w-7 h-7" />
-                                    <h1 className="text-lg font-semibold leading-[1.3]">Studios</h1>
-                                </div>
-                                <div onClick={() => setSectionTwoType("WatchProviders")} className={`flex justify-center items-start gap-2 ${sectionTwoType === "WatchProviders" && "underline text-gray-400"}`}>
-                                    <RiMovie2Line className="w-7 h-7" />
-                                    <h1 className="text-lg font-semibold leading-[1.3]">Watch Providers</h1>
-                                </div>
-                                <div onClick={() => setSectionTwoType("Socials")} className={`flex justify-center items-start gap-2 ${sectionTwoType === "Socials" && "underline text-gray-400"}`}>
-                                    <RiHashtag className="w-7 h-7" />
-                                    <h1 className="text-lg font-semibold leading-[1.3]">Socials</h1>
-                                </div>
+                            <div className="font-medium text-xl">
+                                <h1>Explore More</h1>
                             </div>
-                            {/* Rendering Reviews */}
-                            {(sectionTwoType === "Reviews") &&
-                                (mediaInfo?.reviews?.results?.length > 0 ?
-                                    (<div className="flex flex-row gap-5 no-scrollbar overflow-x-scroll">
-                                        {mediaInfo?.reviews?.results?.map((review) => {
-                                            return (
-                                                <div key={review.id} className="w-99 bg-black/40 flex-shrink-0 p-5 pt-10 rounded-md"
-                                                    style={{ clipPath: 'polygon(6% 5%, 100% 5%, 100% 100%, 0 100%, 0 0)' }}>
-                                                    <div className="w-full flex flex-col gap-3 max-h-79 pr-5 overflow-y-auto custom-scrollbar">
-                                                        <div className="flex gap-5">
-                                                            <div className="w-[3.5rem]">
-                                                                <img src={review?.author_details?.avatar_path ? `${IMG_POSTER_BASE_URL}${review?.author_details?.avatar_path}` : NoProfile} alt="Profile" className="w-full aspect-[1/1] rounded-full object-cover" />
-                                                            </div>
-                                                            <div className="flex flex-col gap-1">
-                                                                <h1 className="text-lg font-semibold underline">A review by {review?.author || review?.author_details?.username || "Scenery User"}</h1>
-                                                                <h1 className="text-sm">Written by <span className="italic">{review?.author || review?.author_details?.username || "Scenery User"}</span> {review?.created_at && `in ${(review?.created_at)?.slice(0, 4)}`}</h1>
-                                                            </div>
-                                                        </div>
-                                                        <h1 className="text-[0.85rem]">{review?.content || "Review unavailable"}</h1>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })}
+                            <div className="w-full flex flex-col justify-around gap-5 rounded-lg cursor-pointer">
+                                {/* Rendering Reviews */}
+                                <div onClick={() => setSectionTwoType(prev => prev === "Reviews" ? null : "Reviews")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionTwoType === "Reviews" && "underline text-gray-400"}`}>
+                                    <div className="flex gap-2">
+                                        <RiChatQuoteLine className="w-7 h-7" />
+                                        <h1 className="text-lg font-semibold leading-[1.3]">Reviews</h1>
                                     </div>
-                                    )
-                                    :
-                                    (
-                                        <div className="w-full flex justify-center items-center gap-2 py-40 bg-black/40 rounded-sm">
-                                            <h1 className="text-xl font-semibold">No one’s spilled the tea yet</h1>
-                                        </div>
-                                    )
-                                )}
-
-                            {/* Rendering Studios */}
-                            {(sectionTwoType === "Studios") &&
-                                (mediaInfo?.details?.production_companies?.length > 0 ?
-                                    (<div className="flex flex-row gap-5">
-                                        <div className="w-full bg-black/40 flex-shrink-0 flex flex-col gap-8 p-8 pt-12 rounded-md" style={{ clipPath: 'polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)' }}>
-                                            <h1 className="text-lg font-semibold underline">The Studios Behind <span className="italic">{mediaInfo?.details?.name ? mediaInfo?.details?.name : null}</span></h1>
-                                            <div className="w-full max-h-70 overflow-y-auto custom-scrollbar flex flex-col gap-5 cursor-pointer">
-                                                {mediaInfo?.details?.production_companies?.map((studio) => {
-                                                    return (
-                                                        <div key={studio.id} onClick={() => studio?.name && window.open(`https://www.google.com/search?q=${studio?.name}+Production+Company`, '_blank')} className="w-full flex gap-5 items-center">
-                                                            <div className="w-[7rem] h-13 bg-white rounded-sm p-2 flex items-center justify-center overflow-hidden">
-                                                                <img src={studio?.logo_path ? `${IMG_POSTER_BASE_URL}${studio.logo_path}` : NoStudio} alt="StudioLogo" className="max-w-full max-h-full object-contain" />
-                                                            </div>
-                                                            {studio?.name &&
-                                                                <div className="flex flex-col gap-1">
-                                                                    {studio?.name && <h1 className="text-base font-semibold">⸺  {studio?.name} {studio?.origin_country && <span className="text-sm">{`(${studio?.origin_country})`}</span>}</h1>}
+                                    {sectionOneType === "Reviews" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
+                                </div>
+                                {(sectionTwoType === "Reviews") &&
+                                    (mediaInfo?.reviews?.results?.length > 0 ?
+                                        (<div className="flex flex-row gap-5 no-scrollbar">
+                                            <div className="w-full bg-black/40 flex flex-col gap-6 py-8 px-3 pt-12 rounded-md 430:px-8 430:py-8 430:pt-12" style={{ clipPath: 'polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)' }}>
+                                                <h1 className="text-base font-semibold underline">Audience Reactions on <span className="italic">{mediaInfo?.details?.name ? mediaInfo?.details?.name : "this TV Show"}</span></h1>
+                                                <div className="w-full max-h-100 overflow-y-auto custom-scrollbar flex flex-col gap-6 pr-3 cursor-pointer 430:pr-5">
+                                                    {mediaInfo?.reviews?.results?.map((review) => {
+                                                        return (
+                                                            <div key={review.id} className="w-full bg-black/40 p-5 pt-10 rounded-md" style={{ clipPath: 'polygon(6% 5%, 100% 5%, 100% 100%, 0 100%, 0 0)' }}>
+                                                                <div className="w-full flex flex-col gap-3 max-h-80 pr-3 overflow-y-auto custom-scrollbar 430:pr-5">
+                                                                    <div className="flex flex-col gap-5 375:flex-row">
+                                                                        <div className="w-[3.5rem]">
+                                                                            <img src={review?.author_details?.avatar_path ? `${IMG_POSTER_BASE_URL}${review?.author_details?.avatar_path}` : NoProfile} alt="Profile" className="w-full aspect-[1/1] rounded-full object-cover" />
+                                                                        </div>
+                                                                        <div className="flex flex-col gap-1">
+                                                                            <h1 className="text-sm font-semibold underline">A review by {review?.author || review?.author_details?.username || "Scenery User"}</h1>
+                                                                            <h1 className="text-xs">Written by <span className="italic">{review?.author || review?.author_details?.username || "Scenery User"}</span> {review?.created_at && `in ${(review?.created_at)?.slice(0, 4)}`}</h1>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h1 className="text-[0.85rem]">{review?.content || "Review unavailable"}</h1>
                                                                 </div>
-                                                            }
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        )
+                                        :
+                                        (
+                                            <div className="w-full text-center py-20 px-10 bg-black/40 rounded-sm">
+                                                <h1 className="text-base font-semibold sm:text-base">No one’s spilled the tea yet</h1>
+                                            </div>
+                                        )
+                                    )}
+
+                                {/* Rendering Studios */}
+                                <div onClick={() => setSectionTwoType(prev => prev === "Studios" ? null : "Studios")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionTwoType === "Studios" && "underline text-gray-400"}`}>
+                                    <div className="flex gap-2">
+                                        <RiFilmLine className="w-7 h-7" />
+                                        <h1 className="text-lg font-semibold leading-[1.3]">Studios</h1>
+                                    </div>
+                                    {sectionOneType === "Studios" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
+                                </div>
+                                {(sectionTwoType === "Studios") &&
+                                    (mediaInfo?.details?.production_companies?.length > 0 ?
+                                        (<div className="flex flex-row gap-5">
+                                            <div className="w-full bg-black/40 flex flex-col gap-8 p-8 pt-12 rounded-md" style={{ clipPath: 'polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)' }}>
+                                                <h1 className="text-base font-semibold underline">The Studios Behind <span className="italic">{mediaInfo?.details?.name ? mediaInfo?.details?.name : "this TV Show"}</span></h1>
+                                                <div className="w-full max-h-70 overflow-y-auto custom-scrollbar flex flex-col gap-6 pr-6 cursor-pointer">
+                                                    {mediaInfo?.details?.production_companies?.map((studio) => {
+                                                        return (
+                                                            <div key={studio.id} onClick={() => studio?.name && window.open(`https://www.google.com/search?q=${studio?.name}+Production+Company`, '_blank')} className="w-full flex flex-col gap-2 items-start 460:items-center 460:flex-row">
+                                                                <div className="w-full h-13 bg-white rounded-sm p-2 flex items-center justify-center overflow-hidden 460:max-w-[7rem]">
+                                                                    <img src={studio?.logo_path ? `${IMG_POSTER_BASE_URL}${studio.logo_path}` : NoStudio} alt="StudioLogo" className="max-w-full max-h-full object-contain" />
+                                                                </div>
+                                                                {studio?.name &&
+                                                                    <div className="flex flex-col gap-1">
+                                                                        {studio?.name && <h1 className="text-sm font-semibold">— {studio?.name} {studio?.origin_country && <span className="text-sm">{`(${studio?.origin_country})`}</span>}</h1>}
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        )
+                                        :
+                                        (
+                                            <div className="w-full text-center py-20 px-10 bg-black/40 rounded-sm">
+                                                <h1 className="text-base font-semibold sm:text-base">Studio information unavailable</h1>
+                                            </div>
+                                        )
+                                    )}
+
+                                {/* Rendering Watch Providers */}
+                                <div onClick={() => setSectionTwoType(prev => prev === "WatchProviders" ? null : "WatchProviders")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionTwoType === "WatchProviders" && "underline text-gray-400"}`}>
+                                    <div className="flex gap-2">
+                                        <RiMovie2Line className="w-7 h-7" />
+                                        <h1 className="text-lg font-semibold leading-[1.3]">Watch Providers</h1>
+                                    </div>
+                                    {sectionOneType === "WatchProviders" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
+                                </div>
+                                {(sectionTwoType === "WatchProviders") &&
+                                    (regionalWatchProviderType?.length > 0 ?
+                                        (<div className="flex flex-row gap-5 no-scrollbar">
+                                            <div className="w-full bg-black/40 flex flex-col gap-6 py-8 px-3 pt-12 rounded-md 430:px-8 430:py-8 430:pt-12" style={{ clipPath: 'polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)' }}>
+                                                <h1 className="text-base font-semibold underline">Streaming Options for <span className="italic">{mediaInfo?.details?.name ? mediaInfo?.details?.name : "this TV Show"}</span> available on</h1>
+                                                <div className="w-full max-h-100 overflow-y-auto custom-scrollbar flex flex-col gap-6 pr-3 cursor-pointer 430:pr-5">
+                                                    {/* Buy */}
+                                                    {(regionalWatchProvider?.watchProviders?.buy?.length) > 0 &&
+                                                        <div className="w-full bg-black/40 flex flex-col gap-5 p-8 rounded-md">
+                                                            <h1 className="text-base font-semibold underline">Buy to own</h1>
+                                                            <div className="flex flex-col gap-5 cursor-pointer">
+                                                                {regionalWatchProvider?.watchProviders?.buy?.map((platform) => {
+                                                                    const query = (mediaInfo?.details?.name && mediaInfo?.details?.overview && platform?.provider_name) ? (encodeURIComponent(`Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`))?.replace(/%20/g, "+") : null;
+                                                                    return (
+                                                                        <div onClick={() => query && window.open(`https://www.google.com/search?q=${query}`, '_blank')} key={platform.provider_id} className="flex gap-3 items-center">
+                                                                            <img src={platform?.logo_path ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}` : NoProvider} alt="ProvidersLogo" className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover" />
+                                                                            <h1 className="text-xs font-semibold 430:text-sm">— {platform?.provider_name || "Name unavailable"}</h1>
+                                                                        </div>
+                                                                    )
+                                                                })}
+                                                            </div>
                                                         </div>
-                                                    )
-                                                })}
+                                                    }
+
+                                                    {/* Flatrate */}
+                                                    {(regionalWatchProvider?.watchProviders?.flatrate?.length) > 0 &&
+                                                        <div className="w-full bg-black/40 flex flex-col gap-5 p-8 rounded-md">
+                                                            <h1 className="text-base font-semibold underline">Included with subscription</h1>
+                                                            <div className="flex flex-col gap-5 cursor-pointer">
+                                                                {regionalWatchProvider?.watchProviders?.flatrate?.map((platform) => {
+                                                                    const query = (mediaInfo?.details?.name && mediaInfo?.details?.overview && platform?.provider_name) ? (encodeURIComponent(`Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`))?.replace(/%20/g, "+") : null;
+                                                                    return (
+                                                                        <div onClick={() => query && window.open(`https://www.google.com/search?q=${query}`, '_blank')} key={platform.provider_id} className="flex gap-3 flex-col items-start 310:flex-row 310:items-center">
+                                                                            <img src={platform?.logo_path ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}` : NoProvider} alt="ProvidersLogo" className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover" />
+                                                                            <h1 className="text-xs font-semibold 430:text-sm">— {platform?.provider_name || "Name unavailable"}</h1>
+                                                                        </div>
+                                                                    )
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                    {/* Rent */}
+                                                    {(regionalWatchProvider?.watchProviders?.rent?.length) > 0 &&
+                                                        <div className="w-full bg-black/40 flex flex-col gap-5 p-8 rounded-md">
+                                                            <h1 className="text-base font-semibold underline">Rent & watch</h1>
+                                                            <div className="flex flex-col gap-5 cursor-pointer">
+                                                                {regionalWatchProvider?.watchProviders?.rent?.map((platform) => {
+                                                                    const query = (mediaInfo?.details?.name && mediaInfo?.details?.overview && platform?.provider_name) ? (encodeURIComponent(`Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`))?.replace(/%20/g, "+") : null;
+                                                                    return (
+                                                                        <div onClick={() => query && window.open(`https://www.google.com/search?q=${query}`, '_blank')} key={platform.provider_id} className="flex gap-3 flex-col items-start 310:flex-row 310:items-center">
+                                                                            <img src={platform?.logo_path ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}` : NoProvider} alt="ProvidersLogo" className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover" />
+                                                                            <h1 className="text-xs font-semibold 430:text-sm">— {platform?.provider_name || "Name unavailable"}</h1>
+                                                                        </div>
+                                                                    )
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    {/* Ads */}
+                                                    {(regionalWatchProvider?.watchProviders?.ads?.length) > 0 &&
+                                                        <div className="w-full bg-black/40 flex flex-col gap-5 p-8 rounded-md">
+                                                            <h1 className="text-base font-semibold underline">Watch with ads</h1>
+                                                            <div className="flex flex-col gap-5 cursor-pointer">
+                                                                {regionalWatchProvider?.watchProviders?.ads?.map((platform) => {
+                                                                    const query = (mediaInfo?.details?.name && mediaInfo?.details?.overview && platform?.provider_name) ? (encodeURIComponent(`Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`))?.replace(/%20/g, "+") : null;
+                                                                    return (
+                                                                        <div onClick={() => query && window.open(`https://www.google.com/search?q=${query}`, '_blank')} key={platform.provider_id} className="flex gap-3 flex-col items-start 310:flex-row 310:items-center">
+                                                                            <img src={platform?.logo_path ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}` : NoProvider} alt="ProvidersLogo" className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover" />
+                                                                            <h1 className="text-xs font-semibold 430:text-sm">— {platform?.provider_name || "Name unavailable"}</h1>
+                                                                        </div>
+                                                                    )
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    {/* Free */}
+                                                    {(regionalWatchProvider?.watchProviders?.free?.length) > 0 &&
+                                                        <div className="w-full bg-black/40 flex flex-col gap-5 p-8 rounded-md">
+                                                            <h1 className="text-base font-semibold underline">Stream for free</h1>
+                                                            <div className="flex flex-col gap-5 cursor-pointer">
+                                                                {regionalWatchProvider?.watchProviders?.free?.map((platform) => {
+                                                                    const query = (mediaInfo?.details?.name && mediaInfo?.details?.overview && platform?.provider_name) ? (encodeURIComponent(`Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`))?.replace(/%20/g, "+") : null;
+                                                                    return (
+                                                                        <div onClick={() => query && window.open(`https://www.google.com/search?q=${query}`, '_blank')} key={platform.provider_id} className="flex gap-3 flex-col items-start 310:flex-row 310:items-center">
+                                                                            <img src={platform?.logo_path ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}` : NoProvider} alt="ProvidersLogo" className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover" />
+                                                                            <h1 className="text-xs font-semibold 430:text-sm">— {platform?.provider_name || "Name unavailable"}</h1>
+                                                                        </div>
+                                                                    )
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
+                                        )
+                                        :
+                                        (
+                                            <div className="w-full text-center py-20 px-10 bg-black/40 rounded-sm">
+                                                <h1 className="text-base font-semibold sm:text-base">No viewing options available</h1>
+                                            </div>
+                                        )
+                                    )}
+
+                                {/* Rendering Socials */}
+                                <div onClick={() => setSectionTwoType(prev => prev === "Socials" ? null : "Socials")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionTwoType === "Socials" && "underline text-gray-400"}`}>
+                                    <div className="flex gap-2">
+                                        <RiHashtag className="w-7 h-7" />
+                                        <h1 className="text-lg font-semibold leading-[1.3]">Socials</h1>
                                     </div>
-                                    )
-                                    :
-                                    (
-                                        <div className="w-full flex justify-center items-center gap-2 py-40 bg-black/40 rounded-sm">
-                                            <h1 className="text-xl font-semibold">Studio information unavailable</h1>
-                                        </div>
-                                    )
-                                )}
-
-
-                            {/* Rendering Watch Providers */}
-                            {(sectionTwoType === "WatchProviders") &&
-                                (regionalWatchProviderType?.length > 0 ?
-                                    (<div className="flex flex-row gap-5 no-scrollbar overflow-x-scroll">
-                                        {/* Buy */}
-                                        {(regionalWatchProvider?.watchProviders?.buy?.length) > 0 &&
-                                            <div className="w-80 bg-black/40 flex-shrink-0 flex flex-col gap-5 p-8 rounded-md" style={{ clipPath: 'polygon(30px 10px, 100% 10px, 100% 100%, 0 100%, 0 0)' }}>
-                                                <h1 className="text-lg font-semibold underline">Buy to own</h1>
-                                                <div className="flex flex-col gap-5 cursor-pointer">
-                                                    {regionalWatchProvider?.watchProviders?.buy?.map((platform) => {
-                                                        const query = (mediaInfo?.details?.name && mediaInfo?.details?.overview && platform?.provider_name) ? (encodeURIComponent(`Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`))?.replace(/%20/g, "+") : null;
-                                                        return (
-                                                            <div onClick={() => query && window.open(`https://www.google.com/search?q=${query}`, '_blank')} key={platform.provider_id} className="flex gap-3 items-center">
-                                                                <img src={platform?.logo_path ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}` : NoProvider} alt="ProvidersLogo" className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover" />
-                                                                <h1 className="text-sm font-semibold">{platform?.provider_name || "Name unavailable"}</h1>
-                                                            </div>
-                                                        )
-                                                    })}
+                                    {sectionOneType === "Socials" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
+                                </div>
+                                {(sectionTwoType === "Socials") &&
+                                    (mediasSocialsCheck !== null ?
+                                        (<div className="flex flex-row gap-5">
+                                            <div className="w-full bg-black/40 flex flex-col gap-8 p-8 pt-12 rounded-md" style={{ clipPath: 'polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)' }}>
+                                                <h1 className="text-base font-semibold underline">Follow <span className="italic">{mediaInfo?.details?.name ? mediaInfo?.details?.name : "this TV Show"}</span> on Social Media</h1>
+                                                <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-5 gap-y-6 mx-auto cursor-pointer">
+                                                    {(mediaInfo?.external_ids?.facebook_id) &&
+                                                        <div onClick={() => mediaInfo?.external_ids?.facebook_id && window.open(`https://www.facebook.com/${mediaInfo?.external_ids?.facebook_id}`, '_blank')} className="flex gap-2 items-center">
+                                                            <RiFacebookLine className="w-8 h-8" />
+                                                            <h1 className="text-sm font-normal 430:text-base">Facebook</h1>
+                                                        </div>
+                                                    }
+                                                    {(mediaInfo?.external_ids?.twitter_id) &&
+                                                        <div onClick={() => mediaInfo?.external_ids?.twitter_id && window.open(`https://x.com/${mediaInfo?.external_ids?.twitter_id}`, '_blank')} className="flex gap-2 items-center">
+                                                            <RiTwitterXLine className="w-8 h-8" />
+                                                            <h1 className="text-sm font-normal 430:text-base">Twitter</h1>
+                                                        </div>
+                                                    }
+                                                    {(mediaInfo?.external_ids?.instagram_id) &&
+                                                        <div onClick={() => mediaInfo?.external_ids?.instagram_id && window.open(`https://www.instagram.com/${mediaInfo?.external_ids?.instagram_id}`, '_blank')} className="flex gap-2 items-center">
+                                                            <RiInstagramLine className="w-8 h-8" />
+                                                            <h1 className="text-sm font-normal 430:text-base">Instagram</h1>
+                                                        </div>
+                                                    }
+                                                    {(mediaInfo?.external_ids?.imdb_id) &&
+                                                        <div onClick={() => mediaInfo?.external_ids?.imdb_id && window.open(`https://www.imdb.com/title/${mediaInfo?.external_ids?.imdb_id}`, '_blank')} className="flex gap-2 items-center">
+                                                            <RiFilmLine className="w-8 h-8" />
+                                                            <h1 className="text-sm font-normal 430:text-base">IMDB</h1>
+                                                        </div>
+                                                    }
+                                                    {(mediaInfo?.external_ids?.tvdb_id) &&
+                                                        <div onClick={() => mediaInfo?.external_ids?.tvdb_id && window.open(`https://thetvdb.com/?id=/${mediaInfo?.external_ids?.tvdb_id}&tab=series`, '_blank')} className="flex gap-2 items-center">
+                                                            <RiSlideshow4Line className="w-8 h-8" />
+                                                            <h1 className="text-sm font-normal 430:text-base">TVDB</h1>
+                                                        </div>
+                                                    }
+                                                    {(mediaInfo?.details?.homepage) &&
+                                                        <div onClick={() => mediaInfo?.details?.homepage && window.open(mediaInfo?.details?.homepage, '_blank')} className="flex gap-2 items-center">
+                                                            <RiGlobalLine className="w-8 h-8" />
+                                                            <h1 className="text-sm font-normal 430:text-base">Website</h1>
+                                                        </div>
+                                                    }
+                                                    {(mediaInfo?.external_ids?.wikidata_id) &&
+                                                        <div onClick={() => mediaInfo?.external_ids?.wikidata_id && window.open(`https://www.wikidata.org/wiki/${mediaInfo?.external_ids?.wikidata_id}`, '_blank')} className="flex gap-2 items-center">
+                                                            <Wikipedia className="w-8 h-8" />
+                                                            <h1 className="text-sm font-normal 430:text-base">Wikipedia</h1>
+                                                        </div>
+                                                    }
                                                 </div>
-                                            </div>
-                                        }
-                                        {/* Flatrate */}
-                                        {(regionalWatchProvider?.watchProviders?.flatrate?.length) > 0 &&
-                                            <div className="w-80 bg-black/40 flex-shrink-0 flex flex-col gap-5 p-8 rounded-md" style={{ clipPath: 'polygon(30px 10px, 100% 10px, 100% 100%, 0 100%, 0 0)' }}>
-                                                <h1 className="text-lg font-semibold underline">Included with subscription</h1>
-                                                <div className="flex flex-col gap-5 cursor-pointer">
-                                                    {regionalWatchProvider?.watchProviders?.flatrate?.map((platform) => {
-                                                        const query = (mediaInfo?.details?.name && mediaInfo?.details?.overview && platform?.provider_name) ? (encodeURIComponent(`Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`))?.replace(/%20/g, "+") : null;
-                                                        return (
-                                                            <div onClick={() => query && window.open(`https://www.google.com/search?q=${query}`, '_blank')} key={platform.provider_id} className="flex gap-3 items-center">
-                                                                <img src={platform?.logo_path ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}` : NoProvider} alt="ProvidersLogo" className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover" />
-                                                                <h1 className="text-sm font-semibold">{platform?.provider_name || "Name unavailable"}</h1>
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </div>
-                                        }
-                                        {/* Rent */}
-                                        {(regionalWatchProvider?.watchProviders?.rent?.length) > 0 &&
-                                            <div className="w-80 bg-black/40 flex-shrink-0 flex flex-col gap-5 p-8 rounded-md" style={{ clipPath: 'polygon(30px 10px, 100% 10px, 100% 100%, 0 100%, 0 0)' }}>
-                                                <h1 className="text-lg font-semibold underline">Rent & watch</h1>
-                                                <div className="flex flex-col gap-5 cursor-pointer">
-                                                    {regionalWatchProvider?.watchProviders?.rent?.map((platform) => {
-                                                        const query = (mediaInfo?.details?.name && mediaInfo?.details?.overview && platform?.provider_name) ? (encodeURIComponent(`Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`))?.replace(/%20/g, "+") : null;
-                                                        return (
-                                                            <div onClick={() => query && window.open(`https://www.google.com/search?q=${query}`, '_blank')} key={platform.provider_id} className="flex gap-3 items-center">
-                                                                <img src={platform?.logo_path ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}` : NoProvider} alt="ProvidersLogo" className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover" />
-                                                                <h1 className="text-sm font-semibold">{platform?.provider_name || "Name unavailable"}</h1>
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </div>
-                                        }
-                                        {/* Ads */}
-                                        {(regionalWatchProvider?.watchProviders?.ads?.length) > 0 &&
-                                            <div className="w-80 bg-black/40 flex-shrink-0 flex flex-col gap-5 p-8 rounded-md" style={{ clipPath: 'polygon(30px 10px, 100% 10px, 100% 100%, 0 100%, 0 0)' }}>
-                                                <h1 className="text-lg font-semibold underline">Watch with ads</h1>
-                                                <div className="flex flex-col gap-5 cursor-pointer">
-                                                    {regionalWatchProvider?.watchProviders?.ads?.map((platform) => {
-                                                        const query = (mediaInfo?.details?.name && mediaInfo?.details?.overview && platform?.provider_name) ? (encodeURIComponent(`Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`))?.replace(/%20/g, "+") : null;
-                                                        return (
-                                                            <div onClick={() => query && window.open(`https://www.google.com/search?q=${query}`, '_blank')} key={platform.provider_id} className="flex gap-3 items-center">
-                                                                <img src={platform?.logo_path ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}` : NoProvider} alt="ProvidersLogo" className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover" />
-                                                                <h1 className="text-sm font-semibold">{platform?.provider_name || "Name unavailable"}</h1>
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </div>
-                                        }
-                                        {/* Free */}
-                                        {(regionalWatchProvider?.watchProviders?.free?.length) > 0 &&
-                                            <div className="w-80 bg-black/40 flex-shrink-0 flex flex-col gap-5 p-8 rounded-md" style={{ clipPath: 'polygon(30px 10px, 100% 10px, 100% 100%, 0 100%, 0 0)' }}>
-                                                <h1 className="text-lg font-semibold underline">Stream for free</h1>
-                                                <div className="flex flex-col gap-5 cursor-pointer">
-                                                    {regionalWatchProvider?.watchProviders?.free?.map((platform) => {
-                                                        const query = (mediaInfo?.details?.name && mediaInfo?.details?.overview && platform?.provider_name) ? (encodeURIComponent(`Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`))?.replace(/%20/g, "+") : null;
-                                                        return (
-                                                            <div onClick={() => query && window.open(`https://www.google.com/search?q=${query}`, '_blank')} key={platform.provider_id} className="flex gap-3 items-center">
-                                                                <img src={platform?.logo_path ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}` : NoProvider} alt="ProvidersLogo" className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover" />
-                                                                <h1 className="text-sm font-semibold">{platform?.provider_name || "Name unavailable"}</h1>
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </div>
-                                        }
-
-                                    </div>
-                                    )
-                                    :
-                                    (
-                                        <div className="w-full flex justify-center items-center gap-2 py-40 bg-black/40 rounded-sm">
-                                            <h1 className="text-xl font-semibold">No viewing options available</h1>
-                                        </div>
-                                    )
-                                )}
-
-                            {/* Rendering Socials */}
-                            {(sectionTwoType === "Socials") &&
-                                (mediasSocialsCheck !== null ?
-                                    (<div className="flex flex-row gap-5">
-                                        <div className="w-full bg-black/40 flex-shrink-0 flex flex-col gap-8 p-8 pt-12 rounded-md" style={{ clipPath: 'polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)' }}>
-                                            <h1 className="text-lg font-semibold underline">Follow <span className="italic">{mediaInfo?.details?.name ? mediaInfo?.details?.name : null}</span> on Social Media</h1>
-                                            <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-x-5 gap-y-6 mx-auto cursor-pointer">
-                                                {(mediaInfo?.external_ids?.facebook_id) &&
-                                                    <div onClick={() => mediaInfo?.external_ids?.facebook_id && window.open(`https://www.facebook.com/${mediaInfo?.external_ids?.facebook_id}`, '_blank')} className="flex gap-3 items-center">
-                                                        <RiFacebookLine className="w-8 h-8" />
-                                                        <h1 className="text-base font-normal">Facebook</h1>
-                                                    </div>
-                                                }
-                                                {(mediaInfo?.external_ids?.twitter_id) &&
-                                                    <div onClick={() => mediaInfo?.external_ids?.twitter_id && window.open(`https://x.com/${mediaInfo?.external_ids?.twitter_id}`, '_blank')} className="flex gap-3 items-center">
-                                                        <RiTwitterXLine className="w-8 h-8" />
-                                                        <h1 className="text-base font-normal">Twitter</h1>
-                                                    </div>
-                                                }
-                                                {(mediaInfo?.external_ids?.instagram_id) &&
-                                                    <div onClick={() => mediaInfo?.external_ids?.instagram_id && window.open(`https://www.instagram.com/${mediaInfo?.external_ids?.instagram_id}`, '_blank')} className="flex gap-3 items-center">
-                                                        <RiInstagramLine className="w-8 h-8" />
-                                                        <h1 className="text-base font-normal">Instagram</h1>
-                                                    </div>
-                                                }
-                                                {(mediaInfo?.external_ids?.imdb_id) &&
-                                                    <div onClick={() => mediaInfo?.external_ids?.imdb_id && window.open(`https://www.imdb.com/title/${mediaInfo?.external_ids?.imdb_id}`, '_blank')} className="flex gap-3 items-center">
-                                                        <RiFilmLine className="w-8 h-8" />
-                                                        <h1 className="text-base font-normal">IMDB</h1>
-                                                    </div>
-                                                }
-                                                {(mediaInfo?.external_ids?.tvdb_id) &&
-                                                    <div onClick={() => mediaInfo?.external_ids?.tvdb_id && window.open(`https://thetvdb.com/?id=/${mediaInfo?.external_ids?.tvdb_id}&tab=series`, '_blank')} className="flex gap-3 items-center">
-                                                        <RiSlideshow4Line className="w-8 h-8" />
-                                                        <h1 className="text-base font-normal">TVDB</h1>
-                                                    </div>
-                                                }
-                                                {(mediaInfo?.details?.homepage) &&
-                                                    <div onClick={() => mediaInfo?.details?.homepage && window.open(mediaInfo?.details?.homepage, '_blank')} className="flex gap-3 items-center">
-                                                        <RiGlobalLine className="w-8 h-8" />
-                                                        <h1 className="text-base font-normal">Official Website</h1>
-                                                    </div>
-                                                }
-                                                {(mediaInfo?.external_ids?.wikidata_id) &&
-                                                    <div onClick={() => mediaInfo?.external_ids?.wikidata_id && window.open(`https://www.wikidata.org/wiki/${mediaInfo?.external_ids?.wikidata_id}`, '_blank')} className="flex gap-3 items-center">
-                                                        <Wikipedia className="w-8 h-8" />
-                                                        <h1 className="text-base font-normal">Wikipedia</h1>
-                                                    </div>
-                                                }
                                             </div>
                                         </div>
-                                    </div>
-                                    )
-                                    :
-                                    (
-                                        <div className="w-full flex justify-center items-center gap-2 py-40 bg-black/40 rounded-sm">
-                                            <h1 className="text-xl font-semibold">No official links available</h1>
-                                        </div>
-                                    )
-                                )}
+                                        )
+                                        :
+                                        (
+                                            <div className="w-full text-center py-20 px-10 bg-black/40 rounded-sm">
+                                                <h1 className="text-base font-semibold sm:text-base">No official links available</h1>
+                                            </div>
+                                        )
+                                    )}
+                            </div>
                         </div>
 
                         {/* Part 8 : Recomendations */}
                         {(mediaInfo?.recommendations?.results?.length > 0) &&
                             < div className="w-full flex flex-col gap-5">
                                 <div className="font-medium text-xl">
-                                    <h1>If you liked <span className="italic text-textcolor-secondary">{(mediaInfo?.details?.name || "this content")?.replace(".", "")} </span>, you might also like</h1>
+                                    <h1>If you liked <span className="italic text-textcolor-secondary">{(mediaInfo?.details?.name || "this TV Show")?.replace(".", "")} </span>, you might also like</h1>
                                 </div>
                                 <div className="flex flex-row gap-4 no-scrollbar overflow-x-scroll">
                                     {mediaInfo?.recommendations?.results?.map((content) => {
                                         return (
                                             <div key={content?.id} onClick={() => mediaType(content)} className="relative flex-shrink-0 group">
-                                                <div className="relative w-[20rem] aspect-video overflow-hidden rounded-t-sm flex-shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out">
+                                                <div className="relative w-[15rem] aspect-video overflow-hidden rounded-t-sm flex-shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out 460:w-[18rem]">
                                                     <img src={content.backdrop_path ? `${IMG_POSTER_BASE_URL}${content.backdrop_path}` : NoBackdrop} alt="Recomendations" className="absolute z-0 w-full h-full object-cover" />
                                                     {/* About movie or show - on hover drop down */}
-                                                    <div className='absolute z-1 bottom-0 bg-black/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200'>
+                                                    <div className='absolute z-1 bottom-0 bg-black/90 w-full flex flex-col gap-[5px] px-2 py-[5px] opacity-0 group-hover:opacity-100 transition duration-200 460:gap-2 460:py-2'>
                                                         <div className='flex justify-between items-center'>
                                                             <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                                                                 <div onClick={() => saveUsersMedia(content, 'watchLater')} className='p-[0.1rem]'>
                                                                     {(showSavedUsersMedia(content, 'watchLater')) ?
-                                                                        <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                         :
-                                                                        <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                     }
                                                                 </div>
                                                                 <div onClick={() => saveUsersMedia(content, 'favourite')} className='p-[0.1rem]'>
                                                                     {(showSavedUsersMedia(content, 'favourite')) ?
-                                                                        <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                        <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                                                         :
-                                                                        <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                     }
                                                                 </div>
                                                             </div>
@@ -987,12 +1020,12 @@ const TVShowInfo = () => {
                                                                 <Info className='w-6 h-6 text-[#A9A9A9]' />
                                                             </div>
                                                         </div>
-                                                        <div className='flex items-center gap-2 font-medium text-[#A9A9A9]'>
+                                                        <div className='flex items-center gap-2 font-medium text-[#A9A9A9] text-xs 460:text-sm'>
                                                             <div className='flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1'>
-                                                                <h1 className='text-sm'>★ {(content.vote_average).toFixed(1) || "0.0"}</h1>
+                                                                <h1>★ {(content.vote_average).toFixed(1) || "0.0"}</h1>
                                                             </div>
                                                             <div className='flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1'>
-                                                                <h1 className='text-sm'>{(content.release_date || content.first_air_date)?.slice(0, 4) || "N/A"}</h1>
+                                                                <h1>{(content.release_date || content.first_air_date)?.slice(0, 4) || "N/A"}</h1>
                                                             </div>
                                                         </div>
                                                         <div className='flex gap-2'>
@@ -1009,8 +1042,8 @@ const TVShowInfo = () => {
                                                         </div>
                                                     </div>
                                                     {(content?.title || content?.name) &&
-                                                        <div className="absolute m-1 left-1 bottom-1 rounded-2xl px-3 py-1 bg-black/60 border-sm transition-transform duration-200 group-hover:-translate-y-32">
-                                                            <h1 className="text-sm font-semibold">{content?.title || content?.name || "N/A"}</h1>
+                                                        <div className="absolute m-1 left-1 bottom-1 rounded-2xl px-3 py-1 bg-black/60 border-sm transition-transform duration-200 group-hover:-translate-y-23 460:group-hover:-translate-y-30">
+                                                            <h1 className="text-xs font-semibold 460:text-sm">{content?.title || content?.name || "N/A"}</h1>
                                                         </div>
                                                     }
                                                 </div>

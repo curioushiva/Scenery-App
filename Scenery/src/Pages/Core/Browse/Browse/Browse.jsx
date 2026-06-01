@@ -1,5 +1,5 @@
 import useContent from '@/Utils/Hooks/useContent/useContent';
-import { IMG_BACKDROP_BASE_URL, IMG_POSTER_BASE_URL } from '@/Utils/SceneryApi/SceneryApi';
+import { IMG_BACKDROP_BASE_URL, IMG_POSTER_BASE_URL } from '@/Utils/SceneryAPI/SceneryAPI';
 import useMedia from '@/Utils/Hooks/useMedia/useMedia'
 import { useDispatch, useSelector } from 'react-redux';
 import { RiBookmarkFill, RiBookmarkLine, RiHeartFill, RiHeartLine, RiInformationLine, RiPauseCircleLine, RiPlayFill } from '@remixicon/react';
@@ -63,7 +63,7 @@ const Browse = () => {
             <div className="max-w-md flex flex-col gap-4">
               <h1 className="text-3xl lg:text-4xl font-bold">{(exploreBGVideo?.video?.title || exploreBGVideo?.video?.name)}</h1>
               {exploreBGVideo?.video?.genre_ids?.length !== 0 &&
-                <div className='flex flex-row gap-2 mr-auto max-[240px]:flex-col'>
+                <div className='flex flex-row gap-2'>
                   {(allGenres
                     .filter((list) => exploreBGVideo?.video?.genre_ids?.includes(list?.id))
                     .slice(0, 2)
@@ -73,12 +73,12 @@ const Browse = () => {
                   )}
                 </div>
               }
-              <p className="hidden text-sm lg:text-base text-gray-200 xus:block xxm:hidden">{(exploreBGVideo?.video?.overview)?.split(" ")?.slice(0, 19)?.join(" ")}...</p>
-              <p className="hidden text-sm lg:text-base text-gray-200 xxm:block">{(exploreBGVideo?.video?.overview)}</p>
+              <p className="text-sm lg:text-base text-gray-200 430:hidden">{(exploreBGVideo?.video?.overview)?.split(" ")?.slice(0, 19)?.join(" ")}...</p>
+              <p className="hidden text-sm lg:text-base text-gray-200 430:block">{(exploreBGVideo?.video?.overview)}</p>
               {(exploreBGVideo?.video?.release_date || exploreBGVideo?.video?.first_air_date) && <h2 className='text-xm font-semibold lg:text-base'>Released in {(exploreBGVideo?.video?.release_date || exploreBGVideo?.video?.first_air_date)?.slice(0, 4)}</h2>}
-              <div className="flex flex-col max-w-40 gap-4 xxm:flex-row xxs:max-w-lg">
+              <div className="flex flex-col gap-4 350:flex-row">
                 {exploreBGVideo?.videoKey &&
-                  <div onClick={() => setIsBgVideoPlaying(prev => !prev)} className="flex justify-center items-center gap-1 bg-white text-black pl-3 pr-6 py-2 rounded cursor-pointer">
+                  <div onClick={() => setIsBgVideoPlaying(prev => !prev)} className="flex justify-center items-center gap-1 bg-white text-black pl-1 pr-4 py-2 rounded cursor-pointer">
                     {isBgVideoPlaying ?
                       <><RiPauseCircleLine /><span className="font-semibold">Pause Trailer</span></>
                       :
@@ -102,7 +102,7 @@ const Browse = () => {
           {(exploreCat.filter((categorie) => categorie.content.length > 5)).map((categorie) => {
             return (
               <div key={categorie.type} className="w-full flex flex-col gap-3">
-                <div className="font-medium text-base xs:text-xl">
+                <div className="font-medium text-base 350:text-xl">
                   <h1>{categorie.title}</h1>
                 </div>
                 <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
@@ -117,16 +117,16 @@ const Browse = () => {
                             <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                               <div onClick={() => saveUsersMedia(content, 'watchLater')} className='p-[0.1rem]'>
                                 {(showSavedUsersMedia(content, 'watchLater')) ?
-                                  <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                  <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                   :
-                                  <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                  <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                 }
                               </div>
                               <div onClick={() => saveUsersMedia(content, 'favourite')} className='p-[0.1rem]'>
                                 {(showSavedUsersMedia(content, 'favourite')) ?
-                                  <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                  <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                   :
-                                  <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                  <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                 }
                               </div>
                             </div>

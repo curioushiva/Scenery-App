@@ -1,6 +1,6 @@
 import useContent from '@/Utils/Hooks/useContent/useContent';
 import useMedia from '@/Utils/Hooks/useMedia/useMedia';
-import { IMG_POSTER_BASE_URL } from '@/Utils/SceneryApi/SceneryApi';
+import { IMG_POSTER_BASE_URL } from '@/Utils/SceneryAPI/SceneryAPI';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RiBookmarkFill, RiBookmarkLine, RiHeartFill, RiHeartLine, RiInformationLine } from '@remixicon/react';
@@ -36,7 +36,7 @@ const Popular = () => {
                 {(popularCat.filter((categorie) => categorie.content.length > 5)).slice(0, 1).map((categorie) => {
                     return (
                         <div key={categorie.type} className="w-full flex flex-col gap-3">
-                            <div className="font-medium text-base xs:text-xl">
+                            <div className="font-medium text-base 350:text-xl">
                                 <h1>{categorie.title}</h1>
                             </div>
                             <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
@@ -50,16 +50,16 @@ const Popular = () => {
                                                     <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                                                         <div onClick={() => saveUsersMedia(content, 'watchLater')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'watchLater')) ?
-                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                 :
-                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                         <div onClick={() => saveUsersMedia(content, 'favourite')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'favourite')) ?
-                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                                                 :
-                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                     </div>
@@ -101,7 +101,7 @@ const Popular = () => {
                 {(popularCat.filter((categorie) => categorie.content.length > 5)).slice(1, 2).map((categorie) => {
                     return categorie.title === "Top Popular Movies" && (
                         <div key={categorie.type} className="w-full flex flex-col gap-3">
-                            <div className="font-medium text-base xs:text-xl">
+                            <div className="font-medium text-base 350:text-xl">
                                 <h1>{categorie.title}</h1>
                             </div>
                             <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
@@ -117,16 +117,16 @@ const Popular = () => {
                                                     <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                                                         <div onClick={() => saveUsersMedia(content, 'watchLater')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'watchLater')) ?
-                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                 :
-                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                         <div onClick={() => saveUsersMedia(content, 'favourite')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'favourite')) ?
-                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                                                 :
-                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                     </div>
@@ -170,16 +170,16 @@ const Popular = () => {
                                                     <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                                                         <div onClick={() => saveUsersMedia(content, 'watchLater')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'watchLater')) ?
-                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                 :
-                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                         <div onClick={() => saveUsersMedia(content, 'favourite')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'favourite')) ?
-                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                                                 :
-                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                     </div>
@@ -221,7 +221,7 @@ const Popular = () => {
                 {(popularCat.filter((categorie) => categorie.content.length > 5)).slice(2, 3).map((categorie) => {
                     return (
                         <div key={categorie.type} className="w-full flex flex-col gap-3">
-                            <div className="font-medium text-base xs:text-xl">
+                            <div className="font-medium text-base 350:text-xl">
                                 <h1>{categorie.title}</h1>
                             </div>
                             <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
@@ -235,16 +235,16 @@ const Popular = () => {
                                                     <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                                                         <div onClick={() => saveUsersMedia(content, 'watchLater')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'watchLater')) ?
-                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                 :
-                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                         <div onClick={() => saveUsersMedia(content, 'favourite')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'favourite')) ?
-                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                                                 :
-                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                     </div>
@@ -286,7 +286,7 @@ const Popular = () => {
                 {(popularCat.filter((categorie) => categorie.content.length > 5)).slice(3, 4).map((categorie) => {
                     return categorie.title === "Top Popular TV Shows" && (
                         <div key={categorie.type} className="w-full flex flex-col gap-3">
-                            <div className="font-medium text-base xs:text-xl">
+                            <div className="font-medium text-base 350:text-xl">
                                 <h1>{categorie.title}</h1>
                             </div>
                             <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
@@ -302,16 +302,16 @@ const Popular = () => {
                                                     <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                                                         <div onClick={() => saveUsersMedia(content, 'watchLater')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'watchLater')) ?
-                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                 :
-                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                         <div onClick={() => saveUsersMedia(content, 'favourite')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'favourite')) ?
-                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                                                 :
-                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                     </div>
@@ -355,16 +355,16 @@ const Popular = () => {
                                                     <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                                                         <div onClick={() => saveUsersMedia(content, 'watchLater')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'watchLater')) ?
-                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                 :
-                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                         <div onClick={() => saveUsersMedia(content, 'favourite')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'favourite')) ?
-                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                                                 :
-                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                     </div>
@@ -406,7 +406,7 @@ const Popular = () => {
                 {(popularCat.filter((categorie) => categorie.content.length > 5)).slice(4, 5).map((categorie) => {
                     return (
                         <div key={categorie.type} className="w-full flex flex-col gap-3">
-                            <div className="font-medium text-base xs:text-xl">
+                            <div className="font-medium text-base 350:text-xl">
                                 <h1>{categorie.title}</h1>
                             </div>
                             <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
@@ -420,16 +420,16 @@ const Popular = () => {
                                                     <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                                                         <div onClick={() => saveUsersMedia(content, 'watchLater')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'watchLater')) ?
-                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                 :
-                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                         <div onClick={() => saveUsersMedia(content, 'favourite')} className='p-[0.1rem]'>
                                                             {(showSavedUsersMedia(content, 'favourite')) ?
-                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                                                 :
-                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                             }
                                                         </div>
                                                     </div>

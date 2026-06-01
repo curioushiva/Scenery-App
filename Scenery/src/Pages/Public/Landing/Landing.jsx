@@ -1,5 +1,5 @@
 import useContent from "@/Utils/Hooks/useContent/useContent";
-import { IMG_POSTER_BASE_URL } from "@/Utils/SceneryApi/SceneryApi";
+import { IMG_POSTER_BASE_URL } from "@/Utils/SceneryAPI/SceneryAPI";
 import { Link, useNavigate } from "react-router"
 import { ReasonToJoinMockData } from "@/Utils/Mockdata/Mockdata"
 import { RiArrowRightSLine } from "@remixicon/react";

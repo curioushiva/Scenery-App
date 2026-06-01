@@ -1,4 +1,4 @@
-import { SCENERY_API_BASE_URL, SCENERY_API_HEADERS } from "@/Utils/SceneryApi/SceneryApi";
+import { SCENERY_API_BASE_URL, SCENERY_API_HEADERS } from "@/Utils/SceneryAPI/SceneryAPI";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router';

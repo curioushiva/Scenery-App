@@ -43,8 +43,24 @@ export const ReasonToJoinMockData = [
     },
 ]
 
-/* Footer Section - About Website */
-export const AboutWebsite = [
+/* Footer Data */
+/* Landing footer data */
+export const LandingFooterData = [
+    { element: "About", URL: "/about", },
+    { element: "Privacy", URL: "/privacy", },
+    { element: "Github", URL: "https://github.com/curioushiva/", },
+    { element: "Website", URL: "https://curioushiva.in/", },
+];
+
+/* System footer data */
+export const SystemFooterData = [
+    { element: "About", URL: "/about", },
+    { element: "Privacy", URL: "/privacy", },
+    { element: "Github", URL: "https://github.com/curioushiva/", },
+    { element: "Website", URL: "https://curioushiva.in/", },
+];
+/* Core footer data */
+export const CoreFooterData = [
     { element: "About", URL: "/about", },
     { element: "Privacy", URL: "/privacy", },
     { element: "Github", URL: "https://github.com/curioushiva/", },

@@ -63,20 +63,36 @@ body,
 
 
   /* Breakpoints */
-  --breakpoint-xus: 17.5rem;
-  /* 280px extra extra small */
-  --breakpoint-xxs: 20rem;
-  /* 310px extra extra small */
-  --breakpoint-xs: 21.875rem;
-  /* 350px extra small */
-  --breakpoint-xls: 24.688rem;
-  /* 395px extra little small */
-  --breakpoint-xxm: 26.875rem;
-  /* 430px extra extra small */
-  --breakpoint-xm: 34.375rem;
-  /* 550px extra medium */
-  --breakpoint-sl: 60.000rem;
-  /* 960px small large */
+  --breakpoint-240: 15.000rem;
+  /* 240px */
+  --breakpoint-280: 17.500rem;
+  /* 280px */
+  --breakpoint-295: 18.438rem;
+  /* 295px */
+  --breakpoint-310: 20.000rem;
+  /* 310px */
+  --breakpoint-350: 21.875rem;
+  /* 350px */  
+  --breakpoint-375: 23.438rem;
+  /* 375px */
+  --breakpoint-385: 24.063rem;
+  /* 385px */
+  --breakpoint-395: 24.688rem;
+  /* 395px */
+  --breakpoint-430: 26.875rem;
+  /* 430px */
+  --breakpoint-460: 28.750rem;
+  /* 460px */
+  --breakpoint-550: 34.375rem;
+  /* 550px */
+  --breakpoint-700: 43.750rem;
+  /* 780px */
+  --breakpoint-840: 52.500rem;
+  /* 840px */
+  --breakpoint-880: 55.000rem;
+  /* 880px */
+  --breakpoint-960: 60.000rem;
+  /* 960px */
 }
 
 /* To hide scrollbars (mainly used in hiding x autoflows) */

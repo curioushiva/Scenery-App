@@ -1,6 +1,6 @@
 import useContent from '@/Utils/Hooks/useContent/useContent';
 import useMedia from '@/Utils/Hooks/useMedia/useMedia';
-import { IMG_BACKDROP_BASE_URL, IMG_POSTER_BASE_URL } from '@/Utils/SceneryApi/SceneryApi';
+import { IMG_BACKDROP_BASE_URL, IMG_POSTER_BASE_URL } from '@/Utils/SceneryAPI/SceneryAPI';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiBookmarkFill, RiBookmarkLine, RiHeartFill, RiHeartLine, RiInformationLine, RiPauseCircleLine, RiPlayFill } from '@remixicon/react';
@@ -88,15 +88,13 @@ const TVShows = () => {
                     <div className="relative z-10 w-full min-h-[75dvh] flex flex-col justify-between gap-10 p-8 mobileNavPad">
                         {/* Movie Genre */}
                         {(tvShowsGenre.length > 0) ?
-                            <div className="relative z-20 flex flex-col items-start justify-start gap-1 xls:flex-row">
-                                <h1 onClick={() => { setIsTvShowsGenreClicked(false); dispatch(addTvShowsGenre([])); dispatch(addSelectedTvShowGenreIndex(null)); setIsBgVideoPlaying(false); }} className="text-xl font-normal leading-[2rem] text-gray-300 cursor-pointer">TV Shows ＞</h1>
+                            <div className="relative z-20 flex flex-row items-start justify-start gap-1 flex-wrap">
+                                <h1 onClick={() => { setIsTvShowsGenreClicked(false); dispatch(addTvShowsGenre([])); dispatch(addSelectedTvShowGenreIndex(null)); setIsBgVideoPlaying(false); }} className="text-xl font-normal leading-[2rem] text-gray-300 cursor-pointer">{`TV Shows >`}</h1>
                                 <h1 className='text-3xl font-medium leading-none'>{tvShowsGenre[0]?.genre} Shows</h1>
                             </div>
                             :
-                            <div className="relative z-20 flex flex-col items-start gap-5 xs:flex-row xs:items-end xs:gap-7 lg:gap-10">
-                                <div>
-                                    <h1 className="text-4xl lg:text-4xl font-bold leading-[1.2] xs:leading-[0.7]">TV Shows</h1>
-                                </div>
+                            <div className="relative z-20 flex flex-row items-end gap-6 flex-wrap">
+                                <h1 className="text-4xl lg:text-4xl font-bold leading-[0.7]">TV Shows</h1>
                                 <div onClick={() => { setIsTvShowsGenreClicked(prev => !prev) }} className="flex justify-center items-center gap-2 cursor-pointer px-2 border-1 lg:gap-7 lg:py-[0.1rem] hover:bg-brcolor-primary">
                                     <h1 className='font-medium text-[0.70rem] lg:text-[0.80rem]'>Genres</h1>
                                     <svg className={`w-3 transition-transform duration-300 ${isTvShowsGenreClicked ? "rotate-180" : "rotate-0"}`} viewBox="8 10 8 4" fill="currentColor"><path d="M12 14L8 10H16L12 14Z" /></svg>
@@ -105,7 +103,7 @@ const TVShows = () => {
                                         <div className="showsGenreDropdown">
                                             <div className="w-40 max-h-30 sm:max-h-40 overflow-y-scroll no-scrollbar bg-black/100 text-sm border-1 border-brcolor-primary flex flex-col items-start justify-center">
                                                 <div className="flex flex-col gap-4 px-4 mt-70 sm:mt-60 pb-5">
-                                                    {tvShowsGenreData.map((val, index, arr) => {
+                                                    {tvShowsGenreData.map((val, index) => {
                                                         return (
                                                             <div key={val.key} className="flex items-center justify-start gap-2">
                                                                 <div onClick={() => {
@@ -127,7 +125,7 @@ const TVShows = () => {
                         <div className="max-w-md flex flex-col gap-4">
                             <h1 className="text-3xl lg:text-4xl font-bold">{(tvShowsBGVideo?.video?.title || tvShowsBGVideo?.video?.name)}</h1>
                             {tvShowsBGVideo?.video?.genre_ids?.length !== 0 &&
-                                <div className='flex flex-row gap-2 mr-auto max-[240px]:flex-col'>
+                                <div className='flex flex-row gap-2'>
                                     {(allGenres
                                         .filter((list) => tvShowsBGVideo?.video?.genre_ids?.includes(list?.id))
                                         .slice(0, 2)
@@ -139,16 +137,16 @@ const TVShows = () => {
                                     )}
                                 </div>
                             }
-                            <p className="hidden text-sm lg:text-base text-gray-200 xus:block xxm:hidden">{(tvShowsBGVideo?.video?.overview)?.split(" ")?.slice(0, 19)?.join(" ")}...</p>
-                            <p className="hidden text-sm lg:text-base text-gray-200 xxm:block">{(tvShowsBGVideo?.video?.overview)}</p>
+                            <p className="text-sm lg:text-base text-gray-200 430:hidden">{(tvShowsBGVideo?.video?.overview)?.split(" ")?.slice(0, 19)?.join(" ")}...</p>
+                            <p className="hidden text-sm lg:text-base text-gray-200 430:block">{(tvShowsBGVideo?.video?.overview)}</p>
                             {(tvShowsBGVideo?.video?.release_date || tvShowsBGVideo?.video?.first_air_date) && <h2 className='text-xm font-semibold lg:text-base'>Released in {(tvShowsBGVideo?.video?.release_date || tvShowsBGVideo?.video?.first_air_date)?.slice(0, 4)}</h2>}
-                            <div className="flex flex-col max-w-40 gap-4 xxm:flex-row xxs:max-w-lg">
+                            <div className="flex flex-col gap-4 350:flex-row">
                                 {tvShowsBGVideo?.videoKey &&
-                                    <div onClick={() => setIsBgVideoPlaying(prev => !prev)} className="flex justify-center items-center gap-1 bg-white text-black pl-3 pr-6 py-2 rounded cursor-pointer">
+                                    <div onClick={() => setIsBgVideoPlaying(prev => !prev)} className="flex justify-center items-center gap-1 bg-white text-black pl-1 pr-4 py-2 rounded cursor-pointer">
                                         {isBgVideoPlaying ?
-                                            <><RiPauseCircleLine /><span className="font-semibold">Pause Trailer</span></>
+                                            <><RiPauseCircleLine /><span className="font-semibold whitespace-nowrap">Pause Trailer</span></>
                                             :
-                                            <><RiPlayFill /><span className="font-semibold">Play Trailer</span></>
+                                            <><RiPlayFill /><span className="font-semibold whitespace-nowrap">Play Trailer</span></>
                                         }
                                     </div>
                                 }
@@ -168,7 +166,7 @@ const TVShows = () => {
                         {tvShowsGenre[0].genreTvShows.filter((val, idx) => val.tvShows.length > 5).map((categorie) => {
                             return (
                                 <div key={categorie.type} className="w-full flex flex-col gap-3">
-                                    <div className="font-medium text-base xs:text-xl">
+                                    <div className="font-medium text-base 350:text-xl">
                                         <h1>{categorie.title}</h1>
                                     </div>
                                     <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
@@ -182,16 +180,16 @@ const TVShows = () => {
                                                             <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                                                                 <div onClick={() => saveUsersMedia(tvShow, 'watchLater')} className='p-[0.1rem]'>
                                                                     {(showSavedUsersMedia(tvShow, 'watchLater')) ?
-                                                                        <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                         :
-                                                                        <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                     }
                                                                 </div>
                                                                 <div onClick={() => saveUsersMedia(tvShow, 'favourite')} className='p-[0.1rem]'>
                                                                     {(showSavedUsersMedia(tvShow, 'favourite')) ?
-                                                                        <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                        <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                                                         :
-                                                                        <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                     }
                                                                 </div>
                                                             </div>
@@ -234,7 +232,7 @@ const TVShows = () => {
                         {(tvShowsCat.filter((categorie) => categorie.tvShows.length > 5)).slice(0, 1).map((categorie) => {
                             return (
                                 <div key={categorie.type} className="w-full flex flex-col gap-3">
-                                    <div className="font-medium text-base xs:text-xl">
+                                    <div className="font-medium text-base 350:text-xl">
                                         <h1>{categorie.title}</h1>
                                     </div>
                                     <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
@@ -248,16 +246,16 @@ const TVShows = () => {
                                                             <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                                                                 <div onClick={() => saveUsersMedia(tvShow, 'watchLater')} className='p-[0.1rem]'>
                                                                     {(showSavedUsersMedia(tvShow, 'watchLater')) ?
-                                                                        <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                         :
-                                                                        <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                     }
                                                                 </div>
                                                                 <div onClick={() => saveUsersMedia(tvShow, 'favourite')} className='p-[0.1rem]'>
                                                                     {(showSavedUsersMedia(tvShow, 'favourite')) ?
-                                                                        <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                        <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                                                         :
-                                                                        <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                     }
                                                                 </div>
                                                             </div>
@@ -297,7 +295,7 @@ const TVShows = () => {
                         {(tvShowsCat.filter((categorie) => categorie.tvShows.length > 5)).slice(1, 2).map((categorie) => {
                             return categorie.title === "Top Popular TV Shows" && (
                                 <div key={categorie.type} className="w-full flex flex-col gap-3">
-                                    <div className="font-medium text-base xs:text-xl">
+                                    <div className="font-medium text-base 350:text-xl">
                                         <h1>{categorie.title}</h1>
                                     </div>
                                     <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
@@ -313,16 +311,16 @@ const TVShows = () => {
                                                             <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                                                                 <div onClick={() => saveUsersMedia(tvShow, 'watchLater')} className='p-[0.1rem]'>
                                                                     {(showSavedUsersMedia(tvShow, 'watchLater')) ?
-                                                                        <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                         :
-                                                                        <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                     }
                                                                 </div>
                                                                 <div onClick={() => saveUsersMedia(tvShow, 'favourite')} className='p-[0.1rem]'>
                                                                     {(showSavedUsersMedia(tvShow, 'favourite')) ?
-                                                                        <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                        <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                                                         :
-                                                                        <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                     }
                                                                 </div>
                                                             </div>
@@ -366,16 +364,16 @@ const TVShows = () => {
                                                             <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                                                                 <div onClick={() => saveUsersMedia(tvShow, 'watchLater')} className='p-[0.1rem]'>
                                                                     {(showSavedUsersMedia(tvShow, 'watchLater')) ?
-                                                                        <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                         :
-                                                                        <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                     }
                                                                 </div>
                                                                 <div onClick={() => saveUsersMedia(tvShow, 'favourite')} className='p-[0.1rem]'>
                                                                     {(showSavedUsersMedia(tvShow, 'favourite')) ?
-                                                                        <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                        <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                                                         :
-                                                                        <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                     }
                                                                 </div>
                                                             </div>
@@ -416,7 +414,7 @@ const TVShows = () => {
                         {(tvShowsCat.filter((categorie) => categorie.tvShows.length > 5)).slice(2, 7).map((categorie) => {
                             return (
                                 <div key={categorie.type} className="w-full flex flex-col gap-3">
-                                    <div className="font-medium text-base xs:text-xl">
+                                    <div className="font-medium text-base 350:text-xl">
                                         <h1>{categorie.title}</h1>
                                     </div>
                                     <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
@@ -430,16 +428,16 @@ const TVShows = () => {
                                                             <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className='flex gap-1'>
                                                                 <div onClick={() => saveUsersMedia(tvShow, 'watchLater')} className='p-[0.1rem]'>
                                                                     {(showSavedUsersMedia(tvShow, 'watchLater')) ?
-                                                                        <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiBookmarkFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                         :
-                                                                        <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiBookmarkLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                     }
                                                                 </div>
                                                                 <div onClick={() => saveUsersMedia(tvShow, 'favourite')} className='p-[0.1rem]'>
                                                                     {(showSavedUsersMedia(tvShow, 'favourite')) ?
-                                                                        <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#f14049]' />
+                                                                        <RiHeartFill className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]' />
                                                                         :
-                                                                        <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] sm:h-[1.9rem] text-[#A9A9A9]' />
+                                                                        <RiHeartLine className='w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]' />
                                                                     }
                                                                 </div>
                                                             </div>
