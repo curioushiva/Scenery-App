@@ -35,9 +35,8 @@ export const LandingFooter = () => {
 export const SystemFooter = () => {
   /* To get path's location */
   const location = useLocation();
-
   return (
-    <div className="w-full flex flex-col gap-10 bg-[#000000] py-20 px-8 lg:px-35">
+    <div className="w-full flex flex-col gap-10 bg-[#000000] py-12 px-8 lg:px-35">
       {/* Tagline */}
       <div className="font-regular text-base text-textcolor-secondary lg:text-lg">
         <h1>Curious ? <span className="underline decoration-solid">Get to know Scenery</span></h1>

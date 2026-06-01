@@ -43,6 +43,36 @@ export const ReasonToJoinMockData = [
     },
 ]
 
+/* About obsidian data */
+export const AboutObsidianMockData = [
+    {
+        questionID: 1,
+        question: "What is Scenery?",
+        answer: "Scenery is a movie and TV show discovery platform. It helps users explore detailed information about titles, cast members, reviews, streaming availability, trailers, production studios, and much more."
+    },
+    {
+        questionID: 2,
+        question: "How do I get started with Scenery?",
+        answer: "Getting started with Scenery is simple. Create an account using a valid email address, or sign in if you already have one. After signing in, you can create or select a profile and begin exploring the platform. Your profile gives you access to personalized features such as favorites, watch-later collections, recommendations, and profile-specific preferences designed to enhance your experience"
+    },
+    {
+        questionID: 3,
+        question: "Where does the content come from?",
+        answer: "Scenery uses entertainment data provided through TMDB. This includes information such as movie details, TV shows, images, ratings, cast information, trailers, and other related content that is continuously updated."
+    },
+    {
+        questionID: 4,
+        question: "What makes Scenery different?",
+        answer: "Scenery focuses on discovery rather than streaming. The goal is to help users find interesting content through powerful search, filtering, curated sections, and AI-assisted recommendations while keeping the experience fast, responsive, and easy to navigate."
+    },
+    {
+        questionID: 5,
+        question: "Who created Scenery?",
+        answer: "Scenery is an independent project created and maintained by Curioushiva. It began as a personal challenge to build a modern entertainment platform while exploring technologies such as React, Firebase, Redux, and external APIs"
+    },
+
+]
+
 /* Footer Data */
 /* Landing footer data */
 export const LandingFooterData = [
