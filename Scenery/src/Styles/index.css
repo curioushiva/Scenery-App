@@ -63,6 +63,8 @@ body,
 
 
   /* Breakpoints */
+  --breakpoint-220: 13.750rem;
+  /* 200px */
   --breakpoint-240: 15.000rem;
   /* 240px */
   --breakpoint-280: 17.500rem;
@@ -203,3 +205,7 @@ body,
     padding-top: 110px;
   }
 }
+
+/* * {
+  outline: 0.1px solid red;
+} */

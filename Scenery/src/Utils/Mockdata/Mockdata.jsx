@@ -43,6 +43,67 @@ export const ReasonToJoinMockData = [
     },
 ]
 
+/* Footer Data */
+/* Landing footer data */
+export const LandingFooterData = [
+    { element: "About Us", URL: "/aboutus" },
+    { element: "Privacy", URL: "/privacy" },
+    { element: "What's New", URL: "/whatsnew" },
+    { element: "Github", URL: "https://github.com/curioushiva/" },
+    { element: "Website", URL: "https://curioushiva.in/" },
+];
+
+/* System footer data */
+export const SystemFooterData = [
+    { element: "About Us", URL: "/aboutus" },
+    { element: "Privacy", URL: "/privacy" },
+    { element: "What's New", URL: "/whatsnew" },
+    { element: "Github", URL: "https://github.com/curioushiva/" },
+    { element: "Website", URL: "https://curioushiva.in/" },
+];
+
+/* Core footer data */
+export const CoreFooterData = [
+    { element: "About Us", URL: "/aboutus" },
+    { element: "Privacy", URL: "/privacy" },
+    { element: "What's New", URL: "/whatsnew" },
+    { element: "Github", URL: "https://github.com/curioushiva/" },
+    { element: "Website", URL: "https://curioushiva.in/" },
+    { element: "My Library", URL: "/library" },
+    { element: "Search", URL: "/search" },
+    { element: "Ask AI", URL: "askai" },
+    { element: "Account", URL: "/account" },
+];
+
+/* Footer Section - Developer Socials */
+export const DevSocials = [
+    {
+        socialType: "LinkedIn",
+        ICON: RiLinkedinBoxFill,
+        URL: "https://www.linkedin.com/in/curioushiva/",
+    },
+    {
+        socialType: "Github",
+        ICON: RiGithubFill,
+        URL: "https://github.com/curioushiva/",
+    },
+    {
+        socialType: "Instagram",
+        ICON: RiInstagramFill,
+        URL: "https://www.instagram.com/curioushiva/",
+    },
+    {
+        socialType: "Twitter",
+        ICON: RiTwitterXFill,
+        URL: "https://x.com/curioushiva/",
+    },
+    {
+        socialType: "BuyMeACoffee",
+        ICON: RiDrinksLine,
+        URL: "https://buymeacoffee.com/curioushiva",
+    },
+]
+
 /* About obsidian data */
 export const AboutObsidianMockData = [
     {
@@ -73,60 +134,13 @@ export const AboutObsidianMockData = [
 
 ]
 
-/* Footer Data */
-/* Landing footer data */
-export const LandingFooterData = [
-    { element: "About", URL: "/about", },
-    { element: "Privacy", URL: "/privacy", },
-    { element: "Github", URL: "https://github.com/curioushiva/", },
-    { element: "Website", URL: "https://curioushiva.in/", },
-];
-
-/* System footer data */
-export const SystemFooterData = [
-    { element: "About", URL: "/about", },
-    { element: "Privacy", URL: "/privacy", },
-    { element: "Github", URL: "https://github.com/curioushiva/", },
-    { element: "Website", URL: "https://curioushiva.in/", },
-];
-/* Core footer data */
-export const CoreFooterData = [
-    { element: "About", URL: "/about", },
-    { element: "Privacy", URL: "/privacy", },
-    { element: "Github", URL: "https://github.com/curioushiva/", },
-    { element: "Website", URL: "https://curioushiva.in/", },
-    { element: "My Library", URL: "/library", },
-    { element: "Search", URL: "/search", },
-    { element: "Ask AI", URL: "askai", },
-    { element: "Account", URL: "/account", },
-];
-
-/* Footer Section - Developer Socials */
-export const DevSocials = [
+/* What's New Updates data */
+export const WhatsNewMockData = [
     {
-        socialType: "LinkedIn",
-        ICON: RiLinkedinBoxFill,
-        URL: "https://www.linkedin.com/in/curioushiva/",
-    },
-    {
-        socialType: "Github",
-        ICON: RiGithubFill,
-        URL: "https://github.com/curioushiva/",
-    },
-    {
-        socialType: "Instagram",
-        ICON: RiInstagramFill,
-        URL: "https://www.instagram.com/curioushiva/",
-    },
-    {
-        socialType: "Twitter",
-        ICON: RiTwitterXFill,
-        URL: "https://x.com/curioushiva/",
-    },
-    {
-        socialType: "BuyMeACoffee",
-        ICON: RiDrinksLine,
-        URL: "https://buymeacoffee.com/curioushiva",
+        id: 1,
+        version: "Release v1.0",
+        time: "June 8, 2026",
+        updation: '# Initial release of Scenery with core discovery, personalization, and AI-powered features.'
     },
 ]
 

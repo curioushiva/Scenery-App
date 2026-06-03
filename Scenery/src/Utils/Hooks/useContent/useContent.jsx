@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SCENERY_API_BASE_URL, SCENERY_API_HEADERS } from '@/Utils/SceneryAPI/SceneryAPI';
+import { SCENERY_API_BASE_URL, SCENERY_API_HEADERS } from '@/Utils/SceneryApi/SceneryApi';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -24,7 +24,7 @@ const useContent = () => {
   const selectedMovieGenreIndex = useSelector((store) => store.content.selectedMovieGenreIndex)
   const selectedTvShowGenreIndex = useSelector((store) => store.content.selectedTvShowGenreIndex)
   /* User's Current Region */
-  const usersCurRegion = useSelector((store) => store.user.account.usersCurRegion)
+  const usersLocation = useSelector((store) => store.user.account.usersLocation)
 
   /* Date today  */
   const today = new Date().toISOString().split("T")[0];
@@ -1007,14 +1007,14 @@ const useContent = () => {
       const primaryVideoAsset = responses.data.results.find(val => val.type === "Trailer" && val.site === "YouTube") || responses.data.results.find(val => val.type === "Teaser" && val.site === "YouTube");
       const primaryVideoKey = primaryVideoAsset?.key;
       let validBackgroundVideoKey = null;
-      if (primaryVideoKey && usersCurRegion) {
+      if (primaryVideoKey && usersLocation) {
         const checkVideo = async (primaryVideoKey) => {
           const { data } = await axios.get(`https://www.googleapis.com/youtube/v3/videos`,
             {
               params: {
                 part: "status,contentDetails",
                 id: primaryVideoKey,
-                regionCode: usersCurRegion,
+                regionCode: usersLocation,
                 key: `${import.meta.env.VITE_YOUTUBE_V3_AUTH_TOKEN}`
               }
             }
@@ -1024,6 +1024,15 @@ const useContent = () => {
           const ageRestricted = video.contentDetails?.contentRating?.ytRating === "ytAgeRestricted";
           const embeddable = video.status?.embeddable;
           const processing = video.status?.uploadStatus === "processing";
+          /* To check video availablity */
+          const restriction = video.contentDetails?.regionRestriction;
+          let isAvailableInCountry = true;
+          if (restriction?.allowed) {
+            isAvailableInCountry = restriction.allowed.includes(usersLocation);
+          } else if (restriction?.blocked) {
+            isAvailableInCountry = !restriction.blocked.includes(usersLocation);
+          }
+          if (!isAvailableInCountry) return null;
           if (ageRestricted || !embeddable || processing) return null;
           return primaryVideoKey;
         };

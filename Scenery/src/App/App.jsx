@@ -2,8 +2,9 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import LandingLayout from "@/Pages/Layouts/LandingLayout/LandingLayout";
 import Landing from "@/Pages/Public/Landing/Landing";
 import SystemLayout from "@/Pages/Layouts/SystemLayout/SystemLayout";
-import About from "@/Pages/System/About/About";
+import AboutUs from "@/Pages/System/AboutUs/AboutUs";
 import Privacy from "@/Pages/System/Privacy/Privacy";
+import WhatsNew from "@/Pages/System/WhatsNew/WhatsNew";
 import AuthLayout from "@/Pages/Layouts/AuthLayout/AuthLayout";
 import Signup from "@/Pages/Public/Auth/Signup/Signup";
 import Signin from "@/Pages/Public/Auth/Signin/Signin";
@@ -19,11 +20,11 @@ import Search from "@/Pages/Core/Search/Search";
 import Askai from "@/Pages/Core/Askai/Askai";
 import MovieInfo from "@/Pages/Core/Browse/MediaInfo/MovieInfo/MovieInfo";
 import TVShowInfo from "@/Pages/Core/Browse/MediaInfo/TVShowInfo/TVShowInfo";
-import useUser from "@/Utils/Hooks/useUser/useUser";
+import useAppInit from "@/Utils/Hooks/useAppInit/useAppInit";
 
 const Layout = () => {
     /* Calling to get : Signed-in User's data | Account details (email, name, avatar) | Fetch Saved Media | User's region */
-    useUser();
+    useAppInit();
 
     /* Main layout for the app */
     return (
@@ -53,8 +54,9 @@ const App = () => {
                 {
                     element: <SystemLayout />,
                     children: [
-                        { path: "about", element: <About /> },
+                        { path: "aboutus", element: <AboutUs /> },
                         { path: "privacy", element: <Privacy /> },
+                        { path: "whatsnew", element: <WhatsNew /> },
                     ]
                 },
 

@@ -4,15 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUsersTypedEmail } from "@/Utils/Redux/Slices/AuthSlice/AuthSlice";
 import { auth } from "@/Utils/Firebase/Firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { updateAccount } from "@/Utils/Redux/Slices/UserSlice/UserSlice";
 
 export const useAuth = () => {
 
     /* To dispatch user info */
     const dispatch = useDispatch();
-
-    /* usersTypedEmail - getting used in sign in logic */
-    const usersTypedEmail = useSelector((store) => store.auth.usersTypedEmail);
 
     /* Regex for valid email */
     const isEmailValid = (email) => {
@@ -72,8 +68,7 @@ export const useAuth = () => {
             dispatch(addUsersTypedEmail(typedSignupEmail));
             /* Firebase - Sign up new users */
             createUserWithEmailAndPassword(auth, typedSignupEmail, typedSignupPassword)
-                .then((userCredential) => {
-                    const user = userCredential.user;
+                .then(() => {
                     setfirebaseSignupError(null);
                 })
                 .catch((error) => {
@@ -165,7 +160,7 @@ export const useAuth = () => {
 
     /* To change typed signin email */
     const changeTypedSigninEmail = () => {
-        setisSigninEmailValid(true);
+        setisSigninEmailValid(false);
         setinvalidSigninPassword(null);
     }
 
@@ -185,6 +180,7 @@ export const useAuth = () => {
         validateSigninEmail,
         invalidSigninEmail,
         isSigninEmailValid,
+        changeTypedSigninEmail,
         invalidSigninPassword,
         validateSigninPassword,
         firebaseSigninError,

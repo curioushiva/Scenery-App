@@ -20,7 +20,7 @@ const Privacy = () => {
             experience.
           </p>
         </div>
-        
+
         {/* Cards */}
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Information we store */}
@@ -29,10 +29,8 @@ const Privacy = () => {
             <p className="text-textcolor-secondary"> Scenery stores only the information required to support your account and personalize your experience.</p>
             <ul className="flex flex-col gap-2 text-sm lg:text-base">
               <li>• Email address</li>
-              <li>• Profile name</li>
-              <li>• Selected avatar</li>
-              <li>• Watch Later collections</li>
-              <li>• Favorites</li>
+              <li>• Profile name and avatar</li>
+              <li>• Watch Later and Favorites lists</li>
               <li>• Basic profile preferences</li>
             </ul>
           </div>

@@ -26,7 +26,7 @@ const About = () => {
                         {AboutObsidianMockData.map((about) => {
                             return (
                                 <div className='flex flex-col gap-1'>
-                                    <div onClick={() => setAboutQueType(prev => prev === about.questionID ? null : about.questionID)} className='w-full h-20 flex justify-between items-center gap-5 py-5 px-5 bg-bgcolor-ternary/80'>
+                                    <div onClick={() => setAboutQueType(prev => prev === about.questionID ? null : about.questionID)} className='w-full flex justify-between items-center gap-5 py-6 px-5 bg-bgcolor-ternary/80'>
                                         <h1 className='text-base font-medium lg:text-lg'>{about.question}</h1>
                                         {aboutQueType === about.questionID ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
                                     </div>

@@ -1,20 +1,16 @@
 import useContent from '@/Utils/Hooks/useContent/useContent';
-import useMedia from '@/Utils/Hooks/useMedia/useMedia';
+import useUser from '@/Utils/Hooks/useUser/useUser';
 import { IMG_BACKDROP_BASE_URL, IMG_POSTER_BASE_URL } from '@/Utils/SceneryAPI/SceneryAPI';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiBookmarkFill, RiBookmarkLine, RiHeartFill, RiHeartLine, RiInformationLine, RiPauseCircleLine, RiPlayFill } from '@remixicon/react';
 import { Info } from 'react-bootstrap-icons';;
-import { Outlet, useNavigate } from 'react-router';
 import { addMoviesGenre, addSelectedMovieGenreIndex } from '@/Utils/Redux/Slices/ContentSlice/ContentSlice';
-import { addMediaID } from '@/Utils/Redux/Slices/MediaSlice/MediaSlice';
-import { useMediaQuery } from 'react-responsive';
 
 const Movies = () => {
 
     /* To dispatch and navigate */
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     /* To access Movie's genre  */
     const moviesGenre = useSelector((store) => store.content.moviesGenre)
@@ -51,7 +47,7 @@ const Movies = () => {
     const [isBgVideoPlaying, setIsBgVideoPlaying] = useState(false)
 
     /* Media type (for info), save media (for saving watchlater & fav) & check if saved */
-    const { mediaType, saveUsersMedia, showSavedUsersMedia } = useMedia();
+    const { mediaType, saveUsersMedia, showSavedUsersMedia } = useUser();
 
     /* Rendering on basis of categorie loaded */
     {
@@ -96,7 +92,7 @@ const Movies = () => {
                             </div>
                             :
                             <div className="relative z-20 flex flex-row items-end gap-6 flex-wrap">
-                                <h1 className="text-4xl lg:text-4xl font-bold leading-[0.7]">Movies</h1>
+                                <h1 className="text-3xl lg:text-4xl font-bold leading-[0.7]">Movies</h1>
                                 <div onClick={() => { setIsMoviesGenreClicked(prev => !prev); }} className="flex justify-center items-center gap-2 cursor-pointer px-2 border-1 lg:gap-7 lg:py-[0.1rem] hover:bg-brcolor-primary">
                                     <h1 className='font-medium text-[0.70rem] lg:text-[0.80rem]'>Genres</h1>
                                     <svg className={`w-3 transition-transform duration-300 ${isMoviesGenreClicked ? "rotate-180" : "rotate-0"}`} viewBox="8 10 8 4" fill="currentColor"><path d="M12 14L8 10H16L12 14Z" /></svg>

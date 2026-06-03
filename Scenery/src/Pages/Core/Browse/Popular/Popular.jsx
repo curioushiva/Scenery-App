@@ -1,11 +1,10 @@
 import useContent from '@/Utils/Hooks/useContent/useContent';
-import useMedia from '@/Utils/Hooks/useMedia/useMedia';
+import useUser from '@/Utils/Hooks/useUser/useUser';
 import { IMG_POSTER_BASE_URL } from '@/Utils/SceneryAPI/SceneryAPI';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RiBookmarkFill, RiBookmarkLine, RiHeartFill, RiHeartLine, RiInformationLine } from '@remixicon/react';
 import { Info } from 'react-bootstrap-icons';
-import { addMediaID } from '@/Utils/Redux/Slices/MediaSlice/MediaSlice';
 import { useNavigate } from 'react-router';
 
 const Popular = () => {
@@ -25,7 +24,7 @@ const Popular = () => {
     const allGenres = useSelector((store) => store.content.allGenres);
 
     /* Media type (for info), save media (for saving watchlater & fav) & check if saved */
-    const { mediaType, saveUsersMedia, showSavedUsersMedia } = useMedia();
+    const { mediaType, saveUsersMedia, showSavedUsersMedia } = useUser();
 
     {
         return popularCat?.length === 0 ?

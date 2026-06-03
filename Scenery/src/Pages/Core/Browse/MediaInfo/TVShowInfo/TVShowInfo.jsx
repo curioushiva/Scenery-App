@@ -1,3 +1,4 @@
+import useUser from "@/Utils/Hooks/useUser/useUser";
 import useMedia from "@/Utils/Hooks/useMedia/useMedia";
 import {
     IMG_POSTER_BASE_URL, IMG_HERO_BACKDROP_BASE_URL, IMG_HERO_POSTER_BASE_URL
@@ -33,18 +34,19 @@ const TVShowInfo = () => {
 
     /* All genres , User's Profile & Users Location */
     const allGenres = useSelector((store) => store.content.allGenres);
-    const usersCurRegion = useSelector((store) => store.user.account.usersCurRegion)
+    const usersLocation = useSelector((store) => store.user.account.usersLocation)
 
     /* Selcting & calling getMovieInfo from dispatched MediaID, media type (for info), save media (for saving watchlater & fav) & check if saved */
     const mediaInfo = useSelector((store) => store.media.mediaInfo)
-    const { mediaType, getTVShowInfo, saveUsersMedia, showSavedUsersMedia } = useMedia();
+    const { mediaType, saveUsersMedia, showSavedUsersMedia } = useUser();
+    const { getTVShowInfo } = useMedia();
     useEffect(() => {
         getTVShowInfo(mediaIDFromURL);
         dispatch(addMediaID(mediaIDFromURL));
     }, [mediaIDFromURL]);
 
     /* Certification check */
-    const mediaCertification = mediaInfo?.certifications?.results?.find((val) => val.iso_3166_1 === usersCurRegion)?.rating;
+    const mediaCertification = mediaInfo?.certifications?.results?.find((val) => val.iso_3166_1 === usersLocation)?.rating;
 
     /* Check for director or creater's name */
     const findCreator = (() => {
@@ -117,7 +119,7 @@ const TVShowInfo = () => {
             })
         );
         return watchProvidersArr.find(
-            (val) => val.country === usersCurRegion
+            (val) => val.country === usersLocation
         ) || null;
     })();
 
@@ -386,10 +388,10 @@ const TVShowInfo = () => {
                             <div className="w-full flex flex-col justify-around gap-5 rounded-lg cursor-pointer">
 
                                 {/* Rendering Networks */}
-                                <div onClick={() => setSectionOneType(prev => prev === "Networks" ? null : "Networks")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionOneType === "Networks" && "underline text-gray-400"}`}>
+                                <div onClick={() => setSectionOneType(prev => prev === "Networks" ? null : "Networks")} className={`flex justify-between gap-4 bg-black/40 p-5 rounded-lg ${sectionOneType === "Networks" && "underline text-gray-400"}`}>
                                     <div className="flex gap-2">
-                                        <RiChatQuoteLine className="w-7 h-7" />
-                                        <h1 className="text-lg font-semibold leading-[1.3]">Networks</h1>
+                                        <RiChatQuoteLine className="w-6 h-6 430:w-7 430:h-7" />
+                                        <h1 className="text-base 430:text-lg font-semibold leading-[1.3]">Networks</h1>
                                     </div>
                                     {sectionOneType === "Networks" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
                                 </div>
@@ -427,10 +429,10 @@ const TVShowInfo = () => {
 
 
                                 {/* Rendering Seasons */}
-                                <div onClick={() => setSectionOneType(prev => prev === "Seasons" ? null : "Seasons")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionOneType === "Seasons" && "underline text-gray-400"}`}>
+                                <div onClick={() => setSectionOneType(prev => prev === "Seasons" ? null : "Seasons")} className={`flex justify-between gap-4 bg-black/40 p-5 rounded-lg ${sectionOneType === "Seasons" && "underline text-gray-400"}`}>
                                     <div className="flex gap-2">
-                                        <RiChatQuoteLine className="w-7 h-7" />
-                                        <h1 className="text-lg font-semibold leading-[1.3]">Seasons</h1>
+                                        <RiChatQuoteLine className="w-6 h-6 430:w-7 430:h-7" />
+                                        <h1 className="text-base 430:text-lg font-semibold leading-[1.3]">Seasons</h1>
                                     </div>
                                     {sectionOneType === "Seasons" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
                                 </div>
@@ -513,14 +515,14 @@ const TVShowInfo = () => {
 
 
                                 {/* Airing Status */}
-                                <div onClick={() => setSectionOneType(prev => prev === "AiringStatus" ? null : "AiringStatus")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionOneType === "AiringStatus" && "underline text-gray-400"}`}>
+                                <div onClick={() => setSectionOneType(prev => prev === "Airing" ? null : "Airing")} className={`flex justify-between gap-4 bg-black/40 p-5 rounded-lg ${sectionOneType === "Airing" && "underline text-gray-400"}`}>
                                     <div className="flex gap-2">
-                                        <RiHourglass2Line className="w-7 h-7" />
-                                        <h1 className="text-lg font-semibold leading-[1.3]">Airing Status</h1>
+                                        <RiHourglass2Line className="w-6 h-6 430:w-7 430:h-7" />
+                                        <h1 className="text-base 430:text-lg font-semibold leading-[1.3]">Airing</h1>
                                     </div>
-                                    {sectionOneType === "AiringStatus" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
+                                    {sectionOneType === "Airing" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
                                 </div>
-                                {(sectionOneType === "AiringStatus") &&
+                                {(sectionOneType === "Airing") &&
                                     ((mediaInfo?.details?.last_episode_to_air || mediaInfo?.details?.next_episode_to_air) !== null ?
                                         (<div className="flex flex-row gap-5" style={{ clipPath: 'polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)' }}>
                                             <div className="w-full bg-black/40 py-8 px-3 pt-18 rounded-md overflow-y-auto custom-scrollbar 430:px-8 430:py-8 430:pt-18">
@@ -698,7 +700,7 @@ const TVShowInfo = () => {
                                                     className="w-full h-full object-cover"
                                                 />
                                                 <div className="absolute m-1 right-1 top-1 rounded-2xl px-3 py-1 bg-black/60 border-sm opacity-0 group-hover:opacity-100">
-                                                    {video?.name && <h1 className="text-xs font-semibold 460:text-sm">{video?.name}</h1>}
+                                                    {video?.name && <h1 className="text-xs font-semibold 460:text-sm">{(video?.name)?.split(/:|-/)[0]}</h1>}
                                                 </div>
                                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100">
                                                     <div className="p-1 rounded-full bg-black/60 border-sm 460:p-2">
@@ -719,10 +721,10 @@ const TVShowInfo = () => {
                             </div>
                             <div className="w-full flex flex-col justify-around gap-5 rounded-lg cursor-pointer">
                                 {/* Rendering Reviews */}
-                                <div onClick={() => setSectionTwoType(prev => prev === "Reviews" ? null : "Reviews")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionTwoType === "Reviews" && "underline text-gray-400"}`}>
+                                <div onClick={() => setSectionTwoType(prev => prev === "Reviews" ? null : "Reviews")} className={`flex justify-between gap-4 bg-black/40 p-5 rounded-lg ${sectionTwoType === "Reviews" && "underline text-gray-400"}`}>
                                     <div className="flex gap-2">
-                                        <RiChatQuoteLine className="w-7 h-7" />
-                                        <h1 className="text-lg font-semibold leading-[1.3]">Reviews</h1>
+                                        <RiChatQuoteLine className="w-6 h-6 430:w-7 430:h-7" />
+                                        <h1 className="text-base 430:text-lg font-semibold leading-[1.3]">Reviews</h1>
                                     </div>
                                     {sectionOneType === "Reviews" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
                                 </div>
@@ -763,10 +765,10 @@ const TVShowInfo = () => {
                                     )}
 
                                 {/* Rendering Studios */}
-                                <div onClick={() => setSectionTwoType(prev => prev === "Studios" ? null : "Studios")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionTwoType === "Studios" && "underline text-gray-400"}`}>
+                                <div onClick={() => setSectionTwoType(prev => prev === "Studios" ? null : "Studios")} className={`flex justify-between gap-4 bg-black/40 p-5 rounded-lg ${sectionTwoType === "Studios" && "underline text-gray-400"}`}>
                                     <div className="flex gap-2">
-                                        <RiFilmLine className="w-7 h-7" />
-                                        <h1 className="text-lg font-semibold leading-[1.3]">Studios</h1>
+                                        <RiFilmLine className="w-6 h-6 430:w-7 430:h-7" />
+                                        <h1 className="text-base 430:text-lg font-semibold leading-[1.3]">Studios</h1>
                                     </div>
                                     {sectionOneType === "Studios" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
                                 </div>
@@ -803,14 +805,14 @@ const TVShowInfo = () => {
                                     )}
 
                                 {/* Rendering Watch Providers */}
-                                <div onClick={() => setSectionTwoType(prev => prev === "WatchProviders" ? null : "WatchProviders")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionTwoType === "WatchProviders" && "underline text-gray-400"}`}>
+                                <div onClick={() => setSectionTwoType(prev => prev === "Providers" ? null : "Providers")} className={`flex justify-between gap-4 bg-black/40 p-5 rounded-lg ${sectionTwoType === "Providers" && "underline text-gray-400"}`}>
                                     <div className="flex gap-2">
-                                        <RiMovie2Line className="w-7 h-7" />
-                                        <h1 className="text-lg font-semibold leading-[1.3]">Watch Providers</h1>
+                                        <RiMovie2Line className="w-6 h-6 430:w-7 430:h-7" />
+                                        <h1 className="text-base 430:text-lg font-semibold leading-[1.3]">Providers</h1>
                                     </div>
-                                    {sectionOneType === "WatchProviders" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
+                                    {sectionOneType === "Providers" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
                                 </div>
-                                {(sectionTwoType === "WatchProviders") &&
+                                {(sectionTwoType === "Providers") &&
                                     (regionalWatchProviderType?.length > 0 ?
                                         (<div className="flex flex-row gap-5 no-scrollbar">
                                             <div className="w-full bg-black/40 flex flex-col gap-6 py-8 px-3 pt-12 rounded-md 430:px-8 430:py-8 430:pt-12" style={{ clipPath: 'polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)' }}>
@@ -916,10 +918,10 @@ const TVShowInfo = () => {
                                     )}
 
                                 {/* Rendering Socials */}
-                                <div onClick={() => setSectionTwoType(prev => prev === "Socials" ? null : "Socials")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionTwoType === "Socials" && "underline text-gray-400"}`}>
+                                <div onClick={() => setSectionTwoType(prev => prev === "Socials" ? null : "Socials")} className={`flex justify-between gap-4 bg-black/40 p-5 rounded-lg ${sectionTwoType === "Socials" && "underline text-gray-400"}`}>
                                     <div className="flex gap-2">
-                                        <RiHashtag className="w-7 h-7" />
-                                        <h1 className="text-lg font-semibold leading-[1.3]">Socials</h1>
+                                        <RiHashtag className="w-6 h-6 430:w-7 430:h-7" />
+                                        <h1 className="text-base 430:text-lg font-semibold leading-[1.3]">Socials</h1>
                                     </div>
                                     {sectionOneType === "Socials" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
                                 </div>
@@ -1043,7 +1045,7 @@ const TVShowInfo = () => {
                                                     </div>
                                                     {(content?.title || content?.name) &&
                                                         <div className="absolute m-1 left-1 bottom-1 rounded-2xl px-3 py-1 bg-black/60 border-sm transition-transform duration-200 group-hover:-translate-y-23 460:group-hover:-translate-y-30">
-                                                            <h1 className="text-xs font-semibold 460:text-sm">{content?.title || content?.name || "N/A"}</h1>
+                                                            <h1 className="text-xs font-semibold 460:text-sm">{((content?.title || content?.name).split(/:|-/)[0]) || "N/A"}</h1>
                                                         </div>
                                                     }
                                                 </div>

@@ -5,12 +5,13 @@ const initialState = {
     account: {
         usersUID: null,
         usersEmail: null,
-        usersName: null,
-        usersCurRegion: null,
+        usersName: '',
         usersAvatarNum: 0,
-        usersProfileType: null
+        usersLocation: null,
+        usersCreatedAt: null,
     },
-    isUsersAvatarNumFetched: false
+    isUsersAccountFetched: false,
+    isUsersProfileSelected: false,
 };
 
 const UserSlice = createSlice({
@@ -20,8 +21,11 @@ const UserSlice = createSlice({
         updateAccount: (state, action) => {
             state.account = { ...state.account, ...action.payload };
         },
-        setIsUsersAvatarNumFetched: (state, action) => {
-            state.isUsersAvatarNumFetched = action.payload;
+        setIsUsersAccountFetched: (state, action) => {
+            state.isUsersAccountFetched = action.payload;
+        },
+        setIsUsersProfileSelected: (state, action) => {
+            state.isUsersProfileSelected = action.payload;
         },
         removeUser: () => {
             return initialState;
@@ -29,6 +33,6 @@ const UserSlice = createSlice({
     }
 });
 
-export const { updateAccount, setIsUsersAvatarNumFetched, removeUser } = UserSlice.actions;
+export const { updateAccount, setIsUsersAccountFetched, setIsUsersProfileSelected, removeUser } = UserSlice.actions;
 export default UserSlice.reducer;
 

@@ -1,7 +1,7 @@
 import useContent from '@/Utils/Hooks/useContent/useContent';
 import { IMG_BACKDROP_BASE_URL, IMG_POSTER_BASE_URL } from '@/Utils/SceneryAPI/SceneryAPI';
-import useMedia from '@/Utils/Hooks/useMedia/useMedia'
-import { useDispatch, useSelector } from 'react-redux';
+import useUser from '@/Utils/Hooks/useUser/useUser';
+import { useSelector } from 'react-redux';
 import { RiBookmarkFill, RiBookmarkLine, RiHeartFill, RiHeartLine, RiInformationLine, RiPauseCircleLine, RiPlayFill } from '@remixicon/react';
 import { Info } from 'react-bootstrap-icons';
 import { useState, useEffect } from 'react';
@@ -24,7 +24,8 @@ const Browse = () => {
   const [isBgVideoPlaying, setIsBgVideoPlaying] = useState(false)
 
   /* Media type (for info), save media (for saving watchlater & fav) & check if saved */
-  const { mediaType, saveUsersMedia, showSavedUsersMedia } = useMedia();
+  const { mediaType, saveUsersMedia, showSavedUsersMedia } = useUser();
+
 
   /* Rendering on basis of categories loaded */
   {

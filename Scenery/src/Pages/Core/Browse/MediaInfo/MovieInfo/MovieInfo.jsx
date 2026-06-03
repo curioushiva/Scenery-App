@@ -1,3 +1,4 @@
+import useUser from "@/Utils/Hooks/useUser/useUser";
 import useMedia from "@/Utils/Hooks/useMedia/useMedia";
 import {
     IMG_POSTER_BASE_URL, IMG_HERO_BACKDROP_BASE_URL, IMG_HERO_POSTER_BASE_URL
@@ -33,18 +34,19 @@ const MovieInfo = () => {
     /* All genres , User's Profile & Users Location */
     const allGenres = useSelector((store) => store.content.allGenres);
     const users = useSelector((store) => store.user)
-    const usersCurRegion = useSelector((store) => store.user.account.usersCurRegion)
+    const usersLocation = useSelector((store) => store.user.account.usersLocation)
 
     /* Selcting & calling getMovieInfo from dispatched MediaID, media type (for info), save media (for saving watchlater & fav) & check if saved */
     const mediaInfo = useSelector((store) => store.media.mediaInfo)
-    const { mediaType, getMovieInfo, saveUsersMedia, showSavedUsersMedia } = useMedia();
+    const { mediaType, saveUsersMedia, showSavedUsersMedia } = useUser();
+    const { getMovieInfo } = useMedia();
     useEffect(() => {
         getMovieInfo(mediaIDFromURL);
         dispatch(addMediaID(mediaIDFromURL));
     }, [mediaIDFromURL]);
 
     /* Certification check */
-    const mediaCertification = mediaInfo?.certifications?.results?.find((val) => val.iso_3166_1 === usersCurRegion)?.release_dates?.[0]?.certification;
+    const mediaCertification = mediaInfo?.certifications?.results?.find((val) => val.iso_3166_1 === usersLocation)?.release_dates?.[0]?.certification;
 
     /* Check for director & writter names */
     const findDirector = (() => {
@@ -114,7 +116,7 @@ const MovieInfo = () => {
             })
         );
         return watchProvidersArr.find(
-            (val) => val.country === usersCurRegion
+            (val) => val.country === usersLocation
         ) || null;
     })();
 
@@ -219,17 +221,22 @@ const MovieInfo = () => {
                                         </div>
                                     }
 
-                                    {/* Genres */}
-                                    {mediaInfo?.details?.genres?.length > 0 &&
-                                        <div className="flex gap-2">
-                                            <h2>•</h2>
-                                            {mediaInfo?.details?.genres?.slice(0, 2)?.map((val) => <h2 key={val.id}>{val?.name === "Science Fiction" ? "Sci-Fi" : (val?.name)?.split(' ')[0]}</h2>)}
-                                        </div>
-                                    }
+                                    {/* Genre & movie runtime */}
+                                    {(mediaInfo?.details?.genres?.length > 0 || (mediaInfo?.details?.runtime !== 0 && mediaInfo?.details?.runtime)) &&
+                                        <div className="flex gap-2 flex-wrap">
+                                            {/* Genres */}
+                                            {mediaInfo?.details?.genres?.length > 0 &&
+                                                <div className="flex gap-2">
+                                                    <h2>•</h2>
+                                                    {mediaInfo?.details?.genres?.slice(0, 2)?.map((val) => <h2 key={val.id}>{val?.name === "Science Fiction" ? "Sci-Fi" : (val?.name)?.split(' ')[0]}</h2>)}
+                                                </div>
+                                            }
 
-                                    {/* Movie runtime */}
-                                    {(mediaInfo?.details?.runtime !== 0 && mediaInfo?.details?.runtime) &&
-                                        <h2>• {`${(Math.floor(mediaInfo?.details?.runtime / 60)) === 0 ? "" : Math.floor(mediaInfo?.details?.runtime / 60)}${(Math.floor(mediaInfo?.details?.runtime / 60)) === 0 ? "" : "h"} ${(mediaInfo?.details?.runtime % 60)?.toString()?.padStart(2, '0')}m`}</h2>
+                                            {/* Movie runtime */}
+                                            {(mediaInfo?.details?.runtime !== 0 && mediaInfo?.details?.runtime) &&
+                                                <h2>• {`${(Math.floor(mediaInfo?.details?.runtime / 60)) === 0 ? "" : Math.floor(mediaInfo?.details?.runtime / 60)}${(Math.floor(mediaInfo?.details?.runtime / 60)) === 0 ? "" : "h"} ${(mediaInfo?.details?.runtime % 60)?.toString()?.padStart(2, '0')}m`}</h2>
+                                            }
+                                        </div>
                                     }
                                 </div>
 
@@ -399,7 +406,7 @@ const MovieInfo = () => {
                                                     className="w-full h-full object-cover"
                                                 />
                                                 <div className="absolute m-1 right-1 top-1 rounded-2xl px-3 py-1 bg-black/60 border-sm opacity-0 group-hover:opacity-100">
-                                                    {video?.name && <h1 className="text-xs font-semibold 460:text-sm">{video?.name}</h1>}
+                                                    {video?.name && <h1 className="text-xs font-semibold 460:text-sm">{(video?.name)?.split(/:|-/)[0]}</h1>}
                                                 </div>
                                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100">
                                                     <div className="p-1 rounded-full bg-black/60 border-sm 460:p-2">
@@ -421,10 +428,10 @@ const MovieInfo = () => {
                             <div className="w-full flex flex-col justify-around gap-5 rounded-lg cursor-pointer">
 
                                 {/* Rendering Reviews */}
-                                <div onClick={() => setSectionOneType(prev => prev === "Reviews" ? null : "Reviews")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionOneType === "Reviews" && "underline text-gray-400"}`}>
+                                <div onClick={() => setSectionOneType(prev => prev === "Reviews" ? null : "Reviews")} className={`flex justify-between gap-4 bg-black/40 p-5 rounded-lg ${sectionOneType === "Reviews" && "underline text-gray-400"}`}>
                                     <div className="flex gap-2">
-                                        <RiChatQuoteLine className="w-7 h-7" />
-                                        <h1 className="text-lg font-semibold leading-[1.3]">Reviews</h1>
+                                        <RiChatQuoteLine className="w-6 h-6 430:w-7 430:h-7" />
+                                        <h1 className="text-base 430:text-lg font-semibold leading-[1.3]">Reviews</h1>
                                     </div>
                                     {sectionOneType === "Reviews" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
                                 </div>
@@ -437,7 +444,7 @@ const MovieInfo = () => {
                                                     {mediaInfo?.reviews?.results?.map((review) => {
                                                         return (
                                                             <div key={review.id} className="w-full bg-black/40 p-5 pt-10 rounded-md" style={{ clipPath: 'polygon(6% 5%, 100% 5%, 100% 100%, 0 100%, 0 0)' }}>
-                                                                <div className="w-full flex flex-col gap-3 max-h-80 pr-3 overflow-y-auto custom-scrollbar 430:pr-5">
+                                                                <div className="w-full flex flex-col gap-3 max-h-80 pr-3 overflow-y-auto custom-scrollbar overflow-x-hidden 430:pr-5">
                                                                     <div className="flex flex-col gap-5 375:flex-row">
                                                                         <div className="w-[3.5rem]">
                                                                             <img src={review?.author_details?.avatar_path ? `${IMG_POSTER_BASE_URL}${review?.author_details?.avatar_path}` : NoProfile} alt="Profile" className="w-full aspect-[1/1] rounded-full object-cover" />
@@ -447,7 +454,7 @@ const MovieInfo = () => {
                                                                             <h1 className="text-xs">Written by <span className="italic">{review?.author || review?.author_details?.username || "Scenery User"}</span> {review?.created_at && `in ${(review?.created_at)?.slice(0, 4)}`}</h1>
                                                                         </div>
                                                                     </div>
-                                                                    <h1 className="text-[0.85rem]">{review?.content || "Review unavailable"}</h1>
+                                                                    <h1 className="text-[0.85rem]">{(review?.content).split(/https:/)[0] || "Review unavailable"}</h1>
                                                                 </div>
                                                             </div>
                                                         )
@@ -465,10 +472,10 @@ const MovieInfo = () => {
                                     )}
 
                                 {/* Rendering Studios */}
-                                <div onClick={() => setSectionOneType(prev => prev === "Studios" ? null : "Studios")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionOneType === "Studios" && "underline text-gray-400"}`}>
+                                <div onClick={() => setSectionOneType(prev => prev === "Studios" ? null : "Studios")} className={`flex justify-between gap-4 bg-black/40 p-5 rounded-lg ${sectionOneType === "Studios" && "underline text-gray-400"}`}>
                                     <div className="flex gap-2">
-                                        <RiFilmLine className="w-7 h-7" />
-                                        <h1 className="text-lg font-semibold leading-[1.3]">Studios</h1>
+                                        <RiFilmLine className="w-6 h-6 430:w-7 430:h-7" />
+                                        <h1 className="basex430:text-lg t-lg font-semibold leading-[1.3]">Studios</h1>
                                     </div>
                                     {sectionOneType === "Studios" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
                                 </div>
@@ -505,14 +512,14 @@ const MovieInfo = () => {
                                     )}
 
                                 {/* Rendering Watch Providers */}
-                                <div onClick={() => setSectionOneType(prev => prev === "WatchProviders" ? null : "WatchProviders")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionOneType === "WatchProviders" && "underline text-gray-400"}`}>
+                                <div onClick={() => setSectionOneType(prev => prev === "Providers" ? null : "Providers")} className={`flex justify-between gap-4 bg-black/40 p-5 rounded-lg ${sectionOneType === "Providers" && "underline text-gray-400"}`}>
                                     <div className="flex gap-2">
-                                        <RiMovie2Line className="w-7 h-7" />
-                                        <h1 className="text-lg font-semibold leading-[1.3]">Watch Providers</h1>
+                                        <RiMovie2Line className="w-6 h-6 430:w-7 430:h-7" />
+                                        <h1 className="tebase-430:text-lg lg font-semibold leading-[1.3]">Providers</h1>
                                     </div>
-                                    {sectionOneType === "WatchProviders" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
+                                    {sectionOneType === "Providers" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
                                 </div>
-                                {(sectionOneType === "WatchProviders") &&
+                                {(sectionOneType === "Providers") &&
                                     (regionalWatchProviderType?.length > 0 ?
                                         (<div className="flex flex-row gap-5 no-scrollbar">
                                             <div className="w-full bg-black/40 flex flex-col gap-6 py-8 px-3 pt-12 rounded-md 430:px-8 430:py-8 430:pt-12" style={{ clipPath: 'polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)' }}>
@@ -535,7 +542,7 @@ const MovieInfo = () => {
                                                             </div>
                                                         </div>
                                                     }
-                                                    
+
                                                     {/* Flatrate */}
                                                     {(regionalWatchProvider?.watchProviders?.flatrate?.length) > 0 &&
                                                         <div className="w-full bg-black/40 flex flex-col gap-5 p-8 rounded-md">
@@ -554,7 +561,7 @@ const MovieInfo = () => {
                                                         </div>
                                                     }
 
-                                                    
+
                                                     {/* Rent */}
                                                     {(regionalWatchProvider?.watchProviders?.rent?.length) > 0 &&
                                                         <div className="w-full bg-black/40 flex flex-col gap-5 p-8 rounded-md">
@@ -620,10 +627,10 @@ const MovieInfo = () => {
                                     )}
 
                                 {/* Rendering Socials */}
-                                <div onClick={() => setSectionOneType(prev => prev === "Socials" ? null : "Socials")} className={`flex justify-between bg-black/40 p-5 rounded-lg ${sectionOneType === "Socials" && "underline text-gray-400"}`}>
+                                <div onClick={() => setSectionOneType(prev => prev === "Socials" ? null : "Socials")} className={`flex justify-between gap-4 bg-black/40 p-5 rounded-lg ${sectionOneType === "Socials" && "underline text-gray-400"}`}>
                                     <div className="flex gap-2">
-                                        <RiHashtag className="w-7 h-7" />
-                                        <h1 className="text-lg font-semibold leading-[1.3]">Socials</h1>
+                                        <RiHashtag className="w-6 h-6 430:w-7 430:h-7" />
+                                        <h1 className="text-base 430:text-lg xt-lg font-semibold leading-[1.3]">Socials</h1>
                                     </div>
                                     {sectionOneType === "Socials" ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
                                 </div>
@@ -742,7 +749,7 @@ const MovieInfo = () => {
                                                     </div>
                                                     {(content?.title || content?.name) &&
                                                         <div className="absolute m-1 left-1 bottom-1 rounded-2xl px-3 py-1 bg-black/60 border-sm transition-transform duration-200 group-hover:-translate-y-23 460:group-hover:-translate-y-30">
-                                                            <h1 className="text-xs font-semibold 460:text-sm">{content?.title || content?.name || "N/A"}</h1>
+                                                            <h1 className="text-xs font-semibold 460:text-sm">{((content?.title || content?.name).split(/:|-/)[0]) || "N/A"}</h1>
                                                         </div>
                                                     }
                                                 </div>

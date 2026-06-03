@@ -1,13 +1,12 @@
 import useContent from '@/Utils/Hooks/useContent/useContent';
-import useMedia from '@/Utils/Hooks/useMedia/useMedia';
+import useUser from '@/Utils/Hooks/useUser/useUser';
 import { IMG_BACKDROP_BASE_URL, IMG_POSTER_BASE_URL } from '@/Utils/SceneryAPI/SceneryAPI';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiBookmarkFill, RiBookmarkLine, RiHeartFill, RiHeartLine, RiInformationLine, RiPauseCircleLine, RiPlayFill } from '@remixicon/react';
 import { Info } from 'react-bootstrap-icons';
-import { Outlet, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { addTvShowsGenre, addSelectedTvShowGenreIndex } from '@/Utils/Redux/Slices/ContentSlice/ContentSlice';
-import { addMediaID } from '@/Utils/Redux/Slices/MediaSlice/MediaSlice';
 
 const TVShows = () => {
 
@@ -50,7 +49,7 @@ const TVShows = () => {
     const [isBgVideoPlaying, setIsBgVideoPlaying] = useState(false)
 
     /* Media type (for info), save media (for saving watchlater & fav) & check if saved */
-    const { mediaType, saveUsersMedia, showSavedUsersMedia } = useMedia();
+    const { mediaType, saveUsersMedia, showSavedUsersMedia } = useUser();
 
     /* Rendering on basis of categories loaded */
     {
@@ -94,7 +93,7 @@ const TVShows = () => {
                             </div>
                             :
                             <div className="relative z-20 flex flex-row items-end gap-6 flex-wrap">
-                                <h1 className="text-4xl lg:text-4xl font-bold leading-[0.7]">TV Shows</h1>
+                                <h1 className="text-3xl lg:text-4xl font-bold leading-[0.7]">TV Shows</h1>
                                 <div onClick={() => { setIsTvShowsGenreClicked(prev => !prev) }} className="flex justify-center items-center gap-2 cursor-pointer px-2 border-1 lg:gap-7 lg:py-[0.1rem] hover:bg-brcolor-primary">
                                     <h1 className='font-medium text-[0.70rem] lg:text-[0.80rem]'>Genres</h1>
                                     <svg className={`w-3 transition-transform duration-300 ${isTvShowsGenreClicked ? "rotate-180" : "rotate-0"}`} viewBox="8 10 8 4" fill="currentColor"><path d="M12 14L8 10H16L12 14Z" /></svg>

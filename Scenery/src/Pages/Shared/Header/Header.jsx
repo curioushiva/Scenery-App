@@ -5,7 +5,6 @@ import { AvatarsMockData } from "@/Utils/Mockdata/Mockdata";
 import { RiHome5Line, RiVideoOnLine, RiTvLine, RiFireLine, RiCopyrightLine, RiEyeCloseLine, RiSearchLine, RiShiningLine, RiBookShelfLine } from "@remixicon/react";
 import { Layers } from "react-bootstrap-icons"
 import { useState, useEffect } from "react";
-import Guest from "@/Assets/Imgs/Avatars/Guest.png"
 import { useMediaQuery } from 'react-responsive';
 
 /* Landing Header */
@@ -47,7 +46,7 @@ export const CoreHeader = () => {
   const isDesktopScreen = useMediaQuery({ query: '(min-width: 500px) and (min-height: 500px)', });
 
   /* User's Profile Info */
-  const { usersProfileType, usersAvatarNum } = useSelector((store) => store.user.account)
+  const { usersAvatarNum } = useSelector((store) => store.user.account)
 
   /* To handle navbar in mobile */
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -77,7 +76,7 @@ export const CoreHeader = () => {
               <Link to="/library"><RiBookShelfLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" /></Link>
               <Link to="/search"><RiSearchLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" /></Link>
               <Link to="/askai"><RiShiningLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" /></Link>
-              <Link to="/account">{usersProfileType === "Guest" ? <img src={Guest} alt="Guest" className="w-7" /> : <img src={AvatarsMockData[usersAvatarNum].avatar} alt="Avatar" className="w-[1.65rem]" />}</Link>
+              <Link to="/account"><img src={AvatarsMockData[usersAvatarNum].avatar} alt="Avatar" className="w-[1.65rem]" /></Link>
             </div>
           </div>
         </div >

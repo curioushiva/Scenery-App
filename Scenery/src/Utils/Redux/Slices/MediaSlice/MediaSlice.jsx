@@ -2,7 +2,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isMediaFetched: false,
     savedMovies: {
         watchLater: [],
         favourite: []
@@ -19,9 +18,6 @@ const MediaSlice = createSlice({
     name: "media",
     initialState,
     reducers: {
-        setIsMediaFetched: (state, action) => {
-            state.isMediaFetched = action.payload;
-        },
         addSavedMovies: (state, action) => {
             const { type, data, append } = action.payload;
             if (append) {
@@ -47,6 +43,6 @@ const MediaSlice = createSlice({
 
     }
 })
-export const { setIsMediaFetched, addSavedMovies, addSavedTVShows, addMediaID, addMediaInfo } = MediaSlice.actions;
+export const { addSavedMovies, addSavedTVShows, addMediaID, addMediaInfo } = MediaSlice.actions;
 export default MediaSlice.reducer;
 
