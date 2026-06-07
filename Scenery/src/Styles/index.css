@@ -41,7 +41,6 @@ body,
   --font-bold: "Netflix_Sans_Bold_Bold", sans-serif;
   --font-cursive: "OGG_Cursive", sans-serif;
 
-
   /* Colors */
 
   /* Body */
@@ -51,30 +50,29 @@ body,
   --color-bgcolor-fourth: #141414;
 
   /* UI */
-  --color-uicolor-primary: #E50914;
+  --color-uicolor-primary: #e50914;
 
   /* Text */
   --color-textcolor-primary: #ffffff;
-  --color-textcolor-secondary: #B3B3B3;
+  --color-textcolor-secondary: #b3b3b3;
 
   /* Border */
-  --color-brcolor-primary: #5F5E5E;
+  --color-brcolor-primary: #5f5e5e;
   --color-brcolor-secondary: #ffffff;
 
-
   /* Breakpoints */
-  --breakpoint-220: 13.750rem;
+  --breakpoint-220: 13.75rem;
   /* 200px */
-  --breakpoint-240: 15.000rem;
+  --breakpoint-240: 15rem;
   /* 240px */
-  --breakpoint-280: 17.500rem;
+  --breakpoint-280: 17.5rem;
   /* 280px */
   --breakpoint-295: 18.438rem;
   /* 295px */
-  --breakpoint-310: 20.000rem;
+  --breakpoint-310: 20rem;
   /* 310px */
   --breakpoint-350: 21.875rem;
-  /* 350px */  
+  /* 350px */
   --breakpoint-375: 23.438rem;
   /* 375px */
   --breakpoint-385: 24.063rem;
@@ -83,17 +81,17 @@ body,
   /* 395px */
   --breakpoint-430: 26.875rem;
   /* 430px */
-  --breakpoint-460: 28.750rem;
+  --breakpoint-460: 28.75rem;
   /* 460px */
   --breakpoint-550: 34.375rem;
   /* 550px */
-  --breakpoint-700: 43.750rem;
+  --breakpoint-700: 43.75rem;
   /* 780px */
-  --breakpoint-840: 52.500rem;
+  --breakpoint-840: 52.5rem;
   /* 840px */
-  --breakpoint-880: 55.000rem;
+  --breakpoint-880: 55rem;
   /* 880px */
-  --breakpoint-960: 60.000rem;
+  --breakpoint-960: 60rem;
   /* 960px */
 }
 
@@ -140,10 +138,10 @@ body,
   left: 20px;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid #5F5E5E;
+  border-bottom: 8px solid #5f5e5e;
 }
 
-@media (min-width:280px) {
+@media (min-width: 280px) {
   .moviesGenreDropdown {
     top: 180%;
     left: 75px;
@@ -155,7 +153,7 @@ body,
   }
 }
 
-@media (min-width:1024px) {
+@media (min-width: 1024px) {
   .moviesGenreDropdown {
     left: 105px;
   }
@@ -177,10 +175,10 @@ body,
   left: 20px;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid #5F5E5E;
+  border-bottom: 8px solid #5f5e5e;
 }
 
-@media (min-width:350px) {
+@media (min-width: 350px) {
   .showsGenreDropdown {
     top: 180%;
     left: 115px;
@@ -192,15 +190,14 @@ body,
   }
 }
 
-@media (min-width:1024px) {
+@media (min-width: 1024px) {
   .showsGenreDropdown {
     left: 155px;
   }
 }
 
 /* Padding from top when mobile layout */
-@media (max-width: 500px),
-(max-height: 500px) {
+@media (max-width: 500px), (max-height: 500px) {
   .mobileNavPad {
     padding-top: 110px;
   }

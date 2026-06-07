@@ -2,10 +2,10 @@ import Add from "@/Assets/Imgs/Avatars/Add.png"
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { updateAccount, setIsUsersProfileSelected } from '@/Utils/Redux/Slices/UserSlice/UserSlice'
+import { setIsProfileSelected } from '@/Utils/Redux/Slices/AccountSlice/AccountSlice'
 import { AvatarsMockData } from '@/Utils/Mockdata/Mockdata'
 import { RiPencilLine } from "@remixicon/react"
-import useUser from "@/Utils/Hooks/useUser/useUser"
+import useAccount from "@/Utils/Hooks/useAccount/useAccount"
 
 const Profile = () => {
 
@@ -13,17 +13,20 @@ const Profile = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    /* To select usersName & usersAvatarnum */
-    const { usersName, usersAvatarNum } = useSelector((store) => store.user.account);
+    /* To save user's account */
+    const { saveProfile } = useAccount();
+
+    /* To select Name & usersAvatarnum */
+    const { Name, AvatarNum } = useSelector((store) => store.account.profile);
 
     /* Check if profile is already selected */
-    const isUsersProfileSelected = useSelector((store) => store.user.isUsersProfileSelected);
+    const isProfileSelected = useSelector((store) => store.account.isProfileSelected);
 
     /* Toggle - To create or update profile */
     const [isProfileFormOpen, setIsProfileFormOpen] = useState(false);
 
     /* To change the avatar photos */
-    const [avatarNum, setAvatarNum] = useState(usersAvatarNum);
+    const [avatarNum, setAvatarNum] = useState(AvatarNum);
     const changeAvatar = () => {
         setAvatarNum((prev) => {
             if (prev + 1 === 12) {
@@ -35,41 +38,35 @@ const Profile = () => {
     };
 
     /* Typed User's Name */
-    const [typedUsersName, setTypedUsersName] = useState(usersName);
+    const [typedName, setTypedName] = useState(Name);
 
     /* User's name error message */
-    const [usersNameError, setUsersNameError] = useState(null);
+    const [nameError, setNameError] = useState(null);
 
-    /* To save user's account */
-    const { saveUsersAccount } = useUser();
-
-    /* Check for valid name and save */
-    const checkUsersNameValid = (profileName) => {
-        const valid = /^[a-zA-Z0-9]{3,12}$/.test(profileName);
+    /* Check for valid name and updating Firestore */
+    const checkValidName = (avatarNum, typedName) => {
+        const valid = /^[a-zA-Z0-9]{3,12}$/.test(typedName);
         if (valid) {
-            /* Updating redux - for faster avail */
-            dispatch(updateAccount({ usersAvatarNum: avatarNum, usersName: typedUsersName }));
             setIsProfileFormOpen(false);
-            /* Updating firebase - for source off truth */
-            saveUsersAccount(avatarNum, typedUsersName);
+            saveProfile(avatarNum, typedName);
         } else {
-            setUsersNameError("⚠ Please enter a valid name");
+            setNameError("⚠ Please enter a valid name");
         }
     };
 
     /* Update values asap after scross plateform updation */
     useEffect(() => {
-        setAvatarNum(usersAvatarNum);
-    }, [usersAvatarNum]);
+        setAvatarNum(AvatarNum);
+    }, [AvatarNum]);
 
     useEffect(() => {
-        setTypedUsersName(usersName);
-    }, [usersName]);
+        setTypedName(Name);
+    }, [Name]);
 
     /* Navigation based on if profile selected already */
     const navigateByProfileSel = () => {
-        if (!isUsersProfileSelected) {
-            dispatch(setIsUsersProfileSelected(true));
+        if (!isProfileSelected) {
+            dispatch(setIsProfileSelected(true));
             navigate("/browse");
         } else {
             navigate("/account");
@@ -82,22 +79,22 @@ const Profile = () => {
             {isProfileFormOpen ?
                 <div className='w-full h-full flex justify-center items-center px-0 py-5'>
                     <div className='w-full max-w-[40rem] bg-bgcolor-secondary flex flex-col gap-4 justify-center items-center border-1 border-brcolor-primary rounded-3xl px-2 py-8 220:px-10'>
-                        <h1 className='text-xl sm:text-2xl font-medium text-center'>{usersName ? "Update your profile" : "Create a profile"}</h1>
-                        <p className='text-xs sm:text-sm font-regular text-center'>{usersName ? "Give your profile a fresh look" : "Set up a profile to track your favorites and discover more"}</p>
+                        <h1 className='text-xl sm:text-2xl font-medium text-center'>{Name ? "Update your profile" : "Create a profile"}</h1>
+                        <p className='text-xs sm:text-sm font-regular text-center'>{Name ? "Give your profile a fresh look" : "Set up a profile to track your favorites and discover more"}</p>
                         <div className="w-22 sm:w-26 flex justify-center items-center">
                             <img src={AvatarsMockData[avatarNum].avatar} alt="avatar" className='w-full aspect-[1/1] object-cover' />
                         </div>
                         <button onClick={() => changeAvatar()} className='text-xs 220:text-sm font-regular text-center py-1 px-3 border-[0.5px] border-brcolor-primary rounded-3xl cursor-pointer hover:bg-[#9E9E9E] transition-colors duration-300 ease-in-out'>Change</button>
                         <div className='w-full flex flex-col gap-1 mt-1'>
-                            <input value={typedUsersName} onChange={(e) => { setTypedUsersName(e.target.value); setUsersNameError(null); }} className="text-xs 220:text-sm sm:text-sm font-medium text-textcolor-secondary px-4 py-3 border-1 border-brcolor-primary rounded-3xl placeholder-textcolor-secondary bg-bgcolor-secondary outline-none" type="text" placeholder="Username" />
-                            <h3 className="text-xs sm:text-sm text-[#FFBB57]">{usersNameError}</h3>
+                            <input value={typedName} onChange={(e) => { setTypedName(e.target.value); setNameError(null); }} className="text-xs 220:text-sm sm:text-sm font-medium text-textcolor-secondary px-4 py-3 border-1 border-brcolor-primary rounded-3xl placeholder-textcolor-secondary bg-bgcolor-secondary outline-none" type="text" placeholder="Username" />
+                            <p className="text-xs sm:text-sm text-[#FFBB57]">{nameError}</p>
                         </div>
-                        <button onClick={() => checkUsersNameValid(typedUsersName)} className="220:w-full py-2 px-3 text-sm sm:text-base font-medium rounded-3xl text-black cursor-pointer bg-textcolor-primary transition duration-220 ease-out hover:scale-95">{usersName ? "Update" : "Save"}</button>
-                        <button onClick={() => { setIsProfileFormOpen(false); setUsersNameError(null); }} className="220:w-full py-2 px-3 text-sm sm:text-base font-medium rounded-3xl text-white cursor-pointer hover:bg-[#9E9E9E] transition-colors duration-300 ease-in-out">Cancel</button></div>
+                        <button onClick={() => checkValidName(avatarNum, typedName)} className="220:w-full py-2 px-3 text-sm sm:text-base font-medium rounded-3xl text-black cursor-pointer bg-textcolor-primary transition duration-220 ease-out hover:scale-95">{Name ? "Update" : "Save"}</button>
+                        <button onClick={() => { setIsProfileFormOpen(false); setNameError(null); }} className="220:w-full py-2 px-3 text-sm sm:text-base font-medium rounded-3xl text-white cursor-pointer hover:bg-[#9E9E9E] transition-colors duration-300 ease-in-out">Cancel</button></div>
                 </div>
                 :
-                /* Render based on the availability of usersName */
-                (usersName === '' ?
+                /* Render based on the availability of Name */
+                (Name === '' ?
                     /* Create Profile */
                     <div className='w-full h-full flex flex-col justify-center items-center gap-6'>
                         <h1 className='text-2xl sm:text-3xl font-medium text-center'>Add a profile to continue</h1>
@@ -122,7 +119,7 @@ const Profile = () => {
                                     <img src={AvatarsMockData[avatarNum].avatar} alt="avatar" className='w-full opacity-[0.90]' />
                                     <RiPencilLine className="opacity-0 absolute text-white/80 z-10 sm:w-8 sm:h-8 duration-300 ease-in-out group-hover:opacity-100" />
                                 </div>
-                                <h1 className='text-xs font-medium text-textcolor-secondary sm:text-[clamp(0.80rem,1.1vw,1.20rem)]'>{usersName}</h1>
+                                <h1 className='text-xs font-medium text-textcolor-secondary sm:text-[clamp(0.80rem,1.1vw,1.20rem)]'>{Name}</h1>
                             </div>
                         </div>
                         <button onClick={() => navigateByProfileSel()} className='mt-5 text-center font-medium text-sm text-textcolor-secondary rounded-3xl cursor-pointer 

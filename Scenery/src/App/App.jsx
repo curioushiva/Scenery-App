@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import useAppInit from "@/Utils/Hooks/useAppInit/useAppInit";
 import LandingLayout from "@/Pages/Layouts/LandingLayout/LandingLayout";
 import Landing from "@/Pages/Public/Landing/Landing";
 import SystemLayout from "@/Pages/Layouts/SystemLayout/SystemLayout";
@@ -9,8 +10,12 @@ import AuthLayout from "@/Pages/Layouts/AuthLayout/AuthLayout";
 import Signup from "@/Pages/Public/Auth/Signup/Signup";
 import Signin from "@/Pages/Public/Auth/Signin/Signin";
 import CoreLayout from "@/Pages/Layouts/CoreLayout/CoreLayout";
-import Account from "@/Pages/Core/User/Account/Account";
-import Profile from "@/Pages/Core/User/Profile/Profile";
+import Account from "@/Pages/Core/Account/Account/Account";
+import Profile from "@/Pages/Core/Account/Profile/Profile/Profile";
+import UpdateName from "@/Pages/Core/Account/Profile/Security/UpdateName/UpdateName";
+import UpdateEmail from "@/Pages/Core/Account/Profile/Security/UpdateEmail/UpdateEmail";
+import ResetPassword from "@/Pages/Core/Account/Profile/Security/ResetPassword/ResetPassword";
+import DeleteAccount from "@/Pages/Core/Account/Profile/Security/DeleteAccount/DeleteAccount";
 import Browse from "@/Pages/Core/Browse/Browse/Browse";
 import Movies from "@/Pages/Core/Browse/Movies/Movies";
 import TVShows from "@/Pages/Core/Browse/TVShows/TVShows";
@@ -20,10 +25,10 @@ import Search from "@/Pages/Core/Search/Search";
 import Askai from "@/Pages/Core/Askai/Askai";
 import MovieInfo from "@/Pages/Core/Browse/MediaInfo/MovieInfo/MovieInfo";
 import TVShowInfo from "@/Pages/Core/Browse/MediaInfo/TVShowInfo/TVShowInfo";
-import useAppInit from "@/Utils/Hooks/useAppInit/useAppInit";
 
 const Layout = () => {
-    /* Calling to get : Signed-in User's data | Account details (email, name, avatar) | Fetch Saved Media | User's region */
+
+    /* To initialize user's data using scenery */
     useAppInit();
 
     /* Main layout for the app */
@@ -90,6 +95,14 @@ const App = () => {
                         { path: "askai", element: <Askai /> },
 
                         { path: "account", element: <Account /> },
+
+                        { path: "account/name", element: <UpdateName /> },
+
+                        { path: "account/email", element: <UpdateEmail /> },
+
+                        { path: "account/password", element: <ResetPassword /> },
+
+                        { path: "account/delete", element: <DeleteAccount /> },
 
                         { path: "movie/:mediaID", element: <MovieInfo /> },
 

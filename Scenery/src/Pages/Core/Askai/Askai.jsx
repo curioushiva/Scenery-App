@@ -2,8 +2,8 @@ import { useSelector } from "react-redux";
 
 const Askai = () => {
 
-  /* To select usersName */
-  const { usersName } = useSelector((store) => store.user.account);
+  /* To select Name */
+  const { Name } = useSelector((store) => store.account.profile);
 
   return (
     <div className="w-full p-8 mobileNavPad">
@@ -15,7 +15,7 @@ const Askai = () => {
 
         {/* Welcome msg */}
         <div className="flex">
-          <h1 className='text-sm lg:text-base font-regular'>Hey, <span className="italic font-medium text-textcolor-secondary">{usersName}</span>. Something in mind? Ask AI</h1>
+          <h1 className='text-sm lg:text-base font-regular'>Hey, <span className="italic font-medium text-textcolor-secondary">{Name}</span>. Something in mind? Ask AI</h1>
         </div>
 
         {/*  */}

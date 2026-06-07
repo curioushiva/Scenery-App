@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Offine = () => {
-  return (
-    <div>Offine</div>
-  )
-}
+  return <div>Offine</div>;
+};
 
-export default Offine
+export default Offine;
