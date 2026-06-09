@@ -26,7 +26,7 @@ const Browse = () => {
   }, []);
 
   /* To access movie, shows, all genres & bg video */
-  const { browseCat, allGenres, exploreBGVideo } = useSelector(
+  const { browseCat, allGenres, browseBGVideo } = useSelector(
     (store) => store.content,
   );
 
@@ -50,18 +50,18 @@ const Browse = () => {
           {/* Background Media */}
           <div className="absolute inset-0 z-0">
             {/* Image */}
-            {exploreBGVideo?.video?.backdrop_path && (
+            {browseBGVideo?.video?.backdrop_path && (
               <img
                 className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ${isBgVideoPlaying ? "opacity-0" : "opacity-100"}`}
-                src={`${IMG_BACKDROP_BASE_URL}${exploreBGVideo?.video?.backdrop_path}`}
+                src={`${IMG_BACKDROP_BASE_URL}${browseBGVideo?.video?.backdrop_path}`}
                 alt="bg"
               />
             )}
             {/* Video */}
-            {exploreBGVideo?.videoKey && (
+            {browseBGVideo?.videoKey && (
               <iframe
                 className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.77vh] h-[56.25vw] min-w-full min-h-full pointer-events-none scale-135 transition-opacity duration-500 ${isBgVideoPlaying ? "opacity-100" : "opacity-0"}`}
-                src={`https://www.youtube.com/embed/${exploreBGVideo?.videoKey}?autoplay=1&mute=1&loop=1&playlist=${exploreBGVideo?.videoKey}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&fs=0&disablekb=1&start=10`}
+                src={`https://www.youtube.com/embed/${browseBGVideo?.videoKey}?autoplay=1&mute=1&loop=1&playlist=${browseBGVideo?.videoKey}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&fs=0&disablekb=1&start=10`}
                 title="video"
                 frameBorder="0"
                 allow="autoplay"
@@ -77,13 +77,13 @@ const Browse = () => {
           <div className="relative z-10 w-full min-h-[75dvh] flex items-end overflow-y-auto p-8 mobileNavPad">
             <div className="max-w-md flex flex-col gap-4">
               <h1 className="text-3xl lg:text-4xl font-bold">
-                {exploreBGVideo?.video?.title || exploreBGVideo?.video?.name}
+                {browseBGVideo?.video?.title || browseBGVideo?.video?.name}
               </h1>
-              {exploreBGVideo?.video?.genre_ids?.length !== 0 && (
+              {browseBGVideo?.video?.genre_ids?.length !== 0 && (
                 <div className="flex flex-row gap-2">
                   {allGenres
                     .filter((list) =>
-                      exploreBGVideo?.video?.genre_ids?.includes(list?.id),
+                      browseBGVideo?.video?.genre_ids?.includes(list?.id),
                     )
                     .slice(0, 2)
                     .map((val) => (
@@ -100,27 +100,27 @@ const Browse = () => {
                 </div>
               )}
               <p className="text-sm lg:text-base text-gray-200 430:hidden">
-                {exploreBGVideo?.video?.overview
+                {browseBGVideo?.video?.overview
                   ?.split(" ")
                   ?.slice(0, 19)
                   ?.join(" ")}
                 ...
               </p>
               <p className="hidden text-sm lg:text-base text-gray-200 430:block">
-                {exploreBGVideo?.video?.overview}
+                {browseBGVideo?.video?.overview}
               </p>
-              {(exploreBGVideo?.video?.release_date ||
-                exploreBGVideo?.video?.first_air_date) && (
+              {(browseBGVideo?.video?.release_date ||
+                browseBGVideo?.video?.first_air_date) && (
                 <h2 className="text-xm font-semibold lg:text-base">
                   Released in{" "}
                   {(
-                    exploreBGVideo?.video?.release_date ||
-                    exploreBGVideo?.video?.first_air_date
+                    browseBGVideo?.video?.release_date ||
+                    browseBGVideo?.video?.first_air_date
                   )?.slice(0, 4)}
                 </h2>
               )}
               <div className="flex flex-col gap-4 350:flex-row">
-                {exploreBGVideo?.videoKey && (
+                {browseBGVideo?.videoKey && (
                   <div
                     onClick={() => setIsBgVideoPlaying((prev) => !prev)}
                     className="flex justify-center items-center gap-1 bg-white text-black pl-1 pr-4 py-2 rounded cursor-pointer"
@@ -138,9 +138,9 @@ const Browse = () => {
                     )}
                   </div>
                 )}
-                {exploreBGVideo?.video?.id && (
+                {browseBGVideo?.video?.id && (
                   <div
-                    onClick={() => mediaType(exploreBGVideo?.video)}
+                    onClick={() => mediaType(browseBGVideo?.video)}
                     className="flex justify-center items-center gap-2 bg-gray-600/70 px-4 py-2 rounded cursor-pointer"
                   >
                     <RiInformationLine />

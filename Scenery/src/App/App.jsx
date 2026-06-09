@@ -9,12 +9,14 @@ import WhatsNew from "@/Pages/System/WhatsNew/WhatsNew";
 import AuthLayout from "@/Pages/Layouts/AuthLayout/AuthLayout";
 import Signup from "@/Pages/Public/Auth/Signup/Signup";
 import Signin from "@/Pages/Public/Auth/Signin/Signin";
+import ResetPassword from "@/Pages/Public/Auth/ResetPassword/ResetPassword";
 import CoreLayout from "@/Pages/Layouts/CoreLayout/CoreLayout";
 import Account from "@/Pages/Core/Account/Account/Account";
-import Profile from "@/Pages/Core/Account/Profile/Profile/Profile";
+import Create from "@/Pages/Core/Account/Profile/Create/Create";
+import Choose from "@/Pages/Core/Account/Profile/Choose/Choose";
 import UpdateName from "@/Pages/Core/Account/Profile/Security/UpdateName/UpdateName";
 import UpdateEmail from "@/Pages/Core/Account/Profile/Security/UpdateEmail/UpdateEmail";
-import ResetPassword from "@/Pages/Core/Account/Profile/Security/ResetPassword/ResetPassword";
+import ChangePassword from "@/Pages/Core/Account/Profile/Security/ChangePassword/ChangePassword";
 import DeleteAccount from "@/Pages/Core/Account/Profile/Security/DeleteAccount/DeleteAccount";
 import Browse from "@/Pages/Core/Browse/Browse/Browse";
 import Movies from "@/Pages/Core/Browse/Movies/Movies";
@@ -71,6 +73,7 @@ const App = () => {
                     children: [
                         { path: "/signin", element: <Signin /> },
                         { path: "/signup", element: <Signup /> },
+                        { path: "/resetpassword", element: <ResetPassword /> },
                     ]
                 },
 
@@ -100,7 +103,7 @@ const App = () => {
 
                         { path: "account/email", element: <UpdateEmail /> },
 
-                        { path: "account/password", element: <ResetPassword /> },
+                        { path: "account/password", element: <ChangePassword /> },
 
                         { path: "account/delete", element: <DeleteAccount /> },
 
@@ -110,10 +113,14 @@ const App = () => {
                     ],
                 },
 
-                /* Choose Profile */
+                /* Profile */
                 {
-                    path: "account/profile",
-                    element: <Profile />
+                    path: "account/create",
+                    element: <Create />
+                },
+                {
+                    path: "account/choose",
+                    element: <Choose />
                 },
             ],
         },

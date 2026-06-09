@@ -1,4 +1,11 @@
-import { signOut, updateEmail, updatePassword } from "firebase/auth";
+import {
+  signOut,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  verifyBeforeUpdateEmail,
+  updatePassword,
+  deleteUser,
+} from "firebase/auth";
 import { doc, updateDoc, setDoc, deleteDoc } from "firebase/firestore";
 import { auth, database } from "@/Utils/Firebase/Firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,76 +25,398 @@ const useAccount = () => {
 
   /* Selecting saved movies & tvshows */
   const savedMovies = useSelector((store) => store.account.profile.savedMovies);
-  const savedTVShows = useSelector((store) => store.account.profile.savedTVShows);
+  const savedTVShows = useSelector(
+    (store) => store.account.profile.savedTVShows,
+  );
 
   /* To save profile */
-  const saveProfile = async (avatarNum, typedName) => {
+  const saveProfile = async (profileAvatar, profileName) => {
+    /* Return if user doesn't exists */
     if (!profile?.UID) return;
+
+    /* Check email validity */
+    const valid = /^[a-zA-Z0-9]{3,12}$/.test(profileName);
+    if (!valid) {
+      return "⨂ Please enter a valid name.";
+    }
+
+    /* Save profile */
     try {
-      await setDoc(doc(database, "users", profile?.UID, "account", "profile"), {
-        PROFILE_UID: profile?.UID,
-        PROFILE_EMAIL: profile?.Email,
-        PROFILE_NAME: typedName,
-        PROFILE_AVATARNUM: avatarNum,
-        PROFILE_LOCATION: profile?.Location,
-        PROFILE_CREATEDAT: profile?.CreatedAt || Date.now(),
-      });
+      await updateDoc(
+        doc(database, "users", profile?.UID, "account", "profile"),
+        {
+          PROFILE_NAME: profileName,
+          PROFILE_AVATARNUM: profileAvatar,
+        },
+      );
     } catch (error) {
-      console.log("Post account failed", error);
+      console.log("Saving profile failed", error);
+      return "⨂ Failed to save profile.";
+    }
+  };
+
+  /* To Sign out */
+  const SignOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.log("Signed out failed", error);
+    }
+  };
+
+  /* To reauthenticate the user */
+  const reauthenticateUser = async (currentPassword) => {
+    /* Return if user doesn't exists */
+    if (!profile?.UID) return;
+
+    /* Check for pass validity */
+    const valid =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+        currentPassword,
+      );
+    if (!valid) {
+      return {
+        success: false,
+        message: "⨂ Please enter a valid password.",
+        requiresReauth: true,
+      };
+    }
+
+    /* Reauthentication */
+    const credential = EmailAuthProvider.credential(
+      auth.currentUser.email,
+      currentPassword,
+    );
+    try {
+      await reauthenticateWithCredential(auth.currentUser, credential);
+      return {
+        success: true,
+        message: "",
+        requiresReauth: false,
+      };
+    } catch (error) {
+      console.log("Account authentication failed", error);
+      switch (error.code) {
+        case "auth/wrong-password":
+        case "auth/invalid-credential":
+          return {
+            success: false,
+            message: "⨂ Password is incorrect.",
+            requiresReauth: true,
+          };
+        case "auth/too-many-requests":
+          return {
+            success: false,
+            message: "⨂ Too many attempts. Try again later.",
+            requiresReauth: true,
+          };
+        default:
+          console.log("Failed to authenticate", error);
+          return {
+            success: false,
+            message: "⨂ Authentication failed.",
+            requiresReauth: true,
+          };
+      }
+    }
+  };
+
+  /* To update profile */
+  const updateProfile = async (newAvatar, newName) => {
+    /* Return if user doesn't exists */
+    if (!profile?.UID) return;
+
+    /* Check name validity */
+    const valid = /^[a-zA-Z0-9]{3,12}$/.test(newName);
+    if (!valid) {
+      return "⨂ Please enter a valid name.";
+    }
+
+    /* Update profie */
+    try {
+      await updateDoc(
+        doc(database, "users", profile?.UID, "account", "profile"),
+        {
+          PROFILE_NAME: newName,
+          PROFILE_AVATARNUM: newAvatar,
+        },
+      );
+    } catch (error) {
+      console.log("Profile updation failed", error);
+      return "⨂ Failed to update profile.";
     }
   };
 
   /* To change profile name on firebase store */
-  const changeName = async (updatedName) => {
+  const changeName = async (newName) => {
+    /* Return if user doesn't exists */
     if (!profile?.UID) return;
-    const valid = /^[a-zA-Z0-9]{3,12}$/.test(updatedName);
-    if (valid) {
-      try {
-        await updateDoc(
-          doc(database, "users", profile?.UID, "account", "profile"),
-          {
-            PROFILE_NAME: updatedName,
-          },
-        );
-      } catch (error) {
-        console.log("Name updation failed", error);
-      }
-      console.log("done");
-    } else {
-      console.log("not done");
-      return "⚠ Please enter a valid name";
+
+    /* Check for name validity */
+    const valid = /^[a-zA-Z0-9]{3,12}$/.test(newName);
+    if (!valid) {
+      return {
+        success: false,
+        message: "⨂ Please enter a valid name",
+      };
+    }
+
+    /* Change profile name */
+    try {
+      await updateDoc(
+        doc(database, "users", profile?.UID, "account", "profile"),
+        {
+          PROFILE_NAME: newName,
+        },
+      );
+      return {
+        success: true,
+        message: "✓ Name has been updated",
+      };
+    } catch (error) {
+      console.log("⨂ Name updation failed", error);
+      return {
+        success: false,
+        message: "⨂ Failed to update name",
+      };
     }
   };
 
   /* To change email on firebase auth */
-  const changeEmail = async (updatedEmail) => {
-    await updateEmail(auth.currentUser, "user@example.com")
-      .then(() => {
-        console.log("Email updated", auth.currentUser);
-      })
-      .catch((error) => {
-        console.log("Email updation failed", error);
-      });
+  const changeEmail = async (newEmail) => {
+    /* Return if user doesn't exists */
+    if (!profile?.UID) return;
+
+    /* Check for same email */
+    if (
+      newEmail.trim().toLowerCase() === auth.currentUser.email.toLowerCase()
+    ) {
+      return {
+        success: false,
+        message: "⨂ Please enter a different email",
+        requiresReauth: false,
+      };
+    }
+
+    /* Check for email validity */
+    const valid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+      newEmail,
+    );
+    if (!valid) {
+      return {
+        success: false,
+        message: "⨂ Please enter a valid email",
+        requiresReauth: false,
+      };
+    }
+
+    /* Set polling true then move forward */
+    try {
+      await updateDoc(
+        doc(database, "users", profile?.UID, "account", "profile"),
+        {
+          PROFILE_CREDCHANGED: true,
+        },
+      );
+    } catch (error) {
+      console.log("Email updation failed", error);
+      return {
+        success: false,
+        message: "⨂ Failed to update email",
+        requiresReauth: false,
+      };
+    }
+
+    /* Change email */
+    try {
+      await verifyBeforeUpdateEmail(auth.currentUser, newEmail);
+      return {
+        success: true,
+        message: "✓ Verify your new email to complete the update",
+        requiresReauth: false,
+      };
+    } catch (error) {
+      switch (error.code) {
+        case "auth/requires-recent-login":
+          return {
+            success: false,
+            message: "",
+            requiresReauth: true,
+          };
+
+        case "auth/too-many-requests":
+          return {
+            success: false,
+            message: "⨂ Too many attempts. Please try again later.",
+            requiresReauth: false,
+          };
+
+        case "auth/network-request-failed":
+          return {
+            success: false,
+            message: "⨂ Network error. Check your connection.",
+            requiresReauth: false,
+          };
+
+        case "auth/invalid-email":
+          return {
+            success: false,
+            message: "⨂ Invalid email address",
+            requiresReauth: false,
+          };
+
+        default:
+          console.error(error);
+          return {
+            success: false,
+            message: "⨂ Failed to update email",
+            requiresReauth: false,
+          };
+      }
+    }
   };
 
   /* To change password on firebase auth */
-  const changePassword = async (updatedPassword) => {
-    await updatePassword(auth.currentUser, "newPassword")
-      .then(() => {
-        console.log("Password updated", auth.currentUser);
-      })
-      .catch((error) => {
-        console.log("Password updation failed", error);
-      });
+  const changePassword = async (newPassword) => {
+    /* Return if user doesn't exists */
+    if (!profile.UID) return;
+
+    /* Check for password validity */
+    const valid =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+        newPassword,
+      );
+    if (!valid) {
+      return {
+        success: false,
+        message: "⨂ Please enter a valid password",
+        requiresReauth: false,
+      };
+    }
+
+    /* Set polling true then move forward */
+    try {
+      await updateDoc(
+        doc(database, "users", profile?.UID, "account", "profile"),
+        {
+          PROFILE_CREDCHANGED: true,
+        },
+      );
+    } catch (error) {
+      console.log("Password reset failed", error);
+      return {
+        success: false,
+        message: "⨂ Failed to reset password",
+        requiresReauth: false,
+      };
+    }
+
+    /* Password change */
+    try {
+      await updatePassword(auth.currentUser, newPassword);
+      return {
+        success: true,
+        message: "✓ Your password has been reset successfully",
+        requiresReauth: false,
+      };
+    } catch (error) {
+      console.log("Password reset failed", error);
+      switch (error.code) {
+        case "auth/requires-recent-login":
+          return {
+            success: false,
+            message: "",
+            requiresReauth: true,
+          };
+        case "auth/weak-password":
+          return {
+            success: false,
+            message: "⨂ Password must be at least 6 characters",
+            requiresReauth: false,
+          };
+
+        case "auth/too-many-requests":
+          return {
+            success: false,
+            message: "⨂ Too many attempts. Please try again later",
+            requiresReauth: false,
+          };
+
+        case "auth/network-request-failed":
+          return {
+            success: false,
+            message: "⨂ Network error. Check your connection",
+            requiresReauth: false,
+          };
+
+        default:
+          console.error(error);
+          return {
+            success: false,
+            message: "⨂ Failed to reset password",
+            requiresReauth: false,
+          };
+      }
+    }
   };
 
-  /* To Sign out user function */
-  const SignOut = () => {
-    signOut(auth)
-      .then(() => { })
-      .catch((error) => {
-        console.log("Signed out failed", error)
-      });
+  /* To delete account permanently */
+  const deleteAccount = async (deleteMsg) => {
+    /* Return if user doesn't exists */
+    if (!profile.UID) return;
+
+    /* Check for delete msg */
+    if (deleteMsg !== "DELETE") {
+      return {
+        success: false,
+        message: "⨂ Please type DELETE to confirm",
+        requiresReauth: false,
+      };
+    }
+
+    /* Deleting firebase account */
+    try {
+      await deleteUser(auth.currentUser);
+    } catch (error) {
+      console.log("Account deletion failed", error);
+      switch (error.code) {
+        case "auth/requires-recent-login":
+          return {
+            success: false,
+            message: "",
+            requiresReauth: true,
+          };
+
+        case "auth/network-request-failed":
+          return {
+            success: false,
+            message: "⨂ Network error. Check your connection.",
+            requiresReauth: false,
+          };
+
+        case "auth/too-many-requests":
+          return {
+            success: false,
+            message: "⨂ Too many attempts. Please try again later.",
+            requiresReauth: false,
+          };
+
+        case "auth/user-not-found":
+          return {
+            success: false,
+            message: "⨂ Account not found.",
+            requiresReauth: false,
+          };
+
+        default:
+          console.error(error);
+          return {
+            success: false,
+            message: "⨂ Failed to delete account.",
+            requiresReauth: false,
+          };
+      }
+    }
   };
 
   /* Function to save profile media */
@@ -387,9 +716,12 @@ const useAccount = () => {
   return {
     saveProfile,
     SignOut,
+    reauthenticateUser,
+    updateProfile,
     changeName,
     changeEmail,
     changePassword,
+    deleteAccount,
     saveProfileMedia,
     showSavedProfileMedia,
   };

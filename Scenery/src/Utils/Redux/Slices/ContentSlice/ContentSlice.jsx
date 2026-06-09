@@ -11,7 +11,7 @@ const initialState = {
 
   /* Browse */
   browseCat: [],
-  exploreBGVideo: {
+  browseBGVideo: {
     video: {},
     videoKey: null,
   },
@@ -61,7 +61,7 @@ const ContentSlice = createSlice({
     },
     /* Browse Page's Background Video */
     addBrowseBGVideo: (state, action) => {
-      state.exploreBGVideo = action.payload;
+      state.browseBGVideo = action.payload;
     },
     /* Movies page data */
     addMoviesCat: (state, action) => {

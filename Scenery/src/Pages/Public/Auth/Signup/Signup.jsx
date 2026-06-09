@@ -4,6 +4,7 @@ import { useAuth } from "@/Utils/Hooks/useAuth/useAuth";
 import { useSelector, useDispatch } from "react-redux";
 import { setSignupPageErrors } from "@/Utils/Redux/Slices/AuthSlice/AuthSlice";
 import { resetErrors } from "@/Utils/Redux/Slices/AuthSlice/AuthSlice";
+import { RiEyeCloseLine, RiEyeLine } from "@remixicon/react";
 
 const Signup = () => {
   /* For dispatch & location */
@@ -28,6 +29,9 @@ const Signup = () => {
   const [typedSignupEmail, settypedSignupEmail] = useState(authTypedEmail);
   const [typedSignupPassword, settypedSignupPassword] = useState("");
 
+  /* To show password */
+  const [showPassword, setShowPassword] = useState(false);
+
   /* Reseting erros on page leave */
   useEffect(() => {
     dispatch(resetErrors("SignupPageErrors"));
@@ -36,11 +40,15 @@ const Signup = () => {
   return (
     <div className="w-full bg-gradient-to-b from-[#431518] to-[#000000] p-8 pt-13">
       <div className="w-full h-[75dvh] flex justify-center items-center pb-85">
-        <div className="h-full flex flex-col gap-2 justify-start items-start">
+        <div className="w-full max-w-md h-full flex flex-col gap-2 justify-start items-start">
+
+          {/* Heading */}
           <h1 className="text-4xl font-bold">Create your account</h1>
           <h2 className="text-lg text-textcolor-secondary pb-5">
             Get started by creating a new account
           </h2>
+
+          {/* Email input fields */}
           <input
             value={typedSignupEmail}
             onChange={(e) => {
@@ -52,41 +60,56 @@ const Signup = () => {
                 }),
               );
             }}
-            className="w-[clamp(100%,40vw,480px)] px-5 py-3 border-1 border-brcolor-primary rounded-sm placeholder-textcolor-secondary bg-bgcolor-secondary focus:outline focus:outline-white 350:w-[clamp(300px,50vw,480px)]"
-            type="text"
+            className="w-full px-5 py-3 border-1 border-brcolor-primary rounded-sm placeholder-textcolor-secondary bg-bgcolor-secondary focus:outline focus:outline-white"
+            type="email"
             placeholder="Email Address"
           />
           <h3 className="ext-sm text-uicolor-primary">{invalidSignupEmail}</h3>
-          <input
-            value={typedSignupPassword}
-            onChange={(e) => {
-              settypedSignupPassword(e.target.value);
-              dispatch(
-                setSignupPageErrors({
-                  invalidSignupPassword: null,
-                  firebaseSignupError: null,
-                }),
-              );
-            }}
-            className="w-[clamp(100%,40vw,480px)] px-5 py-3 border-1 border-brcolor-primary rounded-sm placeholder-textcolor-secondary bg-bgcolor-secondary focus:outline focus:outline-white 350:w-[clamp(300px,50vw,480px)]"
-            type="text"
-            placeholder="Password"
-          />
+
+          {/* Password input fields */}
+          <div className="w-full relative">
+            <input
+              value={typedSignupPassword}
+              onChange={(e) => {
+                settypedSignupPassword(e.target.value);
+                dispatch(
+                  setSignupPageErrors({
+                    invalidSignupPassword: null,
+                    firebaseSignupError: null,
+                  }),
+                );
+              }}
+              className="w-full px-5 pr-14 py-3 border-1 border-brcolor-primary rounded-sm placeholder-textcolor-secondary bg-bgcolor-secondary focus:outline focus:outline-white"
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+            />
+            <div onClick={() => setShowPassword(prev => !prev)} className="absolute z-10 right-5 top-4 cursor-pointer text-textcolor-secondary">
+              {showPassword ?
+                <RiEyeLine className="w-5 h-5" />
+                :
+                <RiEyeCloseLine className="w-5 h-5" />
+              }
+            </div>
+          </div>
           <h4 className="ext-sm text-uicolor-primary">
             {invalidSignupPassword
               ? invalidSignupPassword
               : firebaseSignupError}
           </h4>
+
+          {/* Button */}
           <button
             onClick={() =>
               validateSignupCred(typedSignupEmail, typedSignupPassword)
             }
-            className="w-[clamp(100%,40vw,480px)] px-5 py-3 rounded-sm text-base bg-uicolor-primary font-medium 350:w-[clamp(300px,50vw,480px)] cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
+            className="w-full px-5 py-3 rounded-sm text-base bg-uicolor-primary font-medium cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
           >
             {signupLoader ? "Creating account..." : "Sign Up"}
           </button>
+
+          {/* Navigate to sigin page */}
           <Link to="/signin">
-            <h4 className="text-base text-textcolor-secondary pt-5 underline decoration-solid">
+            <h4 className="text-sm font-regular text-textcolor-secondary pt-5 underline decoration-solid">
               Already have an account? Sign in
             </h4>
           </Link>

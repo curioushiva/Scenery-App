@@ -10,6 +10,7 @@ import { auth } from "@/Utils/Firebase/Firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 export const useAuth = () => {
@@ -21,7 +22,7 @@ export const useAuth = () => {
     const valid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
       email,
     );
-    return valid ? null : "⊗ Please enter a valid Email.";
+    return valid ? null : "⨂ Please enter a valid Email.";
   };
 
   /* Regex for valid password */
@@ -30,7 +31,7 @@ export const useAuth = () => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
         password,
       );
-    return valid ? null : "⊗ Please enter a valid Password.";
+    return valid ? null : "⨂ Please enter a valid Password.";
   };
 
   /* Email Validation for upper part of landing page */
@@ -79,7 +80,7 @@ export const useAuth = () => {
   const validateSignupCred = (typedSignupEmail, typedSignupPassword) => {
     const invalidSignupEmailMsg = isEmailValid(typedSignupEmail);
     const invalidSignupPassMsg = isPasswordValid(typedSignupPassword);
-    if (invalidSignupEmailMsg && invalidSignupPassMsg) {
+    if (invalidSignupEmailMsg || invalidSignupPassMsg) {
       dispatch(
         setSignupPageErrors({
           invalidSignupEmail: invalidSignupEmailMsg,
@@ -226,6 +227,61 @@ export const useAuth = () => {
     );
   };
 
+  /* To reset password */
+  const resetPassword = async (emailAdresss) => {
+    /* Check for email validity */
+    const valid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+      emailAdresss,
+    );
+    if (!valid) {
+      return {
+        success: false,
+        message: "⨂ Please enter a valid email",
+      };
+    }
+
+    /* Password reset */
+    try {
+      await sendPasswordResetEmail(auth, emailAdresss);
+      return {
+        success: true,
+        message: "✓ Password reset link sent. Check your inbox",
+      };
+    } catch (error) {
+      switch (error.code) {
+        case "auth/user-not-found":
+          return {
+            success: false,
+            message: "⨂ No account found with this email",
+          };
+
+        case "auth/invalid-email":
+          return {
+            success: false,
+            message: "⨂ Invalid email address",
+          };
+
+        case "auth/too-many-requests":
+          return {
+            success: false,
+            message: "⨂ Too many attempts. Try again later",
+          };
+
+        case "auth/network-request-failed":
+          return {
+            success: false,
+            message: "⨂ Network error. Check your connection",
+          };
+
+        default:
+          return {
+            success: false,
+            message: "⨂ Failed to send reset email",
+          };
+      }
+    }
+  };
+
   return {
     /* Landing page */
     validateUpperEmail,
@@ -236,5 +292,7 @@ export const useAuth = () => {
     validateSigninEmail,
     validateSigninPassword,
     switchToSigninEmailForm,
+    /* Reset password */
+    resetPassword,
   };
 };

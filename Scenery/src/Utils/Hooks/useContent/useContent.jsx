@@ -1461,7 +1461,7 @@ const useContent = () => {
         return acc;
       }, {});
       dispatch(addMediaInfo(tvShowInfoList));
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return {

@@ -5,12 +5,8 @@ import {
 import {  Link } from "react-router";
 import { useSelector } from "react-redux";
 import useAccount from "@/Utils/Hooks/useAccount/useAccount";
-import { removeAccount } from "@/Utils/Redux/Slices/AccountSlice/AccountSlice";
-import { useDispatch } from "react-redux";
 
 const Account = () => {
-    /* To dispatch & navigate */
-    const dispatch = useDispatch();
 
     /* To select Name */
     const { Name } = useSelector((store) => store.account.profile);
@@ -58,7 +54,7 @@ const Account = () => {
                             <Link to="/account/password" className="w-full flex items-center justify-between gap-5 py-4 lg:py-5 px-5 cursor-pointer transition-all ease-in duration-100 hover:bg-white/5">
                                 <div className="flex items-center justify-center gap-2">
                                     <RiLock2Line className="h-5 w-5 sm:h-6 sm:w-6" />
-                                    <h1 className="text-sm lg:text-base font-medium">Reset password</h1>
+                                    <h1 className="text-sm lg:text-base font-medium">Update password</h1>
                                 </div>
                                 <RiArrowRightSLine />
                             </Link>
@@ -68,7 +64,7 @@ const Account = () => {
                     {/* Profile settings */}
                     <div className="flex flex-col gap-4">
                         <h1 className="text-base font-regular">Profile Settings</h1>
-                        <Link to="profile" className="flex flex-col border border-white/10 rounded-2xl overflow-hidden divide-y divide-white/10">
+                        <Link to="choose" className="flex flex-col border border-white/10 rounded-2xl overflow-hidden divide-y divide-white/10">
                             <div className="w-full flex items-center justify-between gap-5 py-4 lg:py-5 px-5 cursor-pointer transition-all ease-in duration-100 hover:bg-white/5">
                                 <div className="flex items-center justify-center gap-2">
                                     <RiUserLine className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -83,7 +79,7 @@ const Account = () => {
                     <div className="flex flex-col gap-4">
                         <h1 className="text-base font-regular">Account Actions</h1>
                         <div className="flex flex-col border border-white/10 rounded-2xl overflow-hidden divide-y divide-white/10">
-                            <div onClick={() => { SignOut(); dispatch(removeAccount()); }}  className="w-full flex items-center justify-between gap-5 py-4 lg:py-5 px-5 cursor-pointer transition-all ease-in duration-100 hover:bg-white/5">
+                            <div onClick={() => { SignOut(); }}  className="w-full flex items-center justify-between gap-5 py-4 lg:py-5 px-5 cursor-pointer transition-all ease-in duration-100 hover:bg-white/5">
                                 <div className="flex items-center justify-center gap-2">
                                     <RiLogoutCircleLine className="h-5 w-5 sm:h-6 sm:w-6" />
                                     <h1 className="text-sm lg:text-base font-medium">Sign out</h1>

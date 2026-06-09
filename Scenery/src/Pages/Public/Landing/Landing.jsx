@@ -73,7 +73,7 @@ const Landing = () => {
                 dispatch(setLandingPageErrors({ upperEmailInvalid: null }));
               }}
               className="w-full px-5 py-3 border-1 border-brcolor-primary rounded-sm placeholder-textcolor-secondary bg-bgcolor-secondary focus:outline focus:outline-white"
-              type="text"
+              type="email"
               placeholder="Email Address"
             />
             <p className="mt-1 text-sm text-uicolor-primary">
@@ -174,7 +174,7 @@ const Landing = () => {
                 dispatch(setLandingPageErrors({ lowerEmailInvalid: null }));
               }}
               className="w-full px-5 py-3 border-1 border-brcolor-primary rounded-sm placeholder-textcolor-secondary bg-bgcolor-secondary focus:outline focus:outline-white"
-              type="text"
+              type="email"
               placeholder="Email Address"
             />
             <h1 className="text-sm text-uicolor-primary">

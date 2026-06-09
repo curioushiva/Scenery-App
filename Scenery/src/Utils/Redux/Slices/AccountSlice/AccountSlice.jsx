@@ -12,6 +12,7 @@ const initialState = {
     AvatarNum: 0,
     Location: null,
     CreatedAt: null,
+    CredChanged: false,
     savedMovies: {
       watchLater: [],
       favourite: [],
