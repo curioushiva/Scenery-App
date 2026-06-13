@@ -35,7 +35,7 @@ const Layout = () => {
 
     /* Main layout for the app */
     return (
-        <div className="text-textcolor-primary bg-bgcolor-fourth">
+        <div>
             <Outlet />
         </div>
     );

@@ -43,33 +43,46 @@ body,
 
   /* Colors */
 
-  /* Body */
-  --color-bgcolor-primary: #000000;
-  --color-bgcolor-secondary: #111112aa;
-  --color-bgcolor-ternary: #161616;
-  --color-bgcolor-fourth: #141414;
+  /* Background */
+  --color-bg-topcolor: #1A1A2E;
+  --color-bg-bottomcolor: #000000;
+  --color-bg-whitecolor: #FFFFFF;
+  --color-bg-inputcolor: #111112AA;
+  --color-bg-cardcolor: #161616CC;
+  --color-bg-corecolor: #141414;
+  --color-bg-blackcolor: #000000;
 
-  /* UI */
-  --color-uicolor-primary: #e50914;
+  /* Borders */
+  --color-br-primary: #5F5E5E99;
+  --color-br-secondary: #FFFFFF;
+  --color-br-ternary: #5B6AF5;
+
+  /* Button */
+  --color-btn-primary: #5B6AF5;
+  --color-btn-secondary: #4B5563;
 
   /* Text */
-  --color-textcolor-primary: #ffffff;
-  --color-textcolor-secondary: #b3b3b3;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #B3B3B3;
+  --color-text-ternary: #000000;
+  --color-text-fourth: #F14049;
+  --color-text-fifth: #FACC15;
+  --color-text-sixth: #5B6AF5;
 
-  /* Border */
-  --color-brcolor-primary: #5f5e5e;
-  --color-brcolor-secondary: #ffffff;
+  /* Error Messages */
+  --color-errorcolor: #FFBB57;
+  --color-noerrorcolor: #74F944D6;
 
   /* Breakpoints */
-  --breakpoint-220: 13.75rem;
+  --breakpoint-220: 13.750rem;
   /* 200px */
-  --breakpoint-240: 15rem;
+  --breakpoint-240: 15.000rem;
   /* 240px */
-  --breakpoint-280: 17.5rem;
+  --breakpoint-280: 17.500rem;
   /* 280px */
   --breakpoint-295: 18.438rem;
   /* 295px */
-  --breakpoint-310: 20rem;
+  --breakpoint-310: 20.000rem;
   /* 310px */
   --breakpoint-350: 21.875rem;
   /* 350px */
@@ -81,17 +94,17 @@ body,
   /* 395px */
   --breakpoint-430: 26.875rem;
   /* 430px */
-  --breakpoint-460: 28.75rem;
+  --breakpoint-460: 28.750rem;
   /* 460px */
   --breakpoint-550: 34.375rem;
   /* 550px */
-  --breakpoint-700: 43.75rem;
+  --breakpoint-700: 43.750rem;
   /* 780px */
-  --breakpoint-840: 52.5rem;
+  --breakpoint-840: 52.500rem;
   /* 840px */
-  --breakpoint-880: 55rem;
+  --breakpoint-880: 55.000rem;
   /* 880px */
-  --breakpoint-960: 60rem;
+  --breakpoint-960: 60.000rem;
   /* 960px */
 }
 
@@ -196,12 +209,17 @@ body,
   }
 }
 
-/* Padding from top when mobile layout */
-@media (max-width: 500px), (max-height: 500px) {
-  .mobileNavPad {
-    padding-top: 110px;
+/* Navbar padding */
+.navPadding {
+  padding: 6.875rem 2rem 2rem 2rem;
+}
+
+@media (min-width: 500px) and (min-height: 650px) {
+  .navPadding {
+    padding: 2rem 2rem 2rem 2rem;
   }
 }
+
 
 /* * {
   outline: 0.1px solid red;

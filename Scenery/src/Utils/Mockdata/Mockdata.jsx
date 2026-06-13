@@ -3,14 +3,12 @@ import {
   RiGithubFill,
   RiInstagramFill,
   RiLinkedinBoxFill,
-  RiLinkedinFill,
   RiTwitterXFill,
-  RiInstagramLine,
   RiDrinksLine,
   RiComputerLine,
   RiImportLine,
   RiEyeLine,
-  RiProfileLine,
+  RiCopyrightLine,
 } from "@remixicon/react";
 
 /* Avatars for users */
@@ -30,9 +28,9 @@ import Avatar11 from "@/Assets/Imgs/Avatars/Avatar11.png";
 /* Reasons to join mock data */
 export const ReasonToJoinMockData = [
   {
-    header: "Browse a massive movie database",
+    header: "A database of everything",
     subheader:
-      "Browse millions of movies, TV shows, cast, and crew from around the world.",
+      "Access a vast collection of movies and TV shows, complete with cast information, ratings, reviews, and streaming details, powered by TMDB's global entertainment database.",
     imgicon: RiComputerLine,
   },
   {
@@ -48,10 +46,10 @@ export const ReasonToJoinMockData = [
     imgicon: RiEyeLine,
   },
   {
-    header: "Powered by TMDB community",
+    header: "Free and Accessible",
     subheader:
-      "Access constantly updated data, images, and information contributed by users worldwide.",
-    imgicon: RiProfileLine,
+      "Everything Scenery offers is free from day one with no subscriptions to navigate, no paywalls blocking the good stuff and no hidden costs waiting to surprise you later.",
+    imgicon: RiCopyrightLine,
   },
 ];
 

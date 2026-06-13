@@ -19,12 +19,16 @@ import { useMediaQuery } from "react-responsive";
 /* Landing Header */
 export const LandingHeader = () => {
   return (
-    <div className="w-full flex justify-between bg-[#431518] py-8 px-8 lg:px-35">
+    <div className="w-full flex justify-between py-5 px-8 lg:px-35">
       <Link to="/">
         <img src={logo1} alt="logo1" className="w-10 sm:w-12" />
       </Link>
       <Link to="/signin">
-        <button className="px-3 py-1 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium cursor-pointer hover:bg-white/15 transition-all duration-200">
+        <button
+          className="text-sm font-medium px-3 py-1 rounded-3xl bg-white/10 border
+         border-white/20 backdrop-blur-md text-white cursor-pointer hover:bg-white/15
+          transition-all duration-200"
+        >
           Sign In
         </button>
       </Link>
@@ -35,7 +39,7 @@ export const LandingHeader = () => {
 /* System Header */
 export const SystemHeader = () => {
   return (
-    <div className="w-full bg-[#431518] border-b-1 border-brcolor-primary py-5 px-8 lg:px-35">
+    <div className="w-full border-b-1 border-br-primary py-5 px-8 lg:px-35">
       <Link to="">
         <img src={logo1} alt="logo1" className="w-10 sm:w-12" />
       </Link>
@@ -46,7 +50,7 @@ export const SystemHeader = () => {
 /* Auth Header */
 export const AuthHeader = () => {
   return (
-    <div className="w-full bg-[#431518] border-b-1 border-brcolor-primary py-5 px-8 lg:px-35">
+    <div className="w-full border-b-1 border-br-primary py-5 px-8 lg:px-35">
       <Link to="/">
         <img src={logo1} alt="logo1" className="w-10 sm:w-12" />
       </Link>
@@ -58,7 +62,7 @@ export const AuthHeader = () => {
 export const CoreHeader = () => {
   /* Different layouts for different screen sizes */
   const isDesktopScreen = useMediaQuery({
-    query: "(min-width: 500px) and (min-height: 500px)",
+    query: "(min-width: 500px) and (min-height: 650px)",
   });
 
   /* Profile avatar number */
@@ -81,32 +85,32 @@ export const CoreHeader = () => {
     <>
       {/* Desktop Sidebar */}
       {isDesktopScreen && (
-        <div className="w-[88px] h-[100dvh] sticky top-0 z-[100]">
-          <div className="w-full h-full flex flex-col items-center gap-5 bg-bgcolor-fourth p-6">
+        <div className="w-[88px] h-[100dvh] sticky top-0 z-100">
+          <div className="w-full h-full flex flex-col items-center gap-5 text-text-secondary p-6">
             <Link to="/browse">
               <img src={logo1} alt="logo1" className="w-10" />
             </Link>
             <div className="w-full flex-1 flex flex-col justify-center items-center gap-9">
               <Link to="/browse">
-                <RiHome5Line className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" />
+                <RiHome5Line className="w-[1.35rem] h-[1.35rem]" />
               </Link>
               <Link to="/browse/movies">
-                <RiVideoOnLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" />
+                <RiVideoOnLine className="w-[1.35rem] h-[1.35rem]" />
               </Link>
               <Link to="/browse/tvshows">
-                <RiTvLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" />
+                <RiTvLine className="w-[1.35rem] h-[1.35rem]" />
               </Link>
               <Link to="/browse/popular">
-                <RiFireLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" />
+                <RiFireLine className="w-[1.35rem] h-[1.35rem]" />
               </Link>
               <Link to="/library">
-                <RiBookShelfLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" />
+                <RiBookShelfLine className="w-[1.35rem] h-[1.35rem]" />
               </Link>
               <Link to="/search">
-                <RiSearchLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" />
+                <RiSearchLine className="w-[1.35rem] h-[1.35rem]" />
               </Link>
               <Link to="/askai">
-                <RiShiningLine className="w-[1.35rem] h-[1.35rem] text-textcolor-secondary" />
+                <RiShiningLine className="w-[1.35rem] h-[1.35rem]" />
               </Link>
               <Link to="/account">
                 <img
@@ -134,10 +138,10 @@ export const CoreHeader = () => {
           </div>
           {/* Drawer */}
           <div
-            className={`fixed inset-0 z-40 bg-black/50 overflow-y-auto no-scrollbar transition-opacity duration-300 ease-out ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+            className={`fixed inset-0 z-40 bg-bg-blackcolor/50 overflow-y-auto no-scrollbar transition-opacity duration-300 ease-out ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
           >
             <div
-              className={`absolute right-0 top-0 min-h-[100dvh] w-[60%] min-w-[200px] bg-bgcolor-fourth px-8 py-10 transition-transform duration-300 ease-out  ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+              className={`absolute right-0 top-0 min-h-[100dvh] w-[60%] min-w-[200px] bg-bg-corecolor px-8 py-10 transition-transform duration-300 ease-out  ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
             >
               <div className="flex flex-col gap-8">
                 <RiEyeCloseLine

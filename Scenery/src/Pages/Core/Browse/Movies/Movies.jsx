@@ -103,12 +103,12 @@ const Movies = () => {
             )}
 
             {/* Fades top & bottoms */}
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/90 via-transparent to-transparent" />
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-bgcolor-fourth via-bgcolor-fourth/10 to-transparent" />
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-bgcolor-fourth via-bgcolor-fourth/40 to-transparent" />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-bg-corecolor/10 via-transparent to-transparent" />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-bg-corecolor via-bg-corecolor/10 to-transparent" />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-bg-corecolor via-bg-corecolor/40 to-transparent" />
           </div>
           {/* Top Layer */}
-          <div className="relative z-10 w-full min-h-[75dvh] flex flex-col justify-between gap-10 p-8 mobileNavPad">
+          <div className="relative z-10 w-full min-h-[75dvh] flex flex-col justify-between gap-10 navPadding">
             {/* Movie Genre */}
             {moviesGenre?.length > 0 ? (
               <div className="relative z-20 flex flex-row items-start justify-start gap-1 flex-wrap">
@@ -119,7 +119,7 @@ const Movies = () => {
                     dispatch(addSelectedMovieGenreIndex(null));
                     setIsBgVideoPlaying(false);
                   }}
-                  className="text-xl font-normal leading-[2rem] text-gray-300 cursor-pointer"
+                  className="text-xl font-normal leading-[2rem] text-text-primary/90 cursor-pointer"
                 >{`Movies >`}</h1>
                 <h1 className="text-3xl font-medium leading-none">
                   {moviesGenre[0]?.genre} Movies
@@ -134,7 +134,7 @@ const Movies = () => {
                   onClick={() => {
                     setIsMoviesGenreClicked((prev) => !prev);
                   }}
-                  className="flex justify-center items-center gap-2 cursor-pointer px-2 border-1 lg:gap-7 lg:py-[0.1rem] hover:bg-brcolor-primary"
+                  className="flex justify-center items-center gap-2 cursor-pointer px-2 border-1 lg:gap-7 lg:py-[0.1rem] hover:bg-bg-whitecolor/30"
                 >
                   <h1 className="font-medium text-[0.70rem] lg:text-[0.80rem]">
                     Genres
@@ -149,9 +149,9 @@ const Movies = () => {
                   {/* Movies Genre Types*/}
                   {isMoviesGenreClicked && (
                     <div className="moviesGenreDropdown">
-                      <div className="w-40 max-h-30 sm:max-h-40 overflow-y-scroll no-scrollbar bg-black/100 text-sm border-1 border-brcolor-primary flex flex-col items-start justify-center">
+                      <div className="w-40 text-sm max-h-30 sm:max-h-40 overflow-y-scroll no-scrollbar bg-bg-blackcolor border-1 border-br-primary flex flex-col items-start justify-center">
                         <div className="flex flex-col gap-4 px-4 mt-70 sm:mt-60 pb-5">
-                          {moviesGenreData.map((val, index, arr) => {
+                          {moviesGenreData.map((val, index) => {
                             return (
                               <div
                                 key={val.key}
@@ -193,9 +193,8 @@ const Movies = () => {
                     .map((val) => (
                       <h3
                         key={val?.id}
-                        className="text-xm font-semibold lg:text-base px-2 py-[0.10rem] rounded-4xl bg-white/10 backdrop-blur-md border border-white/20 text-white"
+                        className="text-xm font-semibold lg:text-base px-4 py-[0.15rem] rounded-4xl bg-bg-whitecolor/10 backdrop-blur-md border border-br-primary"
                       >
-                        {" "}
                         {val?.name === "Science Fiction"
                           ? "Sci-Fi"
                           : val?.name?.split(" ")[0]}
@@ -203,20 +202,20 @@ const Movies = () => {
                     ))}
                 </div>
               )}
-              <p className="text-sm lg:text-base text-gray-200 430:hidden">
+              <p className="text-sm lg:text-base text-text-primary/90 430:hidden">
                 {moviesBGVideo?.video?.overview
                   ?.split(" ")
                   ?.slice(0, 19)
                   ?.join(" ")}
                 ...
               </p>
-              <p className="hidden text-sm lg:text-base text-gray-200 430:block">
+              <p className="hidden text-sm lg:text-base text-text-primary/90 430:block">
                 {moviesBGVideo?.video?.overview}
               </p>
               {(moviesBGVideo?.video?.release_date ||
                 moviesBGVideo?.video?.first_air_date) && (
                 <h2 className="text-xm font-semibold lg:text-base">
-                  Released in{" "}
+                  Released in
                   {(
                     moviesBGVideo?.video?.release_date ||
                     moviesBGVideo?.video?.first_air_date
@@ -227,7 +226,7 @@ const Movies = () => {
                 {moviesBGVideo?.videoKey && (
                   <div
                     onClick={() => setIsBgVideoPlaying((prev) => !prev)}
-                    className="flex justify-center items-center gap-1 bg-white text-black pl-1 pr-4 py-2 rounded cursor-pointer"
+                    className="flex justify-center items-center gap-1 text-text-ternary bg-bg-whitecolor pl-1 pr-4 py-2 rounded cursor-pointer"
                   >
                     {isBgVideoPlaying ? (
                       <>
@@ -249,7 +248,7 @@ const Movies = () => {
                 {moviesBGVideo?.video?.id && (
                   <div
                     onClick={() => mediaType(moviesBGVideo?.video)}
-                    className="flex justify-center items-center gap-2 bg-gray-600/70 px-4 py-2 rounded cursor-pointer"
+                    className="flex justify-center items-center gap-2 bg-btn-secondary px-4 py-2 rounded cursor-pointer"
                   >
                     <RiInformationLine />
                     <span className="font-semibold whitespace-nowrap">
@@ -266,7 +265,7 @@ const Movies = () => {
         {moviesGenre.length > 0 ? (
           <div className="flex flex-col gap-10 p-8">
             {moviesGenre[0].genreMovies
-              .filter((val, idx) => val.movies.length > 5)
+              .filter((val) => val.movies.length > 5)
               .map((categorie) => {
                 return (
                   <div
@@ -292,7 +291,7 @@ const Movies = () => {
                                 className="absolute z-0 w-full h-full object-cover"
                               />
                               {/* About movie - on hover drop down */}
-                              <div className="absolute z-10 bottom-0 bg-black/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                              <div className="absolute z-10 bottom-0 bg-bg-blackcolor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                 <div className="flex justify-between items-center">
                                   <div
                                     onClick={(e) => {
@@ -311,9 +310,9 @@ const Movies = () => {
                                         movie,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                        <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                        <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -326,25 +325,24 @@ const Movies = () => {
                                         movie,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]" />
+                                        <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                        <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
-                                  <div className="rounded-full border-[#A9A9A9] border p-[0.1rem]">
-                                    <Info className="w-6 h-6 text-[#A9A9A9]" />
+                                  <div className="rounded-full text-text-secondary border p-[0.1rem]">
+                                    <Info className="w-6 h-6" />
                                   </div>
                                 </div>
-                                <div className="flex items-center gap-2 font-medium text-[#A9A9A9]">
+                                <div className="flex items-center gap-2 font-medium text-text-secondary">
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
                                     <h1 className="text-sm">
-                                      ★ {movie.vote_average.toFixed(1) || "0.0"}
+                                      ★{" "}{movie.vote_average.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
                                     <h1 className="text-sm">
-                                      {" "}
                                       {(
                                         movie.release_date ||
                                         movie.first_air_date
@@ -415,7 +413,7 @@ const Movies = () => {
                                 className="absolute z-0 w-full h-full object-cover"
                               />
                               {/* About movie or show - on hover drop down */}
-                              <div className="absolute z-10 bottom-0 bg-black/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                              <div className="absolute z-10 bottom-0 bg-bg-blackcolor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                 <div className="flex justify-between items-center">
                                   <div
                                     onClick={(e) => {
@@ -434,9 +432,9 @@ const Movies = () => {
                                         movie,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                        <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                        <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -449,25 +447,24 @@ const Movies = () => {
                                         movie,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]" />
+                                        <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                        <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
-                                  <div className="rounded-full border-[#A9A9A9] border p-[0.1rem]">
-                                    <Info className="w-6 h-6 text-[#A9A9A9]" />
+                                  <div className="rounded-full text-text-secondary border p-[0.1rem]">
+                                    <Info className="w-6 h-6" />
                                   </div>
                                 </div>
-                                <div className="flex items-center gap-2 font-medium text-[#A9A9A9]">
+                                <div className="flex items-center gap-2 font-medium text-text-secondary">
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
                                     <h1 className="text-sm">
-                                      ★ {movie.vote_average.toFixed(1) || "0.0"}
+                                      ★{" "}{movie.vote_average.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
                                     <h1 className="text-sm">
-                                      {" "}
                                       {(
                                         movie.release_date ||
                                         movie.first_air_date
@@ -544,7 +541,7 @@ const Movies = () => {
                                   {index + 1}
                                 </h1>
                                 {/* About movie or show - on hover drop down */}
-                                <div className="absolute z-10 bottom-0 right-0 bg-black/90 w-[67%] md:w-[65%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                                <div className="absolute z-10 bottom-0 right-0 bg-bg-blackcolor/90 w-[67%] md:w-[65%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                   <div className="flex justify-between items-center">
                                     <div
                                       onClick={(e) => {
@@ -563,9 +560,9 @@ const Movies = () => {
                                           movie,
                                           "watchLater",
                                         ) ? (
-                                          <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                          <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                         ) : (
-                                          <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                          <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                         )}
                                       </div>
                                       <div
@@ -578,17 +575,17 @@ const Movies = () => {
                                           movie,
                                           "favourite",
                                         ) ? (
-                                          <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]" />
+                                          <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
                                         ) : (
-                                          <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                          <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                         )}
                                       </div>
                                     </div>
-                                    <div className="rounded-full border-[#A9A9A9] border p-[0.1rem]">
-                                      <Info className="w-6 h-6 text-[#A9A9A9]" />
+                                    <div className="rounded-full text-text-secondary border p-[0.1rem]">
+                                      <Info className="w-6 h-6" />
                                     </div>
                                   </div>
-                                  <div className="flex items-center gap-2 font-medium text-[#A9A9A9]">
+                                  <div className="flex items-center gap-2 font-medium text-text-secondary">
                                     <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
                                       <h1 className="text-sm">
                                         ★{" "}
@@ -597,7 +594,6 @@ const Movies = () => {
                                     </div>
                                     <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
                                       <h1 className="text-sm">
-                                        {" "}
                                         {(
                                           movie.release_date ||
                                           movie.first_air_date
@@ -655,7 +651,7 @@ const Movies = () => {
                                   {index + 10}
                                 </h1>
                                 {/* About movie or show - on hover drop down */}
-                                <div className="absolute z-10 bottom-0 right-0 bg-black/90 w-[58%] md:w-[50%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                                <div className="absolute z-10 bottom-0 right-0 bg-bg-blackcolor/90 w-[58%] md:w-[50%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                   <div className="flex justify-between items-center">
                                     <div
                                       onClick={(e) => {
@@ -674,9 +670,9 @@ const Movies = () => {
                                           movie,
                                           "watchLater",
                                         ) ? (
-                                          <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                          <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                         ) : (
-                                          <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                          <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                         )}
                                       </div>
                                       <div
@@ -689,17 +685,17 @@ const Movies = () => {
                                           movie,
                                           "favourite",
                                         ) ? (
-                                          <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]" />
+                                          <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
                                         ) : (
-                                          <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                          <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                         )}
                                       </div>
                                     </div>
-                                    <div className="rounded-full border-[#A9A9A9] border p-[0.1rem]">
-                                      <Info className="w-6 h-6 text-[#A9A9A9]" />
+                                    <div className="rounded-full text-text-secondary border p-[0.1rem]">
+                                      <Info className="w-6 h-6" />
                                     </div>
                                   </div>
-                                  <div className="flex items-center gap-2 font-medium text-[#A9A9A9]">
+                                  <div className="flex items-center gap-2 font-medium text-text-secondary">
                                     <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
                                       <h1 className="text-sm">
                                         ★{" "}
@@ -708,7 +704,6 @@ const Movies = () => {
                                     </div>
                                     <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
                                       <h1 className="text-sm">
-                                        {" "}
                                         {(
                                           movie.release_date ||
                                           movie.first_air_date
@@ -777,7 +772,7 @@ const Movies = () => {
                                 className="absolute z-0 w-full h-full object-cover"
                               />
                               {/* About movie or show - on hover drop down */}
-                              <div className="absolute z-10 bottom-0 bg-black/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                              <div className="absolute z-10 bottom-0 bg-bg-blackcolor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                 <div className="flex justify-between items-center">
                                   <div
                                     onClick={(e) => {
@@ -796,9 +791,9 @@ const Movies = () => {
                                         movie,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                        <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                        <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -811,25 +806,24 @@ const Movies = () => {
                                         movie,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#f14049]" />
+                                        <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-[#A9A9A9]" />
+                                        <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
-                                  <div className="rounded-full border-[#A9A9A9] border p-[0.1rem]">
-                                    <Info className="w-6 h-6 text-[#A9A9A9]" />
+                                  <div className="rounded-full text-text-secondary border p-[0.1rem]">
+                                    <Info className="w-6 h-6" />
                                   </div>
                                 </div>
-                                <div className="flex items-center gap-2 font-medium text-[#A9A9A9]">
+                                <div className="flex items-center gap-2 font-medium text-text-secondary">
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
                                     <h1 className="text-sm">
-                                      ★ {movie.vote_average.toFixed(1) || "0.0"}
+                                      ★{" "}{movie.vote_average.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
                                     <h1 className="text-sm">
-                                      {" "}
                                       {(
                                         movie.release_date ||
                                         movie.first_air_date

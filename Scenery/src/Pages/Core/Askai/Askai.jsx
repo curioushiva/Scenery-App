@@ -6,7 +6,7 @@ const Askai = () => {
   const { Name } = useSelector((store) => store.account.profile);
 
   return (
-    <div className="w-full p-8 mobileNavPad">
+    <div className="w-full navPadding">
       <div className="w-full flex flex-col gap-10">
         {/* Intro */}
         <div className="flex">
@@ -15,7 +15,7 @@ const Askai = () => {
 
         {/* Welcome msg */}
         <div className="flex">
-          <h1 className='text-sm lg:text-base font-regular'>Hey, <span className="italic font-medium text-textcolor-secondary">{Name}</span>. Something in mind? Ask AI</h1>
+          <h1 className='text-sm lg:text-base font-regular'>Hey, <span className="italic font-medium text-text-secondary">{Name}</span>. Something in mind? Ask AI</h1>
         </div>
 
         {/*  */}

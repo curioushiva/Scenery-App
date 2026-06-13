@@ -6,14 +6,20 @@ import { useMediaQuery } from "react-responsive";
 const CoreLayout = () => {
   /* Different layouts for different screen sizes */
   const isDesktopScreen = useMediaQuery({
-    query: "(min-width: 500px) and (min-height: 500px)",
+    query: "(min-width: 500px) and (min-height: 650px)",
+  });
+
+  console.log({
+    width: window.innerWidth,
+    height: window.innerHeight,
+    isDesktopScreen,
   });
   return (
     <div
       className={
         isDesktopScreen
-          ? "grid grid-cols-[88px_minmax(0,1fr)] min-h-screen"
-          : "relative w-full min-h-screen grid grid-rows-[auto_1fr_auto]"
+          ? "grid grid-cols-[88px_minmax(0,1fr)] min-h-screen text-text-primary bg-bg-corecolor"
+          : "relative w-full min-h-screen grid grid-rows-[auto_1fr_auto] text-text-primary bg-bg-corecolor overflow-x-auto"
       }
     >
       <CoreHeader />

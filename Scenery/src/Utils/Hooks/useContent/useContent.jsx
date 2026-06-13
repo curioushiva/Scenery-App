@@ -6,7 +6,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import {
-  addLandingPosterData,
+  addLandingContent,
   addAllGenres,
   addBrowseCat,
   addBrowseBGVideo,
@@ -36,15 +36,42 @@ const useContent = () => {
   /* Date today  */
   const today = new Date().toISOString().split("T")[0];
 
-  /* Function to get landing page data */
-  const getLandingPosterData = async () => {
+  /* Data for landing page's poster */
+  const landingContentData = [
+    {
+      type: "popular",
+      url: "/movie/popular",
+    },
+    {
+      type: "topRated",
+      url: "/movie/top_rated",
+    },
+  ];
+
+  /* Function to get landing poster data */
+  const getLandingContentData = async () => {
     try {
-      const responses = await axios.get(
-        `${SCENERY_API_BASE_URL}/movie/popular`,
-        { headers: SCENERY_API_HEADERS },
+      const responses = await Promise.allSettled(
+        landingContentData.map((content) =>
+          axios.get(`${SCENERY_API_BASE_URL}${content.url}`, {
+            headers: SCENERY_API_HEADERS,
+          }),
+        ),
       );
-      responses.data.results &&
-        dispatch(addLandingPosterData(responses.data.results));
+
+      /* To get & dispatch landinga page's content */
+      const landingContentList = landingContentData.reduce((acc, content, i) => {
+        const res = responses[i];
+        if (res.status === "fulfilled") {
+          acc.push({
+            type: content.type,
+            content: res.value.data.results,
+          });
+        }
+        return acc;
+      }, []);
+      dispatch(addLandingContent(landingContentList));
+
     } catch (error) {
       console.error(error);
     }
@@ -262,9 +289,10 @@ const useContent = () => {
         ),
       );
 
-      /* To get & dispatch explore content */
+      /* To get & dispatch browse page's content */
       const browseCatList = browseCatData.reduce((acc, categorie, i) => {
         const res = responses[i];
+        console.log(res)
         if (res.status === "fulfilled") {
           acc.push({
             type: categorie.type,
@@ -338,6 +366,7 @@ const useContent = () => {
         ),
       );
 
+      /* To get & dispatch movies */
       const moviesCatList = moviesCatData.reduce((acc, val, i) => {
         const res = responses[i];
         if (res.status === "fulfilled") {
@@ -747,6 +776,7 @@ const useContent = () => {
         ),
       );
 
+       /* To get & dispatch movies genre */
       const moviesGenreList = moviesGenreData[
         selectedMovieGenreIndex
       ].genreMovies.reduce((acc, val, i) => {
@@ -833,6 +863,7 @@ const useContent = () => {
         ),
       );
 
+       /* To get & dispatch tvshows */
       const tvShowsCatList = tvShowsCatData.reduce((acc, val, i) => {
         const res = responses[i];
         if (res.status === "fulfilled") {
@@ -1241,6 +1272,8 @@ const useContent = () => {
           }),
         ),
       );
+
+       /* To get & dispatch tvshows genre */
       const tvShowsGenreList = tvShowsGenreData[
         selectedTvShowGenreIndex
       ].genreTvShows.reduce((acc, val, i) => {
@@ -1318,6 +1351,7 @@ const useContent = () => {
         ),
       );
 
+       /* To get & dispatch popolar page's content */
       const popularCatList = popularCatData.reduce((acc, val, i) => {
         const res = responses[i];
         if (res.status === "fulfilled") {
@@ -1394,6 +1428,8 @@ const useContent = () => {
           }),
         ),
       );
+
+       /* To get & dispatch movie info */
       const movieInfoList = movieInfoData.reduce((acc, val, i) => {
         const res = responses[i];
         if (res.status === "fulfilled") {
@@ -1453,6 +1489,7 @@ const useContent = () => {
           }),
         ),
       );
+       /* To get & dispatch tvshow info */
       const tvShowInfoList = tvShowInfoData.reduce((acc, val, i) => {
         const res = responses[i];
         if (res.status === "fulfilled") {
@@ -1466,7 +1503,7 @@ const useContent = () => {
 
   return {
     /* Landing page */
-    getLandingPosterData,
+    getLandingContentData,
     /* Browse page */
     getBrowseCat,
     /* All genres */

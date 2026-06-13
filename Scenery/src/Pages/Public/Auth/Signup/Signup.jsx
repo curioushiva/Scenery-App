@@ -38,82 +38,82 @@ const Signup = () => {
   }, [location.pathname]);
 
   return (
-    <div className="w-full bg-gradient-to-b from-[#431518] to-[#000000] p-8 pt-13">
-      <div className="w-full h-[75dvh] flex justify-center items-center pb-85">
-        <div className="w-full max-w-md h-full flex flex-col gap-2 justify-start items-start">
+    <div className="w-full flex justify-center items-center">
+      <div className="w-full max-w-md h-full flex flex-col gap-2 justify-start items-start">
+        {/* Heading */}
+        <h1 className="text-4xl font-bold">Create your account</h1>
+        <h2 className="text-lg text-text-secondary pb-5">
+          Get started by creating a new account
+        </h2>
 
-          {/* Heading */}
-          <h1 className="text-4xl font-bold">Create your account</h1>
-          <h2 className="text-lg text-textcolor-secondary pb-5">
-            Get started by creating a new account
-          </h2>
+        {/* Email input fields */}
+        <input
+          value={typedSignupEmail}
+          onChange={(e) => {
+            settypedSignupEmail(e.target.value);
+            dispatch(
+              setSignupPageErrors({
+                invalidSignupEmail: null,
+                firebaseSignupError: null,
+              }),
+            );
+          }}
+          className="w-full px-5 py-3 rounded-sm border-1 border-br-primary bg-bg-inputcolor placeholder-text-secondary focus:outline focus:outline-white"
+          type="email"
+          placeholder="Email Address"
+        />
+        <p className="ext-sm text-errorcolor">{invalidSignupEmail}</p>
 
-          {/* Email input fields */}
+        {/* Password input fields */}
+        <div className="w-full relative">
           <input
-            value={typedSignupEmail}
+            value={typedSignupPassword}
             onChange={(e) => {
-              settypedSignupEmail(e.target.value);
+              settypedSignupPassword(e.target.value);
               dispatch(
                 setSignupPageErrors({
-                  invalidSignupEmail: null,
+                  invalidSignupPassword: null,
                   firebaseSignupError: null,
                 }),
               );
             }}
-            className="w-full px-5 py-3 border-1 border-brcolor-primary rounded-sm placeholder-textcolor-secondary bg-bgcolor-secondary focus:outline focus:outline-white"
-            type="email"
-            placeholder="Email Address"
+            className="w-full px-5 pr-14 py-3 rounded-sm border-1 border-br-primary bg-bg-inputcolor placeholder-text-secondary focus:outline focus:outline-white"
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
           />
-          <h3 className="ext-sm text-uicolor-primary">{invalidSignupEmail}</h3>
-
-          {/* Password input fields */}
-          <div className="w-full relative">
-            <input
-              value={typedSignupPassword}
-              onChange={(e) => {
-                settypedSignupPassword(e.target.value);
-                dispatch(
-                  setSignupPageErrors({
-                    invalidSignupPassword: null,
-                    firebaseSignupError: null,
-                  }),
-                );
-              }}
-              className="w-full px-5 pr-14 py-3 border-1 border-brcolor-primary rounded-sm placeholder-textcolor-secondary bg-bgcolor-secondary focus:outline focus:outline-white"
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-            />
-            <div onClick={() => setShowPassword(prev => !prev)} className="absolute z-10 right-5 top-4 cursor-pointer text-textcolor-secondary">
-              {showPassword ?
-                <RiEyeLine className="w-5 h-5" />
-                :
-                <RiEyeCloseLine className="w-5 h-5" />
-              }
-            </div>
-          </div>
-          <h4 className="ext-sm text-uicolor-primary">
-            {invalidSignupPassword
-              ? invalidSignupPassword
-              : firebaseSignupError}
-          </h4>
-
-          {/* Button */}
-          <button
-            onClick={() =>
-              validateSignupCred(typedSignupEmail, typedSignupPassword)
-            }
-            className="w-full px-5 py-3 rounded-sm text-base bg-uicolor-primary font-medium cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
+          <div
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute z-10 right-5 top-4 cursor-pointer text-text-secondary"
           >
-            {signupLoader ? "Creating account..." : "Sign Up"}
-          </button>
-
-          {/* Navigate to sigin page */}
-          <Link to="/signin">
-            <h4 className="text-sm font-regular text-textcolor-secondary pt-5 underline decoration-solid">
-              Already have an account? Sign in
-            </h4>
-          </Link>
+            {showPassword ? (
+              <RiEyeLine className="w-5 h-5" />
+            ) : (
+              <RiEyeCloseLine className="w-5 h-5" />
+            )}
+          </div>
         </div>
+        <p className="ext-sm text-errorcolor">
+          {invalidSignupPassword
+            ? invalidSignupPassword
+            : firebaseSignupError}
+        </p>
+
+        {/* Button */}
+        <button
+          onClick={() =>
+            validateSignupCred(typedSignupEmail, typedSignupPassword)
+          }
+          className="w-full px-5 py-3 rounded-sm text-base bg-btn-primary font-medium cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
+        >
+          {signupLoader ? "Creating account..." : "Sign Up"}
+        </button>
+
+        {/* Navigate to sigin page */}
+        <Link to="/signin">
+          <h4 className="text-sm font-regular text-text-secondary pt-5 underline decoration-solid">
+            Already have an account? Sign in
+          </h4>
+        </Link>
       </div>
     </div>
   );

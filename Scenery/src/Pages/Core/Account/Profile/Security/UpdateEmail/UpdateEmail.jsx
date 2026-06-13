@@ -58,7 +58,7 @@ const UpdateEmail = () => {
     };
 
     return (
-        <div className="w-full p-8 mobileNavPad">
+        <div className="w-full navPadding">
             <div className="w-full flex flex-col gap-10">
                 {/* Intro */}
                 <div className="flex">
@@ -82,7 +82,7 @@ const UpdateEmail = () => {
                                 {/* Heading */}
                                 <div className="w-full flex flex-col gap-2">
                                     <h1 className="text-2xl font-bold">Update your email</h1>
-                                    <p className="text-sm sm:text-base text-regular text-textcolor-secondary italic">
+                                    <p className="text-sm sm:text-base text-regular text-text-secondary italic">
                                         Update the email associated with your account.
                                     </p>
                                 </div>
@@ -108,10 +108,10 @@ const UpdateEmail = () => {
                                                             requiresReauth: false
                                                         });
                                                     }}
-                                                    className="w-full text-sm sm:text-base text-textcolor-secondary px-5 pr-14 py-3 border border-white/10 rounded-sm bg-bgcolor-secondary placeholder-textcolor-secondary focus:outline focus:outline-white"
+                                                    className="w-full text-sm sm:text-base px-5 pr-14 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputcolor placeholder-text-secondary focus:outline focus:outline-white"
                                                     type={showAuthPassword ? "text" : "password"}
                                                     placeholder="Password" />
-                                                <div onClick={() => setShowAuthPassword(prev => !prev)} className="absolute z-10 right-5 top-4 cursor-pointer text-textcolor-secondary">
+                                                <div onClick={() => setShowAuthPassword(prev => !prev)} className="absolute z-10 right-5 top-4 cursor-pointer text-text-secondary">
                                                     {showAuthPassword ?
                                                         <RiEyeLine className="w-5 h-5" />
                                                         :
@@ -119,7 +119,7 @@ const UpdateEmail = () => {
                                                     }
                                                 </div>
                                             </div>
-                                            <p className={`text-xs sm:text-sm text-[#ff8957] pl-2`}>
+                                            <p className={`text-xs sm:text-sm text-errorcolor pl-2`}>
                                                 {currPassValidation?.message}
                                             </p>
                                         </div>
@@ -127,20 +127,20 @@ const UpdateEmail = () => {
                                         <div className="flex flex-col gap-2">
                                             <button
                                                 onClick={() => handleAccountReauth()}
-                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium rounded-sm bg-uicolor-primary cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
+                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium rounded-sm bg-btn-primary cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
                                             >
                                                 {authBtnActionLabel}
                                             </button>
                                             <Link
                                                 to="/account"
-                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm text-white cursor-pointer hover:bg-[#9E9E9E] transition-colors duration-300 ease-in-out"
+                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whitecolor/60"
                                             >
                                                 Cancel
                                             </Link>
                                         </div>
                                         {/* Forget password */}
                                         <Link to="/account/password" className="flex gap-2 pt-2">
-                                            <h1 className="text-sm font-regular text-textcolor-secondary underline">Forgot your password? Change it from here</h1>
+                                            <h1 className="text-sm font-regular text-text-secondary underline">Forgot your password? Change it from here</h1>
                                         </Link>
                                     </div>
                                 ) : (
@@ -160,12 +160,12 @@ const UpdateEmail = () => {
                                                         requiresReauth: false
                                                     });
                                                 }}
-                                                className="w-full text-sm sm:text-base text-textcolor-secondary px-5 py-3 border border-white/10 rounded-sm bg-bgcolor-secondary placeholder-textcolor-secondary focus:outline focus:outline-white"
+                                               className="w-full text-sm sm:text-base px-5 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputcolor placeholder-text-secondary focus:outline focus:outline-white"
                                                 type="email"
                                                 placeholder="Email"
                                             />
                                             <p
-                                                className={`text-xs sm:text-sm  ${newEmailValidation?.success ? "text-[#74f944d6]" : "text-[#ff8957]"} pl-2`}
+                                                className={`text-xs sm:text-sm  ${newEmailValidation?.success ? "text-noerrorcolor" : "text-errorcolor"} pl-2`}
                                             >
                                                 {newEmailValidation?.message}
                                             </p>
@@ -174,20 +174,20 @@ const UpdateEmail = () => {
                                         <div className="flex flex-col gap-2">
                                             <button
                                                 onClick={() => handleChangeEmail()}
-                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium rounded-sm bg-uicolor-primary cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
+                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium rounded-sm bg-btn-primary cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
                                             >
                                                 {btnActionLabel}
                                             </button>
                                             <Link
                                                 to="/account"
-                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm text-white cursor-pointer hover:bg-[#9E9E9E] transition-colors duration-300 ease-in-out"
+                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whitecolor/60"
                                             >
                                                 Cancel
                                             </Link>
                                         </div>
                                         {/* Alert message */}
                                         <div className="flex gap-2 pt-2">
-                                            <h1 className="text-xs sm:text-sm font-regular text-textcolor-secondary">⚠ After updating your email, you'll need to sign in again on all devices</h1>
+                                            <h1 className="text-xs sm:text-sm font-regular text-text-secondary">⚠ After updating your email, you'll need to sign in again on all devices</h1>
                                         </div>
                                     </div>
                                 )}

@@ -3,20 +3,20 @@ import { createSlice } from "@reduxjs/toolkit";
 
 /* Initial state */
 const initialState = {
-  /* Home */
-  landingPosterData: [],
+  /* Landing page */
+  landingContent: [],
 
   /* All genres */
   allGenres: [],
 
-  /* Browse */
+  /* Browse page */
   browseCat: [],
   browseBGVideo: {
     video: {},
     videoKey: null,
   },
 
-  /* Movies */
+  /* Movies page */
   moviesCat: [],
   moviesBGVideo: {
     video: {},
@@ -25,7 +25,7 @@ const initialState = {
   selectedMovieGenreIndex: null,
   moviesGenre: [],
 
-  /* Tv shows */
+  /* Tv shows page */
   tvShowsCat: [],
   tvShowsBGVideo: {
     video: {},
@@ -34,7 +34,7 @@ const initialState = {
   selectedTvShowGenreIndex: null,
   tvShowsGenre: [],
 
-  /* Popular */
+  /* Popular page */
   popularCat: [],
 
   /* Media info */
@@ -47,9 +47,9 @@ const ContentSlice = createSlice({
   name: "content",
   initialState,
   reducers: {
-    /* Landingpage poster data */
-    addLandingPosterData: (state, action) => {
-      state.landingPosterData = action.payload;
+    /* Landing page's content */
+    addLandingContent: (state, action) => {
+      state.landingContent = action.payload;
     },
     /* All genres - movies and tv shows included */
     addAllGenres: (state, action) => {
@@ -59,7 +59,7 @@ const ContentSlice = createSlice({
     addBrowseCat: (state, action) => {
       state.browseCat = action.payload;
     },
-    /* Browse Page's Background Video */
+    /* Browse page's background video */
     addBrowseBGVideo: (state, action) => {
       state.browseBGVideo = action.payload;
     },
@@ -67,11 +67,11 @@ const ContentSlice = createSlice({
     addMoviesCat: (state, action) => {
       state.moviesCat = action.payload;
     },
-    /* Movie Page's Background Video */
+    /* Movie page's background video */
     addMoviesBGVideo: (state, action) => {
       state.moviesBGVideo = action.payload;
     },
-    /* Selected Movie Genre Index */
+    /* Selected movie genre index */
     addSelectedMovieGenreIndex: (state, action) => {
       state.selectedMovieGenreIndex = action.payload;
     },
@@ -83,11 +83,11 @@ const ContentSlice = createSlice({
     addTvShowsCat: (state, action) => {
       state.tvShowsCat = action.payload;
     },
-    /* Tv Show Page's Background Video */
+    /* Tv Show page's background video */
     addTvShowsBGVideo: (state, action) => {
       state.tvShowsBGVideo = action.payload;
     },
-    /* Selected Tv shows Genre Index */
+    /* Selected Tv shows genre index */
     addSelectedTvShowGenreIndex: (state, action) => {
       state.selectedTvShowGenreIndex = action.payload;
     },
@@ -110,24 +110,24 @@ const ContentSlice = createSlice({
 });
 
 export const {
-  /* Landingpage & Header */
-  addLandingPosterData,
+  /* Landing page */
+  addLandingContent,
   /* All Genres */
   addAllGenres,
-  /* Browse */
+  /* Browse page */
   addBrowseCat,
   addBrowseBGVideo,
-  /* Movies */
+  /* Movies page */
   addMoviesCat,
   addMoviesBGVideo,
   addSelectedMovieGenreIndex,
   addMoviesGenre,
-  /* TV Shows */
+  /* TV Shows page */
   addTvShowsCat,
   addTvShowsBGVideo,
   addSelectedTvShowGenreIndex,
   addTvShowsGenre,
-  /* Popolar */
+  /* Popolar page */
   addPopularCat,
   /* Media info */
   addMediaID,

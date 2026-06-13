@@ -4,9 +4,11 @@ import { SystemFooter } from "@/Pages/Shared/Footer/Footer";
 
 const SystemLayout = () => {
   return (
-    <div className="w-full min-h-screen grid grid-rows-[auto_1fr_auto]">
+    <div className="w-full min-h-screen grid grid-rows-[auto_1fr_auto] bg-gradient-to-b from-bg-topcolor to-bg-bottomcolor text-text-primary overflow-x-auto">
       <SystemHeader />
-      <Outlet />
+      <div className="w-full p-8 pt-13 lg:px-35">
+        <Outlet />
+      </div>
       <SystemFooter />
     </div>
   );
