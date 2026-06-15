@@ -5,12 +5,14 @@ import storage from "redux-persist/lib/storage";
 import authReducer from "@/Utils/Redux/Slices/AuthSlice/AuthSlice";
 import accountReducer from "@/Utils/Redux/Slices/AccountSlice/AccountSlice";
 import contentReducer from "@/Utils/Redux/Slices/ContentSlice/ContentSlice";
+import discoverReducer from "@/Utils/Redux/Slices/DiscoverSlice/DiscoverSlice";
 
 /* Combine all slice reducers */
 const rootReducer = combineReducers({
   auth: authReducer,
   account: accountReducer,
   content: contentReducer,
+  discover: discoverReducer,
 });
 
 /* Persist config — saves redux state to localStorage */

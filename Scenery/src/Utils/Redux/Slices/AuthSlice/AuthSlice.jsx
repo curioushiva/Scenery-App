@@ -1,4 +1,4 @@
-/* Authentication slice for landing, signup & signin */
+/* Authentication slice to store and manage auth data */
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

@@ -44,13 +44,18 @@ body,
   /* Colors */
 
   /* Background */
-  --color-bg-topcolor: #1A1A2E;
-  --color-bg-bottomcolor: #000000;
-  --color-bg-whitecolor: #FFFFFF;
-  --color-bg-inputcolor: #111112AA;
-  --color-bg-cardcolor: #161616CC;
-  --color-bg-corecolor: #141414;
-  --color-bg-blackcolor: #000000;
+  --color-bg-topColor: #1A1A2E;
+  --color-bg-bottomColor: #000000;
+  --color-bg-whiteColor: #FFFFFF;
+  --color-bg-inputColor: #111112AA;
+  --color-bg-coreColor: #141414;
+  --color-bg-blackColor: #000000;
+  --color-bg-blueColor: #5B6AF5;
+  --color-bg-yellowColor: #FACC15;
+
+  /* Cards */
+  --color-cardColor-primary: #161616CC;
+  --color-cardColor-secondary: #1F1F1F;
 
   /* Borders */
   --color-br-primary: #5F5E5E99;

@@ -9,7 +9,7 @@ import {
 /* Landing Footer */
 export const LandingFooter = () => {
   return (
-    <div className="w-full flex flex-col gap-8 text-text-secondary py-20 px-8 lg:px-35">
+    <div className="w-full flex flex-col gap-8 text-text-secondary p-8 lg:px-35">
       {/* Tagline */}
       <h1 className="font-regular text-base lg:text-lg transition duration-200 ease-in-out hover:underline hover:text-text-primary">
         Curious ? Get to know Scenery
@@ -52,7 +52,7 @@ export const LandingFooter = () => {
 /* System Footer */
 export const SystemFooter = () => {
   return (
-    <div className="w-full flex flex-col gap-8 text-text-secondary py-12 px-8 lg:px-35">
+    <div className="w-full flex flex-col gap-8 text-text-secondary p-8 lg:px-35">
       {/* Tagline */}
       <h1 className="font-regular text-base lg:text-lg transition duration-200 ease-in-out hover:underline hover:text-text-primary">
         Curious ? Get to know Scenery
@@ -95,7 +95,7 @@ export const SystemFooter = () => {
 /* Auth Footer */
 export const AuthFooter = () => {
   return (
-    <div className="w-full flex flex-col gap-8 text-text-secondary py-10 px-8 lg:px-35">
+    <div className="w-full flex flex-col gap-8 text-text-secondary p-8 lg:px-35">
       {/* Tagline */}
       <h1 className="font-regular text-base lg:text-lg transition duration-200 ease-in-out hover:underline hover:text-text-primary">
         Curious ? Get to know Scenery
@@ -138,7 +138,7 @@ export const AuthFooter = () => {
 /* Core Footer */
 export const CoreFooter = () => {
   return (
-    <div className="w-full flex flex-col gap-10 text-text-secondary p-8 pt-13">
+    <div className="w-full flex flex-col gap-10 text-text-secondary p-8">
       {/* About */}
       <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5 mx-auto">
         {CoreFooterData.map((val) => {

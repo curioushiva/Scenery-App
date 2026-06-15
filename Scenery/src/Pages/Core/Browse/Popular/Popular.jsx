@@ -44,31 +44,31 @@ const Popular = () => {
         <div className="relative flex flex-col gap-10 overflow-hidden">
           {/* Now Playing */}
           {popularCat
-            .filter((categorie) => categorie.content.length > 5)
-            .slice(0, 1)
-            .map((categorie) => {
+            ?.filter((categorie) => categorie?.content?.length > 5)
+            ?.slice(0, 1)
+            ?.map((categorie) => {
               return (
-                <div key={categorie.type} className="w-full flex flex-col gap-3">
+                <div key={categorie?.type} className="w-full flex flex-col gap-3">
                   <div className="font-medium text-base 350:text-xl">
-                    <h1>{categorie.title}</h1>
+                    <h1>{categorie?.title}</h1>
                   </div>
                   <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
-                    {categorie.content
-                      .filter((content) => content.id && content.poster_path)
-                      .map((content, index) => (
+                    {categorie?.content
+                      ?.filter((content) => content?.id && content?.poster_path)
+                      ?.map((content) => (
                         <div
-                          key={content.id}
+                          key={content?.id}
                           onClick={() => mediaType(content)}
                           className="relative flex-shrink-0 group"
                         >
-                          <div className="relative rounded-sm overflow-hidden w-[10rem] lg:w-[13rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
+                          <div className="relative rounded-sm overflow-hidden w-[8.5rem] sm:w-[9.5rem] lg:w-[10.5rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
                             <img
-                              src={`${IMG_POSTER_BASE_URL}${content.poster_path}`}
+                              src={`${IMG_POSTER_BASE_URL}${content?.poster_path}`}
                               alt="Poster"
                               className="absolute z-0 w-full h-full object-cover"
                             />
                             {/* About movie or show - on hover drop down */}
-                            <div className="absolute z-10 bottom-0 bg-bg-blackcolor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                            <div className="absolute z-10 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                               <div className="flex justify-between items-center">
                                 <div
                                   onClick={(e) => {
@@ -87,9 +87,9 @@ const Popular = () => {
                                       content,
                                       "watchLater",
                                     ) ? (
-                                      <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                      <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     ) : (
-                                      <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                      <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                   <div
@@ -99,46 +99,46 @@ const Popular = () => {
                                     className="p-[0.1rem]"
                                   >
                                     {showSavedProfileMedia(content, "favourite") ? (
-                                      <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                      <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                     ) : (
-                                      <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                      <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                 </div>
                                 <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                  <Info className="w-6 h-6" />
+                                  <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </div>
                               </div>
                               <div className="flex items-center gap-2 font-medium text-text-secondary">
                                 <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                  <h1 className="text-sm">
-                                    ★ {content.vote_average.toFixed(1) || "0.0"}
+                                  <h1 className="text-xs lg:text-sm font-regular">
+                                    ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                   </h1>
                                 </div>
                                 <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                  <h1 className="text-sm">
+                                  <h1 className="text-xs lg:text-sm font-regular">
                                     {(
-                                      content.release_date ||
-                                      content.first_air_date
+                                      content?.release_date ||
+                                      content?.first_air_date
                                     )?.slice(0, 4) || "N/A"}
                                   </h1>
                                 </div>
                               </div>
                               <div className="flex gap-2">
-                                {content.genre_ids.length === 0 ? (
-                                  <h1 className="text-sm font-medium">
+                                {content?.genre_ids?.length === 0 ? (
+                                  <h1 className="text-xs lg:text-sm font-regular">
                                     Uncategorized
                                   </h1>
                                 ) : (
                                   allGenres
-                                    .filter((list) =>
-                                      content.genre_ids.includes(list.id),
+                                    ?.filter((list) =>
+                                      content?.genre_ids?.includes(list?.id),
                                     )
-                                    .slice(0, 2)
-                                    .map((val) => (
+                                    ?.slice(0, 2)
+                                    ?.map((val) => (
                                       <h1
-                                        key={val.id}
-                                        className="text-sm font-medium"
+                                        key={val?.id}
+                                        className="text-xs lg:text-sm font-regular"
                                       >
                                         {val?.name === "Science Fiction"
                                           ? "Sci-Fi"
@@ -158,32 +158,32 @@ const Popular = () => {
 
           {/* Top Popular Movies */}
           {popularCat
-            .filter((categorie) => categorie.content.length > 5)
-            .slice(1, 2)
-            .map((categorie) => {
+            ?.filter((categorie) => categorie?.content?.length > 5)
+            ?.slice(1, 2)
+            ?.map((categorie) => {
               return (
-                categorie.title === "Top Popular Movies" && (
+                categorie?.title === "Top Popular Movies" && (
                   <div
-                    key={categorie.type}
+                    key={categorie?.type}
                     className="w-full flex flex-col gap-3"
                   >
                     <div className="font-medium text-base 350:text-xl">
-                      <h1>{categorie.title}</h1>
+                      <h1>{categorie?.title}</h1>
                     </div>
                     <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
                       {/* 1-9 */}
-                      {categorie.content
-                        .filter((content) => content.id && content.poster_path)
-                        .slice(0, 9)
-                        .map((content, index) => (
+                      {categorie?.content
+                        ?.filter((content) => content?.id && content?.poster_path)
+                        ?.slice(0, 9)
+                        ?.map((content, index) => (
                           <div
-                            key={content.id}
+                            key={content?.id}
                             onClick={() => mediaType(content)}
                             className="relative w-[16rem] h-[12rem] md:w-[18rem] md:h-[14rem] flex-shrink-0 group"
                           >
                             <div className="relative flex justify-center items-center rounded-sm overflow-hidden w-full h-full transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
-                                src={`${IMG_POSTER_BASE_URL}${content.poster_path}`}
+                                src={`${IMG_POSTER_BASE_URL}${content?.poster_path}`}
                                 alt="Poster"
                                 className="absolute right-0 z-10 w-[67%] md:w-[65%] h-full object-cover"
                               />
@@ -194,7 +194,7 @@ const Popular = () => {
                                 {index + 1}
                               </h1>
                               {/* About movie or show - on hover drop down */}
-                              <div className="absolute z-10 bottom-0 right-0 bg-bg-blackcolor/90 w-[67%] md:w-[65%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                              <div className="absolute z-10 bottom-0 right-0 bg-bg-blackColor/90 w-[67%] md:w-[65%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                 <div className="flex justify-between items-center">
                                   <div
                                     onClick={(e) => {
@@ -213,9 +213,9 @@ const Popular = () => {
                                         content,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -228,47 +228,47 @@ const Popular = () => {
                                         content,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
                                   <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                    <Info className="w-6 h-6" />
+                                    <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
-                                      ★ {content.vote_average.toFixed(1) || "0.0"}
+                                    <h1 className="text-xs lg:text-sm font-regular">
+                                      ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
+                                    <h1 className="text-xs lg:text-sm font-regular">
 
                                       {(
-                                        content.release_date ||
-                                        content.first_air_date
+                                        content?.release_date ||
+                                        content?.first_air_date
                                       )?.slice(0, 4) || "N/A"}
                                     </h1>
                                   </div>
                                 </div>
                                 <div className="flex gap-2">
-                                  {content.genre_ids.length === 0 ? (
-                                    <h1 className="text-sm font-medium">
+                                  {content?.genre_ids?.length === 0 ? (
+                                    <h1 className="text-xs lg:text-sm font-regular">
                                       Uncategorized
                                     </h1>
                                   ) : (
                                     allGenres
-                                      .filter((list) =>
-                                        content.genre_ids.includes(list.id),
+                                      ?.filter((list) =>
+                                        content?.genre_ids?.includes(list.id),
                                       )
                                       .slice(0, 2)
                                       .map((val) => (
                                         <h1
-                                          key={val.id}
-                                          className="text-sm font-medium"
+                                          key={val?.id}
+                                          className="text-xs lg:text-sm font-regular"
                                         >
                                           {val?.name === "Science Fiction"
                                             ? "Sci-Fi"
@@ -282,18 +282,18 @@ const Popular = () => {
                           </div>
                         ))}
                       {/* 10-15 */}
-                      {categorie.content
-                        .filter((content) => content.id && content.poster_path)
-                        .slice(9, 15)
-                        .map((content, index) => (
+                      {categorie?.content
+                        ?.filter((content) => content?.id && content?.poster_path)
+                        ?.slice(9, 15)
+                        ?.map((content, index) => (
                           <div
-                            key={content.id}
+                            key={content?.id}
                             onClick={() => mediaType(content)}
                             className="relative w-[23rem] h-[12rem] md:w-[25rem] md:h-[14rem] flex-shrink-0 group"
                           >
                             <div className="relative flex justify-center items-center rounded-sm overflow-hidden w-full h-full transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
-                                src={`${IMG_POSTER_BASE_URL}${content.poster_path}`}
+                                src={`${IMG_POSTER_BASE_URL}${content?.poster_path}`}
                                 alt="Poster"
                                 className="absolute right-0 z-10 w-[58%] md:w-[50%] h-full object-cover"
                               />
@@ -304,7 +304,7 @@ const Popular = () => {
                                 {index + 10}
                               </h1>
                               {/* About movie or show - on hover drop down */}
-                              <div className="absolute z-10 bottom-0 right-0 bg-bg-blackcolor/90 w-[58%] md:w-[50%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                              <div className="absolute z-10 bottom-0 right-0 bg-bg-blackColor/90 w-[58%] md:w-[50%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                 <div className="flex justify-between items-center">
                                   <div
                                     onClick={(e) => {
@@ -323,9 +323,9 @@ const Popular = () => {
                                         content,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -338,47 +338,47 @@ const Popular = () => {
                                         content,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
                                   <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                    <Info className="w-6 h-6" />
+                                    <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
-                                      ★ {content.vote_average.toFixed(1) || "0.0"}
+                                    <h1 className="text-xs lg:text-sm font-regular">
+                                      ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
+                                    <h1 className="text-xs lg:text-sm font-regular">
 
                                       {(
-                                        content.release_date ||
-                                        content.first_air_date
+                                        content?.release_date ||
+                                        content?.first_air_date
                                       )?.slice(0, 4) || "N/A"}
                                     </h1>
                                   </div>
                                 </div>
                                 <div className="flex gap-2">
-                                  {content.genre_ids.length === 0 ? (
-                                    <h1 className="text-sm font-medium">
+                                  {content?.genre_ids?.length === 0 ? (
+                                    <h1 className="text-xs lg:text-sm font-regular">
                                       Uncategorized
                                     </h1>
                                   ) : (
                                     allGenres
-                                      .filter((list) =>
-                                        content.genre_ids.includes(list.id),
+                                      ?.filter((list) =>
+                                        content?.genre_ids?.includes(list?.id),
                                       )
-                                      .slice(0, 2)
-                                      .map((val) => (
+                                      ?.slice(0, 2)
+                                      ?.map((val) => (
                                         <h1
-                                          key={val.id}
-                                          className="text-sm font-medium"
+                                          key={val?.id}
+                                          className="text-xs lg:text-sm font-regular"
                                         >
                                           {val?.name === "Science Fiction"
                                             ? "Sci-Fi"
@@ -399,31 +399,31 @@ const Popular = () => {
 
           {/* Upcoming Movies */}
           {popularCat
-            .filter((categorie) => categorie.content.length > 5)
-            .slice(2, 3)
-            .map((categorie) => {
+            ?.filter((categorie) => categorie?.content?.length > 5)
+            ?.slice(2, 3)
+            ?.map((categorie) => {
               return (
-                <div key={categorie.type} className="w-full flex flex-col gap-3">
+                <div key={categorie?.type} className="w-full flex flex-col gap-3">
                   <div className="font-medium text-base 350:text-xl">
-                    <h1>{categorie.title}</h1>
+                    <h1>{categorie?.title}</h1>
                   </div>
                   <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
-                    {categorie.content
-                      .filter((content) => content.id && content.poster_path)
-                      .map((content, index) => (
+                    {categorie?.content
+                      ?.filter((content) => content?.id && content?.poster_path)
+                      ?.map((content) => (
                         <div
-                          key={content.id}
+                          key={content?.id}
                           onClick={() => mediaType(content)}
                           className="relative flex-shrink-0 group"
                         >
-                          <div className="relative rounded-sm overflow-hidden w-[10rem] lg:w-[13rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
+                          <div className="relative rounded-sm overflow-hidden w-[8.5rem] sm:w-[9.5rem] lg:w-[10.5rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
                             <img
-                              src={`${IMG_POSTER_BASE_URL}${content.poster_path}`}
+                              src={`${IMG_POSTER_BASE_URL}${content?.poster_path}`}
                               alt="Poster"
                               className="absolute z-0 w-full h-full object-cover"
                             />
                             {/* About movie or show - on hover drop down */}
-                            <div className="absolute z-10 bottom-0 bg-bg-blackcolor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                            <div className="absolute z-10 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                               <div className="flex justify-between items-center">
                                 <div
                                   onClick={(e) => {
@@ -442,9 +442,9 @@ const Popular = () => {
                                       content,
                                       "watchLater",
                                     ) ? (
-                                      <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                      <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     ) : (
-                                      <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                      <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                   <div
@@ -454,47 +454,47 @@ const Popular = () => {
                                     className="p-[0.1rem]"
                                   >
                                     {showSavedProfileMedia(content, "favourite") ? (
-                                      <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                      <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                     ) : (
-                                      <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                      <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                 </div>
                                 <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                  <Info className="w-6 h-6" />
+                                  <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </div>
                               </div>
                               <div className="flex items-center gap-2 font-medium text-text-secondary">
                                 <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                  <h1 className="text-sm">
-                                    ★ {content.vote_average.toFixed(1) || "0.0"}
+                                  <h1 className="text-xs lg:text-sm font-regular">
+                                    ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                   </h1>
                                 </div>
                                 <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                  <h1 className="text-sm">
+                                  <h1 className="text-xs lg:text-sm font-regular">
 
                                     {(
-                                      content.release_date ||
-                                      content.first_air_date
+                                      content?.release_date ||
+                                      content?.first_air_date
                                     )?.slice(0, 4) || "N/A"}
                                   </h1>
                                 </div>
                               </div>
                               <div className="flex gap-2">
-                                {content.genre_ids.length === 0 ? (
-                                  <h1 className="text-sm font-medium">
+                                {content?.genre_ids?.length === 0 ? (
+                                  <h1 className="text-xs lg:text-sm font-regular">
                                     Uncategorized
                                   </h1>
                                 ) : (
                                   allGenres
-                                    .filter((list) =>
-                                      content.genre_ids.includes(list.id),
+                                    ?.filter((list) =>
+                                      content?.genre_ids?.includes(list?.id),
                                     )
-                                    .slice(0, 2)
-                                    .map((val) => (
+                                    ?.slice(0, 2)
+                                    ?.map((val) => (
                                       <h1
-                                        key={val.id}
-                                        className="text-sm font-medium"
+                                        key={val?.id}
+                                        className="text-xs lg:text-sm font-regular"
                                       >
                                         {val?.name === "Science Fiction"
                                           ? "Sci-Fi"
@@ -514,32 +514,32 @@ const Popular = () => {
 
           {/* Top Popular Shows */}
           {popularCat
-            .filter((categorie) => categorie.content.length > 5)
-            .slice(3, 4)
-            .map((categorie) => {
+            ?.filter((categorie) => categorie?.content?.length > 5)
+            ?.slice(3, 4)
+            ?.map((categorie) => {
               return (
-                categorie.title === "Top Popular TV Shows" && (
+                categorie?.title === "Top Popular TV Shows" && (
                   <div
-                    key={categorie.type}
+                    key={categorie?.type}
                     className="w-full flex flex-col gap-3"
                   >
                     <div className="font-medium text-base 350:text-xl">
-                      <h1>{categorie.title}</h1>
+                      <h1>{categorie?.title}</h1>
                     </div>
                     <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
                       {/* 1-9 */}
-                      {categorie.content
-                        .filter((content) => content.id && content.poster_path)
-                        .slice(0, 9)
-                        .map((content, index) => (
+                      {categorie?.content
+                        ?.filter((content) => content?.id && content?.poster_path)
+                        ?.slice(0, 9)
+                        ?.map((content, index) => (
                           <div
-                            key={content.id}
+                            key={content?.id}
                             onClick={() => mediaType(content)}
                             className="relative w-[16rem] h-[12rem] md:w-[18rem] md:h-[14rem] flex-shrink-0 group"
                           >
                             <div className="relative flex justify-center items-center rounded-sm overflow-hidden w-full h-full transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
-                                src={`${IMG_POSTER_BASE_URL}${content.poster_path}`}
+                                src={`${IMG_POSTER_BASE_URL}${content?.poster_path}`}
                                 alt="Poster"
                                 className="absolute right-0 z-10 w-[67%] md:w-[65%] h-full object-cover"
                               />
@@ -550,7 +550,7 @@ const Popular = () => {
                                 {index + 1}
                               </h1>
                               {/* About movie or show - on hover drop down */}
-                              <div className="absolute z-10 bottom-0 right-0 bg-bg-blackcolor/90 w-[67%] md:w-[65%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                              <div className="absolute z-10 bottom-0 right-0 bg-bg-blackColor/90 w-[67%] md:w-[65%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                 <div className="flex justify-between items-center">
                                   <div
                                     onClick={(e) => {
@@ -569,9 +569,9 @@ const Popular = () => {
                                         content,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -584,47 +584,47 @@ const Popular = () => {
                                         content,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
                                   <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                    <Info className="w-6 h-6" />
+                                    <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
-                                      ★ {content.vote_average.toFixed(1) || "0.0"}
+                                    <h1 className="text-xs lg:text-sm font-regular">
+                                      ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
+                                    <h1 className="text-xs lg:text-sm font-regular">
 
                                       {(
-                                        content.release_date ||
-                                        content.first_air_date
+                                        content?.release_date ||
+                                        content?.first_air_date
                                       )?.slice(0, 4) || "N/A"}
                                     </h1>
                                   </div>
                                 </div>
                                 <div className="flex gap-2">
-                                  {content.genre_ids.length === 0 ? (
-                                    <h1 className="text-sm font-medium">
+                                  {content?.genre_ids?.length === 0 ? (
+                                    <h1 className="text-xs lg:text-sm font-regular">
                                       Uncategorized
                                     </h1>
                                   ) : (
                                     allGenres
-                                      .filter((list) =>
-                                        content.genre_ids.includes(list.id),
+                                      ?.filter((list) =>
+                                        content?.genre_ids?.includes(list?.id),
                                       )
-                                      .slice(0, 2)
-                                      .map((val) => (
+                                      ?.slice(0, 2)
+                                      ?.map((val) => (
                                         <h1
-                                          key={val.id}
-                                          className="text-sm font-medium"
+                                          key={val?.id}
+                                          className="text-xs lg:text-sm font-regular"
                                         >
                                           {val?.name === "Science Fiction"
                                             ? "Sci-Fi"
@@ -638,18 +638,18 @@ const Popular = () => {
                           </div>
                         ))}
                       {/* 10-15 */}
-                      {categorie.content
-                        .filter((content) => content.id && content.poster_path)
-                        .slice(9, 15)
-                        .map((content, index) => (
+                      {categorie?.content
+                        ?.filter((content) => content?.id && content?.poster_path)
+                        ?.slice(9, 15)
+                        ?.map((content, index) => (
                           <div
-                            key={content.id}
+                            key={content?.id}
                             onClick={() => mediaType(content)}
                             className="relative w-[23rem] h-[12rem] md:w-[25rem] md:h-[14rem] flex-shrink-0 group"
                           >
                             <div className="relative flex justify-center items-center rounded-sm overflow-hidden w-full h-full transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
-                                src={`${IMG_POSTER_BASE_URL}${content.poster_path}`}
+                                src={`${IMG_POSTER_BASE_URL}${content?.poster_path}`}
                                 alt="Poster"
                                 className="absolute right-0 z-10 w-[58%] md:w-[50%] h-full object-cover"
                               />
@@ -660,7 +660,7 @@ const Popular = () => {
                                 {index + 10}
                               </h1>
                               {/* About movie or show - on hover drop down */}
-                              <div className="absolute z-10 bottom-0 right-0 bg-bg-blackcolor/90 w-[58%] md:w-[50%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                              <div className="absolute z-10 bottom-0 right-0 bg-bg-blackColor/90 w-[58%] md:w-[50%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                 <div className="flex justify-between items-center">
                                   <div
                                     onClick={(e) => {
@@ -679,9 +679,9 @@ const Popular = () => {
                                         content,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -694,47 +694,47 @@ const Popular = () => {
                                         content,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
                                   <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                    <Info className="w-6 h-6" />
+                                    <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
-                                      ★ {content.vote_average.toFixed(1) || "0.0"}
+                                    <h1 className="text-xs lg:text-sm font-regular">
+                                      ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
+                                    <h1 className="text-xs lg:text-sm font-regular">
 
                                       {(
-                                        content.release_date ||
-                                        content.first_air_date
+                                        content?.release_date ||
+                                        content?.first_air_date
                                       )?.slice(0, 4) || "N/A"}
                                     </h1>
                                   </div>
                                 </div>
                                 <div className="flex gap-2">
-                                  {content.genre_ids.length === 0 ? (
-                                    <h1 className="text-sm font-medium">
+                                  {content?.genre_ids?.length === 0 ? (
+                                    <h1 className="text-xs lg:text-sm font-regular">
                                       Uncategorized
                                     </h1>
                                   ) : (
                                     allGenres
-                                      .filter((list) =>
-                                        content.genre_ids.includes(list.id),
+                                      ?.filter((list) =>
+                                        content?.genre_ids?.includes(list?.id),
                                       )
-                                      .slice(0, 2)
-                                      .map((val) => (
+                                      ?.slice(0, 2)
+                                      ?.map((val) => (
                                         <h1
-                                          key={val.id}
-                                          className="text-sm font-medium"
+                                          key={val?.id}
+                                          className="text-xs lg:text-sm font-regular"
                                         >
                                           {val?.name === "Science Fiction"
                                             ? "Sci-Fi"
@@ -755,31 +755,31 @@ const Popular = () => {
 
           {/* Upcoming Shows */}
           {popularCat
-            .filter((categorie) => categorie.content.length > 5)
-            .slice(4, 5)
-            .map((categorie) => {
+            ?.filter((categorie) => categorie?.content?.length > 5)
+            ?.slice(4, 5)
+            ?.map((categorie) => {
               return (
-                <div key={categorie.type} className="w-full flex flex-col gap-3">
+                <div key={categorie?.type} className="w-full flex flex-col gap-3">
                   <div className="font-medium text-base 350:text-xl">
-                    <h1>{categorie.title}</h1>
+                    <h1>{categorie?.title}</h1>
                   </div>
                   <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
-                    {categorie.content
-                      .filter((content) => content.id && content.poster_path)
-                      .map((content, index) => (
+                    {categorie?.content
+                      ?.filter((content) => content?.id && content?.poster_path)
+                      ?.map((content) => (
                         <div
-                          key={content.id}
+                          key={content?.id}
                           onClick={() => mediaType(content)}
                           className="relative flex-shrink-0 group"
                         >
-                          <div className="relative rounded-sm overflow-hidden w-[10rem] lg:w-[13rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
+                          <div className="relative rounded-sm overflow-hidden w-[8.5rem] sm:w-[9.5rem] lg:w-[10.5rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
                             <img
-                              src={`${IMG_POSTER_BASE_URL}${content.poster_path}`}
+                              src={`${IMG_POSTER_BASE_URL}${content?.poster_path}`}
                               alt="Poster"
                               className="absolute z-0 w-full h-full object-cover"
                             />
                             {/* About movie or show - on hover drop down */}
-                            <div className="absolute z-10 bottom-0 bg-bg-blackcolor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                            <div className="absolute z-10 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                               <div className="flex justify-between items-center">
                                 <div
                                   onClick={(e) => {
@@ -798,9 +798,9 @@ const Popular = () => {
                                       content,
                                       "watchLater",
                                     ) ? (
-                                      <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                      <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     ) : (
-                                      <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                      <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                   <div
@@ -810,47 +810,47 @@ const Popular = () => {
                                     className="p-[0.1rem]"
                                   >
                                     {showSavedProfileMedia(content, "favourite") ? (
-                                      <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                      <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                     ) : (
-                                      <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                      <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                 </div>
                                 <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                  <Info className="w-6 h-6" />
+                                  <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </div>
                               </div>
                               <div className="flex items-center gap-2 font-medium text-text-secondary">
                                 <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                  <h1 className="text-sm">
-                                    ★ {content.vote_average.toFixed(1) || "0.0"}
+                                  <h1 className="text-xs lg:text-sm font-regular">
+                                    ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                   </h1>
                                 </div>
                                 <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                  <h1 className="text-sm">
+                                  <h1 className="text-xs lg:text-sm font-regular">
 
                                     {(
-                                      content.release_date ||
-                                      content.first_air_date
+                                      content?.release_date ||
+                                      content?.first_air_date
                                     )?.slice(0, 4) || "N/A"}
                                   </h1>
                                 </div>
                               </div>
                               <div className="flex gap-2">
-                                {content.genre_ids.length === 0 ? (
-                                  <h1 className="text-sm font-medium">
+                                {content?.genre_ids?.length === 0 ? (
+                                  <h1 className="text-xs lg:text-sm font-regular">
                                     Uncategorized
                                   </h1>
                                 ) : (
                                   allGenres
-                                    .filter((list) =>
-                                      content.genre_ids.includes(list.id),
+                                    ?.filter((list) =>
+                                      content?.genre_ids?.includes(list?.id),
                                     )
-                                    .slice(0, 2)
-                                    .map((val) => (
+                                    ?.slice(0, 2)
+                                    ?.map((val) => (
                                       <h1
-                                        key={val.id}
-                                        className="text-sm font-medium"
+                                        key={val?.id}
+                                        className="text-xs lg:text-sm font-regular"
                                       >
                                         {val?.name === "Science Fiction"
                                           ? "Sci-Fi"

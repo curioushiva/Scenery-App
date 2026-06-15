@@ -28,7 +28,7 @@ const WhatsNew = () => {
                     prev === update.id ? null : update.id,
                   )
                 }
-                className={`w-full flex justify-between items-center gap-5 py-2 px-5 border border-br-primary rounded-2xl cursor-pointer transition-all ease-in duration-100 ${aboutQueType === update.id ? "bg-bg-whitecolor/20" : "bg-bg-whitecolor/1"}`}
+                className={`w-full flex justify-between items-center gap-5 py-2 px-5 border border-br-primary rounded-2xl cursor-pointer transition-all ease-in duration-100 ${aboutQueType === update.id ? "bg-bg-whiteColor/20" : "bg-bg-whiteColor/1"}`}
               >
                 <div className="flex flex-col gap-1 350:flex-row 350:justify-center 350:items-center">
                   <h1 className="text-sm font-medium lg:text-base text-nowrap">

@@ -118,7 +118,7 @@ const DeleteAccount = () => {
                               requiresReauth: false,
                             });
                           }}
-                          className="w-full text-sm sm:text-base px-5 pr-14 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputcolor placeholder-text-secondary focus:outline focus:outline-white"
+                          className="w-full text-sm sm:text-base px-5 pr-14 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
                           type={showAuthPassword ? "text" : "password"}
                           placeholder="Password"
                         />
@@ -147,7 +147,7 @@ const DeleteAccount = () => {
                       </button>
                       <Link
                         to="/account"
-                        className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whitecolor/60"
+                        className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whiteColor/60"
                       >
                         Cancel
                       </Link>
@@ -182,7 +182,7 @@ const DeleteAccount = () => {
                             requiresReauth: false,
                           });
                         }}
-                        className="w-full text-sm sm:text-base px-5 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputcolor placeholder-text-secondary focus:outline focus:outline-white"
+                        className="w-full text-sm sm:text-base px-5 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
                         type="text"
                         placeholder="Delete account"
                       />
@@ -201,7 +201,7 @@ const DeleteAccount = () => {
                       </button>
                       <Link
                         to="/account"
-                        className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whitecolor/60"
+                        className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whiteColor/60"
                       >
                         Cancel
                       </Link>

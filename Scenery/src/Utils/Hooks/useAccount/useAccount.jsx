@@ -303,10 +303,10 @@ const useAccount = () => {
         },
       );
     } catch (error) {
-      console.log("Password reset failed", error);
+      console.log("Failed to change password", error);
       return {
         success: false,
-        message: "⨂ Failed to reset password",
+        message: "⨂ The password cannot be changed at the moment",
         requiresReauth: false,
       };
     }
@@ -316,7 +316,7 @@ const useAccount = () => {
       await updatePassword(auth.currentUser, newPassword);
       return {
         success: true,
-        message: "✓ Your password has been reset successfully",
+        message: "✓ Your password has been changed successfully",
         requiresReauth: false,
       };
     } catch (error) {
@@ -353,7 +353,7 @@ const useAccount = () => {
           console.error(error);
           return {
             success: false,
-            message: "⨂ Failed to reset password",
+            message: "⨂ Failed to change password",
             requiresReauth: false,
           };
       }

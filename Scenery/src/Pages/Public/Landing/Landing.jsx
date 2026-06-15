@@ -89,7 +89,7 @@ const Landing = () => {
                   setUpperTypedEmail(e.target.value);
                   dispatch(setLandingPageErrors({ upperEmailInvalid: null }));
                 }}
-                className="w-full text-sm px-5 py-3 rounded-sm border-1 border-border border-br-primary bg-bg-inputcolor placeholder-text-secondary focus:outline focus:outline-white"
+                className="w-full text-sm px-5 py-3 rounded-sm border-1 border-border border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
                 type="email"
                 placeholder="Email Address"
               />
@@ -110,13 +110,13 @@ const Landing = () => {
             <div className="w-full flex flex-col gap-3 pt-8">
               {popularContent?.content?.slice(0, 2)?.map((poster) => {
                 return (
-                  <div className="relative w-full max-w-[9rem] aspect-[2/3]">
+                  <div key={poster.id} className="relative w-full max-w-[9rem] aspect-[2/3]">
                     <img
                       src={`${IMG_POSTER_BASE_URL}${poster?.poster_path}`}
                       alt="Poster"
                       className="w-full h-full object-cover rounded-xl"
                     />
-                    <div className="absolute inset-0 bg-bg-blackcolor/30 rounded-xl" />
+                    <div className="absolute inset-0 bg-bg-blackColor/30 rounded-xl" />
                   </div>
                 );
               })}
@@ -124,13 +124,13 @@ const Landing = () => {
             <div className="w-full flex flex-col gap-3">
               {popularContent?.content?.slice(2, 4)?.map((poster) => {
                 return (
-                  <div className="relative w-full max-w-[9rem] aspect-[2/3]">
+                  <div key={poster.id} className="relative w-full max-w-[9rem] aspect-[2/3]">
                     <img
                       src={`${IMG_POSTER_BASE_URL}${poster?.poster_path}`}
                       alt="Poster"
                       className="w-full h-full object-cover rounded-xl"
                     />
-                    <div className="absolute inset-0 bg-bg-blackcolor/30 rounded-xl" />
+                    <div className="absolute inset-0 bg-bg-blackColor/30 rounded-xl" />
                   </div>
                 );
               })}
@@ -138,13 +138,13 @@ const Landing = () => {
             <div className="w-full flex flex-col gap-3 pt-8">
               {popularContent?.content?.slice(4, 6)?.map((poster) => {
                 return (
-                  <div className="relative w-full max-w-[9rem] aspect-[2/3]">
+                  <div key={poster.id} className="relative w-full max-w-[9rem] aspect-[2/3]">
                     <img
                       src={`${IMG_POSTER_BASE_URL}${poster?.poster_path}`}
                       alt="Poster"
                       className="w-full h-full object-cover rounded-xl"
                     />
-                    <div className="absolute inset-0 bg-bg-blackcolor/30 rounded-xl" />
+                    <div className="absolute inset-0 bg-bg-blackColor/30 rounded-xl" />
                   </div>
                 );
               })}
@@ -217,7 +217,7 @@ const Landing = () => {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <div className="absolute inset-0 bg-bg-blackcolor/20 rounded-xl" />
+                    <div className="absolute inset-0 bg-bg-blackColor/20 rounded-xl" />
                   </div>
                 );
               })}
@@ -234,7 +234,7 @@ const Landing = () => {
         {/* Content */}
         <div className="w-full grid grid-cols-1 550:grid-cols-2 md:grid-cols-4 auto-rows-auto gap-5">
           {/* 1 */}
-          <div className="col-span-1 550:col-span-2 row-span-1 550:row-span-2 bg-bg-cardcolor/80 rounded-xl">
+          <div className="col-span-1 550:col-span-2 row-span-1 550:row-span-2 bg-cardColor-primary/80 rounded-xl">
             <div className="w-full h-full flex flex-col gap-8 p-8">
               {ReasonToJoinMockData?.slice(0, 1)?.map((val, idx) => {
                 const Heading = val.header;
@@ -255,22 +255,22 @@ const Landing = () => {
 
               <div className="w-full h-full flex gap-3 flex-wrap">
                 <div className="w-full flex flex-col 350:flex-row gap-3">
-                  <div className="w-full h-full px-4 py-4 flex flex-col justify-center items-center gap-1 rounded-xl bg-bg-topcolor/80">
+                  <div className="w-full h-full px-4 py-4 flex flex-col justify-center items-center gap-1 rounded-xl bg-bg-topColor/80">
                     <h1 className="text-sm sm:text-base font-medium">800K+</h1>
                     <p className="text-xs sm:text:sm font-regular">Movies</p>
                   </div>
-                  <div className="w-full h-full px-4 py-4 flex flex-col justify-center items-center gap-1 rounded-xl bg-bg-topcolor/80">
+                  <div className="w-full h-full px-4 py-4 flex flex-col justify-center items-center gap-1 rounded-xl bg-bg-topColor/80">
                     <h1 className="text-sm sm:text-base font-medium">150K+</h1>
                     <p className="text-xs sm:text:sm font-regular">TV Shows</p>
                   </div>
                 </div>
 
                 <div className="w-full flex flex-col 350:flex-row gap-3">
-                  <div className="w-full h-full px-4 py-4 flex flex-col justify-center items-center gap-1 rounded-xl bg-bg-topcolor/80">
+                  <div className="w-full h-full px-4 py-4 flex flex-col justify-center items-center gap-1 rounded-xl bg-bg-topColor/80">
                     <h1 className="text-sm sm:text-base font-medium">2.9M+</h1>
                     <p className="text-xs sm:text:sm font-regular">Cast & Crew</p>
                   </div>
-                  <div className="w-full h-full px-4 py-4 flex flex-col justify-center items-center gap-1 rounded-xl bg-bg-topcolor/80">
+                  <div className="w-full h-full px-4 py-4 flex flex-col justify-center items-center gap-1 rounded-xl bg-bg-topColor/80">
                     <h1 className="text-sm sm:text-base font-medium">3.8M+</h1>
                     <p className="text-xs sm:text:sm font-regular">Episodes</p>
                   </div>
@@ -280,7 +280,7 @@ const Landing = () => {
           </div>
 
           {/* 2 */}
-          <div className="col-span-1 550:col-span-1 row-span-2 550:row-span-1 flex flex-col gap-4 bg-bg-cardcolor/80 rounded-xl">
+          <div className="col-span-1 550:col-span-1 row-span-2 550:row-span-1 flex flex-col gap-4 bg-cardColor-primary/80 rounded-xl">
             <div className="w-full flex flex-col gap-8 p-8">
               {ReasonToJoinMockData?.slice(1, 2)?.map((val, idx) => {
                 const Heading = val.header;
@@ -302,7 +302,7 @@ const Landing = () => {
           </div>
 
           {/* 3 */}
-          <div className="col-span-1 550:col-span-1 row-span-3 550:row-span-1 flex flex-col gap-4 bg-bg-cardcolor/80 rounded-xl">
+          <div className="col-span-1 550:col-span-1 row-span-3 550:row-span-1 flex flex-col gap-4 bg-cardColor-primary/80 rounded-xl">
             <div className="w-full flex flex-col gap-8 p-8">
               {ReasonToJoinMockData?.slice(2, 3)?.map((val, idx) => {
                 const Heading = val.header;
@@ -324,7 +324,7 @@ const Landing = () => {
           </div>
 
           {/* 4 */}
-          <div className="col-span-1 550:col-span-2 row-span-4 550:row-span-1 flex flex-col gap-4 bg-bg-cardcolor/80 rounded-xl">
+          <div className="col-span-1 550:col-span-2 row-span-4 550:row-span-1 flex flex-col gap-4 bg-cardColor-primary/80 rounded-xl">
             <div className="w-full flex flex-col gap-8 p-8">
               {ReasonToJoinMockData?.slice(3, 4)?.map((val, idx) => {
                 const Heading = val.header;
@@ -363,7 +363,7 @@ const Landing = () => {
                 setLowerTypedEmail(e.target.value);
                 dispatch(setLandingPageErrors({ lowerEmailInvalid: null }));
               }}
-              className="w-full text-sm px-5 py-3 rounded-sm border-1 border-border border-br-primary bg-bg-inputcolor placeholder-text-secondary focus:outline focus:outline-white"
+              className="w-full text-sm px-5 py-3 rounded-sm border-1 border-border border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
               type="email"
               placeholder="Email Address"
             />

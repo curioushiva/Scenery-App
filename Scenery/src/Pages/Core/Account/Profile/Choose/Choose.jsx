@@ -81,9 +81,9 @@ const Choose = () => {
     if (showUpdateProfileForm) {
         /* Update profile form */
         return (
-            <div className="w-full h-screen min-h-screen px-5 py-5 bg-gradient-to-b from-bg-topcolor to-bg-bottomcolor text-text-primary">
+            <div className="w-full h-screen min-h-screen px-5 py-5 bg-gradient-to-b from-bg-topColor to-bg-bottomColor text-text-primary">
                 <div className="w-full h-full flex justify-center items-center px-0 py-5">
-                    <div className="w-full max-w-[40rem] bg-bg-cardcolor flex flex-col gap-4 justify-center items-center border-1 border-br-primary rounded-3xl px-2 py-8 220:px-10">
+                    <div className="w-full max-w-[40rem] bg-cardColor-primary flex flex-col gap-4 justify-center items-center border-1 border-br-primary rounded-3xl px-2 py-8 220:px-10">
                         {/* Headings */}
                         <h1 className="text-xl sm:text-2xl font-medium text-center">
                             Update your profile
@@ -113,7 +113,7 @@ const Choose = () => {
                                     setNewName(e.target.value);
                                     setNewNameValidation(null);
                                 }}
-                                className="text-xs 220:text-sm sm:text-sm font-medium px-4 py-3 rounded-3xl border-1 border-br-primary bg-bg-inputcolor placeholder-text-secondary outline-none"
+                                className="text-xs 220:text-sm sm:text-sm font-medium px-4 py-3 rounded-3xl border-1 border-br-primary bg-bg-inputColor placeholder-text-secondary outline-none"
                                 type="text"
                                 placeholder="Name"
                             />
@@ -123,7 +123,7 @@ const Choose = () => {
                         </div>
                         <button
                             onClick={() => handleUpdateProfile()}
-                            className="220:w-full py-2 px-3 text-sm sm:text-base font-medium rounded-3xl text-text-ternary bg-bg-whitecolor cursor-pointer  transition duration-220 ease-out active:scale-95"
+                            className="220:w-full py-2 px-3 text-sm sm:text-base font-medium rounded-3xl text-text-ternary bg-bg-whiteColor cursor-pointer  transition duration-220 ease-out active:scale-95"
                         >
                             {btnActionLabel}
                         </button>
@@ -133,7 +133,7 @@ const Choose = () => {
                                 setShowUpdateProfileForm(false);
                                 setNewNameValidation(null);
                             }}
-                            className="220:w-full py-2 px-3 text-sm sm:text-base font-medium rounded-3xl cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whitecolor/60"
+                            className="220:w-full py-2 px-3 text-sm sm:text-base font-medium rounded-3xl cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whiteColor/60"
                         >
                             Cancel
                         </button>
@@ -144,7 +144,7 @@ const Choose = () => {
     } else {
         /* Updated profile */
         return (
-            <div className="w-full h-screen min-h-screen px-5 py-5 bg-gradient-to-b from-bg-topcolor to-bg-bottomcolor text-text-primary">
+            <div className="w-full h-screen min-h-screen px-5 py-5 bg-gradient-to-b from-bg-topColor to-bg-bottomColor text-text-primary">
                 <div className="w-full h-full flex flex-col justify-center items-center gap-6">
                     {/* Headings */}
                     <h1 className="text-2xl sm:text-3xl font-medium text-center">

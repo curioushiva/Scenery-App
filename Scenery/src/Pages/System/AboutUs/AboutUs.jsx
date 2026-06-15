@@ -37,7 +37,7 @@ const About = () => {
                       prev === about.questionID ? null : about.questionID,
                     )
                   }
-                  className="w-full flex justify-between items-center gap-5 py-6 px-5 bg-bg-cardcolor"
+                  className="w-full flex justify-between items-center gap-5 py-6 px-5 bg-cardColor-primary"
                 >
                   <h1 className="text-base font-medium lg:text-lg">
                     {about.question}
@@ -49,7 +49,7 @@ const About = () => {
                   )}
                 </div>
                 {aboutQueType === about.questionID && (
-                  <div className="bg-bg-cardcolor py-5 px-5">
+                  <div className="bg-cardColor-primary py-5 px-5">
                     <h1 className="text-base font-regular lg:text-lg">
                       {about.answer}
                     </h1>

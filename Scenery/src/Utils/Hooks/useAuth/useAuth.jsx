@@ -1,12 +1,13 @@
-/* Custom hook for authTypedEmail and usersTypedPassword authentication */
-import { useDispatch } from "react-redux";
+/* Custom hook for authentication */
+import { useDispatch, useSelector } from "react-redux";
+import { doc, updateDoc } from "firebase/firestore";
 import {
   setAuthTypedEmail,
   setLandingPageErrors,
   setSignupPageErrors,
   setSigninPageErrors,
 } from "@/Utils/Redux/Slices/AuthSlice/AuthSlice";
-import { auth } from "@/Utils/Firebase/Firebase";
+import { auth, database } from "@/Utils/Firebase/Firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -16,6 +17,9 @@ import {
 export const useAuth = () => {
   /* To dispatch */
   const dispatch = useDispatch();
+
+  /* Selecting profile */
+  const profile = useSelector((store) => store?.account?.profile);
 
   /* Regex for valid email */
   const isEmailValid = (email) => {
@@ -103,7 +107,7 @@ export const useAuth = () => {
         typedSignupEmail,
         typedSignupPassword,
       )
-        .then(() => {})
+        .then(() => { })
         .catch((error) => {
           dispatch(
             setSignupPageErrors({
@@ -180,7 +184,7 @@ export const useAuth = () => {
       );
       /* Firebase - Sign in user */
       signInWithEmailAndPassword(auth, typedSigninEmail, typedSigninPassword)
-        .then(() => {})
+        .then(() => { })
         .catch((error) => {
           dispatch(setSigninPageErrors({ signinLoader: false }));
           const errorCode = error.code;
@@ -238,6 +242,26 @@ export const useAuth = () => {
         success: false,
         message: "⨂ Please enter a valid email",
       };
+    }
+
+    /* If user is already signed in then only */
+    if (profile?.UID) {
+      /* Set polling true then move forward */
+      try {
+        await updateDoc(
+          doc(database, "users", profile?.UID, "account", "profile"),
+          {
+            PROFILE_CREDCHANGED: true,
+          },
+        );
+      } catch (error) {
+        console.log("The password cannot be reset at the moment", error);
+        return {
+          success: false,
+          message: "⨂ Failed to reset password",
+          requiresReauth: false,
+        };
+      }
     }
 
     /* Password reset */

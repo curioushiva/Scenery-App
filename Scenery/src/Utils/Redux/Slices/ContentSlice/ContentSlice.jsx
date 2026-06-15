@@ -1,4 +1,4 @@
-/* Movies slice to stores and manages movies data */
+/* Content slice to stores and manage various content data */
 import { createSlice } from "@reduxjs/toolkit";
 
 /* Initial state */

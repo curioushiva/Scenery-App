@@ -108,7 +108,7 @@ const UpdateEmail = () => {
                                                             requiresReauth: false
                                                         });
                                                     }}
-                                                    className="w-full text-sm sm:text-base px-5 pr-14 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputcolor placeholder-text-secondary focus:outline focus:outline-white"
+                                                    className="w-full text-sm sm:text-base px-5 pr-14 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
                                                     type={showAuthPassword ? "text" : "password"}
                                                     placeholder="Password" />
                                                 <div onClick={() => setShowAuthPassword(prev => !prev)} className="absolute z-10 right-5 top-4 cursor-pointer text-text-secondary">
@@ -133,7 +133,7 @@ const UpdateEmail = () => {
                                             </button>
                                             <Link
                                                 to="/account"
-                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whitecolor/60"
+                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whiteColor/60"
                                             >
                                                 Cancel
                                             </Link>
@@ -160,7 +160,7 @@ const UpdateEmail = () => {
                                                         requiresReauth: false
                                                     });
                                                 }}
-                                               className="w-full text-sm sm:text-base px-5 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputcolor placeholder-text-secondary focus:outline focus:outline-white"
+                                               className="w-full text-sm sm:text-base px-5 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
                                                 type="email"
                                                 placeholder="Email"
                                             />
@@ -180,7 +180,7 @@ const UpdateEmail = () => {
                                             </button>
                                             <Link
                                                 to="/account"
-                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whitecolor/60"
+                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whiteColor/60"
                                             >
                                                 Cancel
                                             </Link>

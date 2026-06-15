@@ -69,9 +69,9 @@ const Browse = () => {
               />
             )}
             {/* Fades top & bottoms */}
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-bg-corecolor/10 via-transparent to-transparent" />
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-bg-corecolor via-bg-corecolor/10 to-transparent" />
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-bg-corecolor via-bg-corecolor/40 to-transparent" />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-bg-coreColor/10 via-transparent to-transparent" />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-bg-coreColor via-bg-coreColor/10 to-transparent" />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-bg-coreColor via-bg-coreColor/40 to-transparent" />
           </div>
           {/* About Video */}
           <div className="relative z-10 w-full min-h-[75dvh] flex items-end navPadding">
@@ -82,14 +82,14 @@ const Browse = () => {
               {browseBGVideo?.video?.genre_ids?.length !== 0 && (
                 <div className="flex flex-row gap-2">
                   {allGenres
-                    .filter((list) =>
+                    ?.filter((list) =>
                       browseBGVideo?.video?.genre_ids?.includes(list?.id),
                     )
-                    .slice(0, 2)
-                    .map((val) => (
+                    ?.slice(0, 2)
+                    ?.map((val) => (
                       <h3
                         key={val.id}
-                        className="text-xm font-semibold lg:text-base px-4 py-[0.15rem] rounded-4xl bg-bg-whitecolor/10 backdrop-blur-md border border-br-primary"
+                        className="text-xm font-semibold lg:text-base px-4 py-[0.15rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary"
                       >
                         {val?.name === "Science Fiction"
                           ? "Sci-Fi"
@@ -122,7 +122,7 @@ const Browse = () => {
                 {browseBGVideo?.videoKey && (
                   <div
                     onClick={() => setIsBgVideoPlaying((prev) => !prev)}
-                    className="flex justify-center items-center gap-1 text-text-ternary bg-bg-whitecolor pl-1 pr-4 py-2 rounded cursor-pointer"
+                    className="flex justify-center items-center gap-1 text-text-ternary bg-bg-whiteColor pl-1 pr-4 py-2 rounded cursor-pointer"
                   >
                     {isBgVideoPlaying ? (
                       <>
@@ -154,34 +154,34 @@ const Browse = () => {
         <div className="flex flex-col gap-10 p-8">
           {/* Filtering categories if movie array is more than 5 */}
           {browseCat
-            .filter((categorie) => categorie.content.length > 5)
-            .map((categorie) => {
+            ?.filter((categorie) => categorie?.content?.length > 5)
+            ?.map((categorie) => {
               return (
                 <div
-                  key={categorie.type}
+                  key={categorie?.type}
                   className="w-full flex flex-col gap-3"
                 >
                   <div className="font-medium text-base 350:text-xl">
-                    <h1>{categorie.title}</h1>
+                    <h1>{categorie?.title}</h1>
                   </div>
                   <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
                     {/* Filtering movies if movie have id & poster paths */}
-                    {categorie.content
-                      .filter((content) => content.id && content.poster_path)
+                    {categorie?.content
+                      .filter((content) => content?.id && content?.poster_path)
                       .map((content) => (
                         <div
                           key={content?.id}
                           onClick={() => mediaType(content)}
                           className="relative flex-shrink-0 group"
                         >
-                          <div className="relative rounded-sm overflow-hidden w-[10rem] lg:w-[13rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
+                          <div className="relative rounded-sm overflow-hidden w-[8.5rem] sm:w-[9.5rem] lg:w-[10.5rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-[0.95]">
                             <img
-                              src={`${IMG_POSTER_BASE_URL}${content.poster_path}`}
+                              src={`${IMG_POSTER_BASE_URL}${content?.poster_path}`}
                               alt="Poster"
                               className="absolute z-0 w-full h-full object-cover"
                             />
                             {/* About movie or show - on hover drop down */}
-                            <div className="absolute z-10 bottom-0 bg-bg-blackcolor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                            <div className="absolute z-10 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                               <div className="flex justify-between items-center">
                                 <div
                                   onClick={(e) => {
@@ -200,9 +200,9 @@ const Browse = () => {
                                       content,
                                       "watchLater",
                                     ) ? (
-                                      <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                      <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     ) : (
-                                      <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                      <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                   <div
@@ -215,46 +215,46 @@ const Browse = () => {
                                       content,
                                       "favourite",
                                     ) ? (
-                                      <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                      <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                     ) : (
-                                      <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                      <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                 </div>
                                 <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                  <Info className="w-6 h-6" />
+                                  <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </div>
                               </div>
                               <div className="flex items-center gap-2 font-medium text-text-secondary">
                                 <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                  <h1 className="text-sm">
-                                    ★ {content.vote_average.toFixed(1) || "0.0"}
+                                  <h1 className="text-xs lg:text-sm font-regular">
+                                    ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                   </h1>
                                 </div>
                                 <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                  <h1 className="text-sm">
+                                  <h1 className="text-xs lg:text-sm font-regular">
                                     {(
-                                      content.release_date ||
-                                      content.first_air_date
+                                      content?.release_date ||
+                                      content?.first_air_date
                                     )?.slice(0, 4) || "N/A"}
                                   </h1>
                                 </div>
                               </div>
                               <div className="flex gap-2">
-                                {content.genre_ids.length === 0 ? (
-                                  <h1 className="text-sm font-medium">
+                                {content?.genre_ids?.length === 0 ? (
+                                  <h1 className="text-xs lg:text-sm font-regular">
                                     Uncategorized
                                   </h1>
                                 ) : (
                                   allGenres
-                                    .filter((list) =>
-                                      content.genre_ids.includes(list.id),
+                                    ?.filter((list) =>
+                                      content?.genre_ids?.includes(list?.id),
                                     )
-                                    .slice(0, 2)
-                                    .map((val) => (
+                                    ?.slice(0, 2)
+                                    ?.map((val) => (
                                       <h1
-                                        key={val.id}
-                                        className="text-sm font-medium"
+                                        key={val?.id}
+                                        className="text-xs lg:text-sm font-regular"
                                       >
                                         {val?.name === "Science Fiction"
                                           ? "Sci-Fi"

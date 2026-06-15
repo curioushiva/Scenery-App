@@ -292,7 +292,6 @@ const useContent = () => {
       /* To get & dispatch browse page's content */
       const browseCatList = browseCatData.reduce((acc, categorie, i) => {
         const res = responses[i];
-        console.log(res)
         if (res.status === "fulfilled") {
           acc.push({
             type: categorie.type,

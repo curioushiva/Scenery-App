@@ -22,6 +22,7 @@ import {
 } from "@/Utils/Redux/Slices/AccountSlice/AccountSlice";
 import useAccount from "../useAccount/useAccount";
 import { setAuthTypedEmail } from "@/Utils/Redux/Slices/AuthSlice/AuthSlice";
+import { removeDiscover } from "@/Utils/Redux/Slices/DiscoverSlice/DiscoverSlice";
 
 const useAppInit = () => {
   /* For dispatch, location & navigate */
@@ -53,10 +54,11 @@ const useAppInit = () => {
           }),
         );
       } else {
-        /* Remove user if signout or auth change */
+        /* Remove user & data if signout or auth change */
         SignOut();
         dispatch(setAuthTypedEmail(""));
         dispatch(removeAccount());
+        dispatch(removeDiscover());
       }
     });
     return () => {
@@ -179,7 +181,7 @@ const useAppInit = () => {
     if (isProfileSelected) {
       /* Navigatin for different paths when both true */
       if (
-        ["/", "/signin", "/signup", "/resetpassword", "/account/create"].includes(
+        ["/", "/signin", "/signup", "/account/create"].includes(
           location.pathname,
         )
       ) {
@@ -292,7 +294,6 @@ const useAppInit = () => {
     const interval = setInterval(async () => {
       try {
         await auth.currentUser?.reload();
-        console.log("start running")
       } catch (error) {
         clearInterval(interval);
       }

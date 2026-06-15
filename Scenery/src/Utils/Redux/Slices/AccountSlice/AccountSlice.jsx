@@ -1,4 +1,4 @@
-/* User Slice to stores and manages authenticated user details */
+/* Account slice to stores and manages account data  */
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

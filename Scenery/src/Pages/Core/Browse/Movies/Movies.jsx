@@ -103,9 +103,9 @@ const Movies = () => {
             )}
 
             {/* Fades top & bottoms */}
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-bg-corecolor/10 via-transparent to-transparent" />
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-bg-corecolor via-bg-corecolor/10 to-transparent" />
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-bg-corecolor via-bg-corecolor/40 to-transparent" />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-bg-coreColor/10 via-transparent to-transparent" />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-bg-coreColor via-bg-coreColor/10 to-transparent" />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-bg-coreColor via-bg-coreColor/40 to-transparent" />
           </div>
           {/* Top Layer */}
           <div className="relative z-10 w-full min-h-[75dvh] flex flex-col justify-between gap-10 navPadding">
@@ -134,7 +134,7 @@ const Movies = () => {
                   onClick={() => {
                     setIsMoviesGenreClicked((prev) => !prev);
                   }}
-                  className="flex justify-center items-center gap-2 cursor-pointer px-2 border-1 lg:gap-7 lg:py-[0.1rem] hover:bg-bg-whitecolor/30"
+                  className="flex justify-center items-center gap-2 cursor-pointer px-2 border-1 lg:gap-7 lg:py-[0.1rem] hover:bg-bg-whiteColor/30"
                 >
                   <h1 className="font-medium text-[0.70rem] lg:text-[0.80rem]">
                     Genres
@@ -149,12 +149,12 @@ const Movies = () => {
                   {/* Movies Genre Types*/}
                   {isMoviesGenreClicked && (
                     <div className="moviesGenreDropdown">
-                      <div className="w-40 text-sm max-h-30 sm:max-h-40 overflow-y-scroll no-scrollbar bg-bg-blackcolor border-1 border-br-primary flex flex-col items-start justify-center">
+                      <div className="w-40 text-sm max-h-30 sm:max-h-40 overflow-y-scroll no-scrollbar bg-bg-blackColor border-1 border-br-primary flex flex-col items-start justify-center">
                         <div className="flex flex-col gap-4 px-4 mt-70 sm:mt-60 pb-5">
-                          {moviesGenreData.map((val, index) => {
+                          {moviesGenreData?.map((val, index) => {
                             return (
                               <div
-                                key={val.key}
+                                key={val?.key}
                                 className="flex items-center justify-start gap-2"
                               >
                                 <div
@@ -186,14 +186,14 @@ const Movies = () => {
               {moviesBGVideo?.video?.genre_ids?.length !== 0 && (
                 <div className="flex flex-row gap-2">
                   {allGenres
-                    .filter((list) =>
+                    ?.filter((list) =>
                       moviesBGVideo?.video?.genre_ids?.includes(list?.id),
                     )
-                    .slice(0, 2)
-                    .map((val) => (
+                    ?.slice(0, 2)
+                    ?.map((val) => (
                       <h3
                         key={val?.id}
-                        className="text-xm font-semibold lg:text-base px-4 py-[0.15rem] rounded-4xl bg-bg-whitecolor/10 backdrop-blur-md border border-br-primary"
+                        className="text-xm font-semibold lg:text-base px-4 py-[0.15rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary"
                       >
                         {val?.name === "Science Fiction"
                           ? "Sci-Fi"
@@ -214,19 +214,19 @@ const Movies = () => {
               </p>
               {(moviesBGVideo?.video?.release_date ||
                 moviesBGVideo?.video?.first_air_date) && (
-                <h2 className="text-xm font-semibold lg:text-base">
-                  Released in
-                  {(
-                    moviesBGVideo?.video?.release_date ||
-                    moviesBGVideo?.video?.first_air_date
-                  )?.slice(0, 4)}
-                </h2>
-              )}
+                  <h2 className="text-xm font-semibold lg:text-base">
+                    Released in
+                    {(
+                      moviesBGVideo?.video?.release_date ||
+                      moviesBGVideo?.video?.first_air_date
+                    )?.slice(0, 4)}
+                  </h2>
+                )}
               <div className="flex flex-col gap-4 350:flex-row">
                 {moviesBGVideo?.videoKey && (
                   <div
                     onClick={() => setIsBgVideoPlaying((prev) => !prev)}
-                    className="flex justify-center items-center gap-1 text-text-ternary bg-bg-whitecolor pl-1 pr-4 py-2 rounded cursor-pointer"
+                    className="flex justify-center items-center gap-1 text-text-ternary bg-bg-whiteColor pl-1 pr-4 py-2 rounded cursor-pointer"
                   >
                     {isBgVideoPlaying ? (
                       <>
@@ -262,36 +262,36 @@ const Movies = () => {
         </div>
 
         {/* Page 2 : Movies with categorie - including genre movies based on condition */}
-        {moviesGenre.length > 0 ? (
+        {moviesGenre?.length > 0 ? (
           <div className="flex flex-col gap-10 p-8">
-            {moviesGenre[0].genreMovies
-              .filter((val) => val.movies.length > 5)
-              .map((categorie) => {
+            {moviesGenre?.[0]?.genreMovies
+              ?.filter((val) => val?.movies?.length > 5)
+              ?.map((categorie) => {
                 return (
                   <div
-                    key={categorie.type}
+                    key={categorie?.type}
                     className="w-full flex flex-col gap-3"
                   >
                     <div className="font-medium text-base 350:text-xl">
-                      <h1>{categorie.title}</h1>
+                      <h1>{categorie?.title}</h1>
                     </div>
                     <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
-                      {categorie.movies
-                        .filter((movie) => movie.id && movie.poster_path)
-                        .map((movie) => (
+                      {categorie?.movies
+                        ?.filter((movie) => movie?.id && movie?.poster_path)
+                        ?.map((movie) => (
                           <div
-                            key={movie.id}
+                            key={movie?.id}
                             onClick={() => mediaType(movie)}
                             className="relative flex-shrink-0 group"
                           >
-                            <div className="relative rounded-sm overflow-hidden w-[10rem] lg:w-[13rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
+                            <div className="relative rounded-sm overflow-hidden w-[8.5rem] sm:w-[9.5rem] lg:w-[10.5rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
-                                src={`${IMG_POSTER_BASE_URL}${movie.poster_path}`}
+                                src={`${IMG_POSTER_BASE_URL}${movie?.poster_path}`}
                                 alt="Poster"
                                 className="absolute z-0 w-full h-full object-cover"
                               />
                               {/* About movie - on hover drop down */}
-                              <div className="absolute z-10 bottom-0 bg-bg-blackcolor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                              <div className="absolute z-10 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                 <div className="flex justify-between items-center">
                                   <div
                                     onClick={(e) => {
@@ -310,9 +310,9 @@ const Movies = () => {
                                         movie,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -325,46 +325,46 @@ const Movies = () => {
                                         movie,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
                                   <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                    <Info className="w-6 h-6" />
+                                    <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
-                                      ★{" "}{movie.vote_average.toFixed(1) || "0.0"}
+                                    <h1 className="text-xs lg:text-sm font-regular">
+                                      ★{" "}{movie?.vote_average?.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
+                                    <h1 className="text-xs lg:text-sm font-regular">
                                       {(
-                                        movie.release_date ||
-                                        movie.first_air_date
+                                        movie?.release_date ||
+                                        movie?.first_air_date
                                       )?.slice(0, 4) || "N/A"}
                                     </h1>
                                   </div>
                                 </div>
                                 <div className="flex gap-2">
-                                  {movie.genre_ids.length === 0 ? (
-                                    <h1 className="text-sm font-medium">
+                                  {movie?.genre_ids?.length === 0 ? (
+                                    <h1 className="text-xs lg:text-sm font-regular">
                                       Uncategorized
                                     </h1>
                                   ) : (
                                     allGenres
-                                      .filter((list) =>
-                                        movie.genre_ids.includes(list.id),
+                                      ?.filter((list) =>
+                                        movie?.genre_ids?.includes(list?.id),
                                       )
-                                      .slice(0, 2)
-                                      .map((val) => (
+                                      ?.slice(0, 2)
+                                      ?.map((val) => (
                                         <h1
-                                          key={val.id}
-                                          className="text-sm font-medium"
+                                          key={val?.id}
+                                          className="text-xs lg:text-sm font-regular"
                                         >
                                           {val?.name === "Science Fiction"
                                             ? "Sci-Fi"
@@ -386,34 +386,34 @@ const Movies = () => {
           <div className="flex flex-col gap-10 p-8">
             {/* Now Playing */}
             {moviesCat
-              .filter((categorie) => categorie.movies.length > 5)
-              .slice(0, 1)
-              .map((categorie) => {
+              ?.filter((categorie) => categorie?.movies?.length > 5)
+              ?.slice(0, 1)
+              ?.map((categorie) => {
                 return (
                   <div
-                    key={categorie.type}
+                    key={categorie?.type}
                     className="w-full flex flex-col gap-3"
                   >
                     <div className="font-medium text-base 350:text-xl">
-                      <h1>{categorie.title}</h1>
+                      <h1>{categorie?.title}</h1>
                     </div>
                     <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
-                      {categorie.movies
-                        .filter((movie) => movie.id && movie.poster_path)
-                        .map((movie) => (
+                      {categorie?.movies
+                        ?.filter((movie) => movie?.id && movie?.poster_path)
+                        ?.map((movie) => (
                           <div
-                            key={movie.id}
+                            key={movie?.id}
                             onClick={() => mediaType(movie)}
                             className="relative flex-shrink-0 group"
                           >
-                            <div className="relative rounded-sm overflow-hidden w-[10rem] lg:w-[13rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
+                            <div className="relative rounded-sm overflow-hidden w-[8.5rem] sm:w-[9.5rem] lg:w-[10.5rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
-                                src={`${IMG_POSTER_BASE_URL}${movie.poster_path}`}
+                                src={`${IMG_POSTER_BASE_URL}${movie?.poster_path}`}
                                 alt="Poster"
                                 className="absolute z-0 w-full h-full object-cover"
                               />
                               {/* About movie or show - on hover drop down */}
-                              <div className="absolute z-10 bottom-0 bg-bg-blackcolor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                              <div className="absolute z-10 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                 <div className="flex justify-between items-center">
                                   <div
                                     onClick={(e) => {
@@ -432,9 +432,9 @@ const Movies = () => {
                                         movie,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -447,46 +447,46 @@ const Movies = () => {
                                         movie,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
                                   <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                    <Info className="w-6 h-6" />
+                                    <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
-                                      ★{" "}{movie.vote_average.toFixed(1) || "0.0"}
+                                    <h1 className="text-xs lg:text-sm font-regular">
+                                      ★{" "}{movie?.vote_average?.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
+                                    <h1 className="text-xs lg:text-sm font-regular">
                                       {(
-                                        movie.release_date ||
-                                        movie.first_air_date
+                                        movie?.release_date ||
+                                        movie?.first_air_date
                                       )?.slice(0, 4) || "N/A"}
                                     </h1>
                                   </div>
                                 </div>
                                 <div className="flex gap-2">
-                                  {movie.genre_ids.length === 0 ? (
-                                    <h1 className="text-sm font-medium">
+                                  {movie?.genre_ids?.length === 0 ? (
+                                    <h1 className="text-xs lg:text-sm font-regular">
                                       Uncategorized
                                     </h1>
                                   ) : (
                                     allGenres
-                                      .filter((list) =>
-                                        movie.genre_ids.includes(list.id),
+                                      ?.filter((list) =>
+                                        movie?.genre_ids?.includes(list?.id),
                                       )
-                                      .slice(0, 2)
-                                      .map((val) => (
+                                      ?.slice(0, 2)
+                                      ?.map((val) => (
                                         <h1
-                                          key={val.id}
-                                          className="text-sm font-medium"
+                                          key={val?.id}
+                                          className="text-xs lg:text-sm font-regular"
                                         >
                                           {val?.name === "Science Fiction"
                                             ? "Sci-Fi"
@@ -505,32 +505,32 @@ const Movies = () => {
               })}
             {/* Top Popular Movies */}
             {moviesCat
-              .filter((categorie) => categorie.movies.length > 5)
-              .slice(1, 2)
-              .map((categorie) => {
+              ?.filter((categorie) => categorie?.movies?.length > 5)
+              ?.slice(1, 2)
+              ?.map((categorie) => {
                 return (
-                  categorie.title === "Top Popular Movies" && (
+                  categorie?.title === "Top Popular Movies" && (
                     <div
-                      key={categorie.type}
+                      key={categorie?.type}
                       className="w-full flex flex-col gap-3"
                     >
                       <div className="font-medium text-base 350:text-xl">
-                        <h1>{categorie.title}</h1>
+                        <h1>{categorie?.title}</h1>
                       </div>
                       <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
                         {/* 1-9 */}
-                        {categorie.movies
-                          .filter((movie) => movie.id && movie.poster_path)
-                          .slice(0, 9)
-                          .map((movie, index) => (
+                        {categorie?.movies
+                          ?.filter((movie) => movie?.id && movie?.poster_path)
+                          ?.slice(0, 9)
+                          ?.map((movie, index) => (
                             <div
-                              key={movie.id}
+                              key={movie?.id}
                               onClick={() => mediaType(movie)}
                               className="relative w-[16rem] h-[12rem] md:w-[18rem] md:h-[14rem] flex-shrink-0 group"
                             >
                               <div className="relative flex justify-center items-center rounded-sm overflow-hidden w-full h-full transition-transform duration-300 ease-out group-hover:scale-95">
                                 <img
-                                  src={`${IMG_POSTER_BASE_URL}${movie.poster_path}`}
+                                  src={`${IMG_POSTER_BASE_URL}${movie?.poster_path}`}
                                   alt="Poster"
                                   className="absolute right-0 z-10 w-[67%] md:w-[65%] h-full object-cover"
                                 />
@@ -541,7 +541,7 @@ const Movies = () => {
                                   {index + 1}
                                 </h1>
                                 {/* About movie or show - on hover drop down */}
-                                <div className="absolute z-10 bottom-0 right-0 bg-bg-blackcolor/90 w-[67%] md:w-[65%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                                <div className="absolute z-10 bottom-0 right-0 bg-bg-blackColor/90 w-[67%] md:w-[65%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                   <div className="flex justify-between items-center">
                                     <div
                                       onClick={(e) => {
@@ -560,9 +560,9 @@ const Movies = () => {
                                           movie,
                                           "watchLater",
                                         ) ? (
-                                          <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                          <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                         ) : (
-                                          <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                          <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                         )}
                                       </div>
                                       <div
@@ -575,47 +575,47 @@ const Movies = () => {
                                           movie,
                                           "favourite",
                                         ) ? (
-                                          <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                          <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                         ) : (
-                                          <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                          <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                         )}
                                       </div>
                                     </div>
                                     <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                      <Info className="w-6 h-6" />
+                                      <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                     </div>
                                   </div>
                                   <div className="flex items-center gap-2 font-medium text-text-secondary">
                                     <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                      <h1 className="text-sm">
+                                      <h1 className="text-xs lg:text-sm font-regular">
                                         ★{" "}
-                                        {movie.vote_average.toFixed(1) || "0.0"}
+                                        {movie?.vote_average?.toFixed(1) || "0.0"}
                                       </h1>
                                     </div>
                                     <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                      <h1 className="text-sm">
+                                      <h1 className="text-xs lg:text-sm font-regular">
                                         {(
-                                          movie.release_date ||
-                                          movie.first_air_date
+                                          movie?.release_date ||
+                                          movie?.first_air_date
                                         )?.slice(0, 4) || "N/A"}
                                       </h1>
                                     </div>
                                   </div>
                                   <div className="flex gap-2">
-                                    {movie.genre_ids.length === 0 ? (
-                                      <h1 className="text-sm font-medium">
+                                    {movie?.genre_ids?.length === 0 ? (
+                                      <h1 className="text-xs lg:text-sm font-regular">
                                         Uncategorized
                                       </h1>
                                     ) : (
                                       allGenres
-                                        .filter((list) =>
-                                          movie.genre_ids.includes(list.id),
+                                        ?.filter((list) =>
+                                          movie?.genre_ids?.includes(list?.id),
                                         )
-                                        .slice(0, 2)
-                                        .map((val) => (
+                                        ?.slice(0, 2)
+                                        ?.map((val) => (
                                           <h1
-                                            key={val.id}
-                                            className="text-sm font-medium"
+                                            key={val?.id}
+                                            className="text-xs lg:text-sm font-regular"
                                           >
                                             {val?.name === "Science Fiction"
                                               ? "Sci-Fi"
@@ -630,17 +630,17 @@ const Movies = () => {
                           ))}
                         {/* 10-15 */}
                         {categorie.movies
-                          .filter((movie) => movie.id && movie.poster_path)
-                          .slice(9, 15)
-                          .map((movie, index) => (
+                          ?.filter((movie) => movie?.id && movie?.poster_path)
+                          ?.slice(9, 15)
+                          ?.map((movie, index) => (
                             <div
-                              key={movie.id}
+                              key={movie?.id}
                               onClick={() => mediaType(movie)}
                               className="relative w-[23rem] h-[12rem] md:w-[25rem] md:h-[14rem] flex-shrink-0 group"
                             >
                               <div className="relative flex justify-center items-center rounded-sm overflow-hidden w-full h-full transition-transform duration-300 ease-out group-hover:scale-95">
                                 <img
-                                  src={`${IMG_POSTER_BASE_URL}${movie.poster_path}`}
+                                  src={`${IMG_POSTER_BASE_URL}${movie?.poster_path}`}
                                   alt="Poster"
                                   className="absolute right-0 z-10 w-[58%] md:w-[50%] h-full object-cover"
                                 />
@@ -651,7 +651,7 @@ const Movies = () => {
                                   {index + 10}
                                 </h1>
                                 {/* About movie or show - on hover drop down */}
-                                <div className="absolute z-10 bottom-0 right-0 bg-bg-blackcolor/90 w-[58%] md:w-[50%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                                <div className="absolute z-10 bottom-0 right-0 bg-bg-blackColor/90 w-[58%] md:w-[50%] flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                   <div className="flex justify-between items-center">
                                     <div
                                       onClick={(e) => {
@@ -670,9 +670,9 @@ const Movies = () => {
                                           movie,
                                           "watchLater",
                                         ) ? (
-                                          <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                          <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                         ) : (
-                                          <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                          <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                         )}
                                       </div>
                                       <div
@@ -685,47 +685,47 @@ const Movies = () => {
                                           movie,
                                           "favourite",
                                         ) ? (
-                                          <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                          <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                         ) : (
-                                          <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                          <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                         )}
                                       </div>
                                     </div>
                                     <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                      <Info className="w-6 h-6" />
+                                      <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                     </div>
                                   </div>
                                   <div className="flex items-center gap-2 font-medium text-text-secondary">
                                     <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                      <h1 className="text-sm">
+                                      <h1 className="text-xs lg:text-sm font-regular">
                                         ★{" "}
-                                        {movie.vote_average.toFixed(1) || "0.0"}
+                                        {movie?.vote_average?.toFixed(1) || "0.0"}
                                       </h1>
                                     </div>
                                     <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                      <h1 className="text-sm">
+                                      <h1 className="text-xs lg:text-sm font-regular">
                                         {(
-                                          movie.release_date ||
-                                          movie.first_air_date
+                                          movie?.release_date ||
+                                          movie?.first_air_date
                                         )?.slice(0, 4) || "N/A"}
                                       </h1>
                                     </div>
                                   </div>
                                   <div className="flex gap-2">
-                                    {movie.genre_ids.length === 0 ? (
-                                      <h1 className="text-sm font-medium">
+                                    {movie?.genre_ids?.length === 0 ? (
+                                      <h1 className="text-xs lg:text-sm font-regular">
                                         Uncategorized
                                       </h1>
                                     ) : (
                                       allGenres
-                                        .filter((list) =>
-                                          movie.genre_ids.includes(list.id),
+                                        ?.filter((list) =>
+                                          movie?.genre_ids?.includes(list?.id),
                                         )
-                                        .slice(0, 2)
-                                        .map((val) => (
+                                        ?.slice(0, 2)
+                                        ?.map((val) => (
                                           <h1
                                             key={val.id}
-                                            className="text-sm font-medium"
+                                            className="text-xs lg:text-sm font-regular"
                                           >
                                             {val?.name === "Science Fiction"
                                               ? "Sci-Fi"
@@ -745,34 +745,34 @@ const Movies = () => {
               })}
             {/* Other */}
             {moviesCat
-              .filter((categorie) => categorie.movies.length > 5)
-              .slice(2, 7)
-              .map((categorie) => {
+              ?.filter((categorie) => categorie?.movies?.length > 5)
+              ?.slice(2, 7)
+              ?.map((categorie) => {
                 return (
                   <div
-                    key={categorie.type}
+                    key={categorie?.type}
                     className="w-full flex flex-col gap-3"
                   >
                     <div className="font-medium text-base 350:text-xl">
-                      <h1>{categorie.title}</h1>
+                      <h1>{categorie?.title}</h1>
                     </div>
                     <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
-                      {categorie.movies
-                        .filter((movie) => movie.id && movie.poster_path)
-                        .map((movie) => (
+                      {categorie?.movies
+                        ?.filter((movie) => movie?.id && movie?.poster_path)
+                        ?.map((movie) => (
                           <div
-                            key={movie.id}
+                            key={movie?.id}
                             onClick={() => mediaType(movie)}
                             className="relative flex-shrink-0 group"
                           >
-                            <div className="relative rounded-sm overflow-hidden w-[10rem] lg:w-[13rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
+                            <div className="relative rounded-sm overflow-hidden w-[8.5rem] sm:w-[9.5rem] lg:w-[10.5rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
-                                src={`${IMG_POSTER_BASE_URL}${movie.poster_path}`}
+                                src={`${IMG_POSTER_BASE_URL}${movie?.poster_path}`}
                                 alt="Poster"
                                 className="absolute z-0 w-full h-full object-cover"
                               />
                               {/* About movie or show - on hover drop down */}
-                              <div className="absolute z-10 bottom-0 bg-bg-blackcolor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
+                              <div className="absolute z-10 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-2 px-2 py-2 opacity-0 group-hover:opacity-100 transition duration-200">
                                 <div className="flex justify-between items-center">
                                   <div
                                     onClick={(e) => {
@@ -791,9 +791,9 @@ const Movies = () => {
                                         movie,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -806,46 +806,46 @@ const Movies = () => {
                                         movie,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
                                   <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                    <Info className="w-6 h-6" />
+                                    <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
-                                      ★{" "}{movie.vote_average.toFixed(1) || "0.0"}
+                                    <h1 className="text-xs lg:text-sm font-regular">
+                                      ★{" "}{movie?.vote_average?.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
                                   <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                    <h1 className="text-sm">
+                                    <h1 className="text-xs lg:text-sm font-regular">
                                       {(
-                                        movie.release_date ||
-                                        movie.first_air_date
+                                        movie?.release_date ||
+                                        movie?.first_air_date
                                       )?.slice(0, 4) || "N/A"}
                                     </h1>
                                   </div>
                                 </div>
                                 <div className="flex gap-2">
-                                  {movie.genre_ids.length === 0 ? (
-                                    <h1 className="text-sm font-medium">
+                                  {movie?.genre_ids?.length === 0 ? (
+                                    <h1 className="text-xs lg:text-sm font-regular">
                                       Uncategorized
                                     </h1>
                                   ) : (
                                     allGenres
-                                      .filter((list) =>
-                                        movie.genre_ids.includes(list.id),
+                                      ?.filter((list) =>
+                                        movie?.genre_ids?.includes(list?.id),
                                       )
-                                      .slice(0, 2)
-                                      .map((val) => (
+                                      ?.slice(0, 2)
+                                      ?.map((val) => (
                                         <h1
-                                          key={val.id}
-                                          className="text-sm font-medium"
+                                          key={val?.id}
+                                          className="text-xs lg:text-sm font-regular"
                                         >
                                           {val?.name === "Science Fiction"
                                             ? "Sci-Fi"

@@ -67,9 +67,9 @@ const Create = () => {
     if (showCreateProfileForm) {
         /* Create profile form */
         return (
-            <div className="w-full h-screen min-h-screen bg-gradient-to-b px-5 py-5 from-bg-topcolor to-bg-bottomcolor text-text-primary">
+            <div className="w-full h-screen min-h-screen bg-gradient-to-b px-5 py-5 from-bg-topColor to-bg-bottomColor text-text-primary">
                 <div className="w-full h-full flex justify-center items-center px-0 py-5">
-                    <div className="w-full max-w-[40rem] bg-bg-cardcolor flex flex-col gap-4 justify-center items-center border-1 border-br-primary rounded-3xl px-2 py-8 220:px-10">
+                    <div className="w-full max-w-[40rem] bg-cardColor-primary flex flex-col gap-4 justify-center items-center border-1 border-br-primary rounded-3xl px-2 py-8 220:px-10">
                         {/* Headings */}
                         <h1 className="text-xl sm:text-2xl font-medium text-center">
                             Create a profile
@@ -99,7 +99,7 @@ const Create = () => {
                                     setProfileName(e.target.value);
                                     setProfileNameValidation(null);
                                 }}
-                                className="text-xs 220:text-sm sm:text-sm font-medium px-4 py-3 rounded-3xl border-1 border-br-primary bg-bg-inputcolor placeholder-text-secondary outline-none"
+                                className="text-xs 220:text-sm sm:text-sm font-medium px-4 py-3 rounded-3xl border-1 border-br-primary bg-bg-inputColor placeholder-text-secondary outline-none"
                                 type="text"
                                 placeholder="Name"
                             />
@@ -109,7 +109,7 @@ const Create = () => {
                         </div>
                         <button
                             onClick={() => handleSaveProfile()}
-                            className="220:w-full py-2 px-3 text-sm sm:text-base font-medium rounded-3xl text-text-ternary bg-bg-whitecolor cursor-pointer  transition duration-220 ease-out active:scale-95"
+                            className="220:w-full py-2 px-3 text-sm sm:text-base font-medium rounded-3xl text-text-ternary bg-bg-whiteColor cursor-pointer  transition duration-220 ease-out active:scale-95"
                         >
                             {btnActionLabel}
                         </button>
@@ -119,7 +119,7 @@ const Create = () => {
                                 setShowCreateProfileForm(false);
                                 setProfileNameValidation(null);
                             }}
-                            className="220:w-full py-2 px-3 text-sm sm:text-base font-medium rounded-3xl cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whitecolor/60"
+                            className="220:w-full py-2 px-3 text-sm sm:text-base font-medium rounded-3xl cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whiteColor/60"
                         >
                             Cancel
                         </button>
@@ -131,7 +131,7 @@ const Create = () => {
         if (!Name) {
             /* Create Profile Comp */
             return (
-                <div className="w-full h-screen min-h-screen bg-gradient-to-b px-5 py-5 from-bg-topcolor to-bg-bottomcolor text-text-primary">
+                <div className="w-full h-screen min-h-screen bg-gradient-to-b px-5 py-5 from-bg-topColor to-bg-bottomColor text-text-primary">
                     <div className="w-full h-full flex flex-col justify-center items-center gap-6">
                         {/* Headings */}
                         <h1 className="text-2xl sm:text-3xl font-medium text-center">
@@ -147,7 +147,7 @@ const Create = () => {
                                 onClick={() => setShowCreateProfileForm(true)}
                                 className="flex flex-col gap-2 justify-center items-center mt-2 cursor-pointer rounded-sm hover:scale-[1.1] duration-300 ease-in-out"
                             >
-                                <div className="w-22 h-22 flex justify-center items-center hover:bg-bg-whitecolor/20 transition-colors duration-300 ease-in-out rounded-sm sm:w-[clamp(6rem,10vw,10rem)] sm:h-[clamp(6rem,10vw,10rem)]">
+                                <div className="w-22 h-22 flex justify-center items-center hover:bg-bg-whiteColor/20 transition-colors duration-300 ease-in-out rounded-sm sm:w-[clamp(6rem,10vw,10rem)] sm:h-[clamp(6rem,10vw,10rem)]">
                                     <img
                                         src={Add}
                                         alt="Add"
@@ -165,7 +165,7 @@ const Create = () => {
         } else {
             /* Created profile comp */
             return (
-                <div className="w-full h-screen min-h-screen bg-gradient-to-b px-5 py-5 from-bg-topcolor to-bg-bottomcolor text-text-primary">
+                <div className="w-full h-screen min-h-screen bg-gradient-to-b px-5 py-5 from-bg-topColor to-bg-bottomColor text-text-primary">
                     <div className="w-full h-full flex flex-col justify-center items-center gap-6">
                         {/* Headings */}
                         <h1 className="text-2xl sm:text-3xl font-medium text-center">

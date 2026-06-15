@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import logo1 from "@/Assets/Imgs/Logo/logo1.png";
 import { useSelector } from "react-redux";
 import { AvatarsMockData } from "@/Utils/Mockdata/Mockdata";
@@ -60,6 +60,9 @@ export const AuthHeader = () => {
 
 /* Core Header */
 export const CoreHeader = () => {
+  /* For pathname */
+  const location = useLocation();
+
   /* Different layouts for different screen sizes */
   const isDesktopScreen = useMediaQuery({
     query: "(min-width: 500px) and (min-height: 650px)",
@@ -91,28 +94,28 @@ export const CoreHeader = () => {
               <img src={logo1} alt="logo1" className="w-10" />
             </Link>
             <div className="w-full flex-1 flex flex-col justify-center items-center gap-9">
-              <Link to="/browse">
+              <Link to="/browse" className={`${location.pathname === "/browse" && "text-text-primary scale-[1.10]"} transition duration-200 ease-in-out hover:scale-[1.10] hover:text-text-primary`}>
                 <RiHome5Line className="w-[1.35rem] h-[1.35rem]" />
               </Link>
-              <Link to="/browse/movies">
+              <Link to="/browse/movies" className={`${location.pathname.includes("/movies") && "text-text-primary scale-[1.10]"} transition duration-200 ease-in-out hover:scale-[1.10] hover:text-text-primary`}>
                 <RiVideoOnLine className="w-[1.35rem] h-[1.35rem]" />
               </Link>
-              <Link to="/browse/tvshows">
+              <Link to="/browse/tvshows" className={`${location.pathname.includes("/tvshows") && "text-text-primary scale-[1.10]"} transition duration-200 ease-in-out hover:scale-[1.10] hover:text-text-primary`}>
                 <RiTvLine className="w-[1.35rem] h-[1.35rem]" />
               </Link>
-              <Link to="/browse/popular">
+              <Link to="/browse/popular" className={`${location.pathname.includes("/popular") && "text-text-primary scale-[1.10]"} transition duration-200 ease-in-out hover:scale-[1.10] hover:text-text-primary`}>
                 <RiFireLine className="w-[1.35rem] h-[1.35rem]" />
               </Link>
-              <Link to="/library">
+              <Link to="/library" className={`${location.pathname.includes("/library") && "text-text-primary scale-[1.10]"} transition duration-200 ease-in-out hover:scale-[1.10] hover:text-text-primary`}>
                 <RiBookShelfLine className="w-[1.35rem] h-[1.35rem]" />
               </Link>
-              <Link to="/search">
+              <Link to="/search" className={`${location.pathname.includes("/search") && "text-text-primary scale-[1.10]"} transition duration-200 ease-in-out hover:scale-[1.10] hover:text-text-primary`}>
                 <RiSearchLine className="w-[1.35rem] h-[1.35rem]" />
               </Link>
-              <Link to="/askai">
+              <Link to="/askai" className={`${location.pathname.includes("/askai") && "text-text-primary scale-[1.10]"} transition duration-200 ease-in-out hover:scale-[1.10] hover:text-text-primary`}>
                 <RiShiningLine className="w-[1.35rem] h-[1.35rem]" />
               </Link>
-              <Link to="/account">
+              <Link to="/account" className={`${location.pathname.includes("/account") && "scale-[1.20]"} transition duration-200 ease-in-out hover:scale-[1.20]`}>
                 <img
                   src={AvatarsMockData[AvatarNum].avatar}
                   alt="Avatar"
@@ -138,10 +141,10 @@ export const CoreHeader = () => {
           </div>
           {/* Drawer */}
           <div
-            className={`fixed inset-0 z-40 bg-bg-blackcolor/50 overflow-y-auto no-scrollbar transition-opacity duration-300 ease-out ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+            className={`fixed inset-0 z-40 bg-bg-blackColor/50 overflow-y-auto no-scrollbar transition-opacity duration-300 ease-out ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
           >
             <div
-              className={`absolute right-0 top-0 min-h-[100dvh] w-[60%] min-w-[200px] bg-bg-corecolor px-8 py-10 transition-transform duration-300 ease-out  ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+              className={`absolute right-0 top-0 min-h-[100dvh] w-[60%] min-w-[200px] bg-bg-coreColor px-8 py-10 transition-transform duration-300 ease-out  ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
             >
               <div className="flex flex-col gap-8">
                 <RiEyeCloseLine

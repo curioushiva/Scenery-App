@@ -24,7 +24,7 @@ const Privacy = () => {
       {/* Cards */}
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Information we store */}
-        <div className="bg-bg-whitecolor/1 border border-br-primary rounded-2xl p-6 flex flex-col gap-5">
+        <div className="bg-bg-whiteColor/1 border border-br-primary rounded-2xl p-6 flex flex-col gap-5">
           <h2 className="text-xl font-medium">Information We Store</h2>
           <p className="text-text-secondary">
             Scenery stores only the information required to support your
@@ -39,7 +39,7 @@ const Privacy = () => {
         </div>
 
         {/* How we use it */}
-        <div className="bg-bg-whitecolor/1 border border-br-primary rounded-2xl p-6 flex flex-col gap-5">
+        <div className="bg-bg-whiteColor/1 border border-br-primary rounded-2xl p-6 flex flex-col gap-5">
           <h2 className="text-xl font-medium">How We Use It</h2>
           <ul className="flex flex-col gap-2 text-sm lg:text-base">
             <li>• Authenticate your account</li>
@@ -54,7 +54,7 @@ const Privacy = () => {
         </div>
 
         {/* Third Party */}
-        <div className="bg-bg-whitecolor/1 border border-br-primary rounded-2xl p-6 flex flex-col gap-5">
+        <div className="bg-bg-whiteColor/1 border border-br-primary rounded-2xl p-6 flex flex-col gap-5">
           <h2 className="text-xl font-medium">Third-Party Services</h2>
           <p className="text-text-secondary leading-relaxed">
             Scenery uses Firebase for authentication and account storage, and
@@ -64,7 +64,7 @@ const Privacy = () => {
         </div>
 
         {/* Local Storage */}
-        <div className="bg-bg-whitecolor/1 border border-br-primary rounded-2xl p-6 flex flex-col gap-5">
+        <div className="bg-bg-whiteColor/1 border border-br-primary rounded-2xl p-6 flex flex-col gap-5">
           <h2 className="text-xl font-medium">Local Storage</h2>
           <p className="text-text-secondary leading-relaxed">
             To improve performance and reduce loading times, some application
@@ -74,7 +74,7 @@ const Privacy = () => {
       </div>
 
       {/* Questions */}
-      <div className="bg-bg-whitecolor/1 border border-br-primary rounded-2xl p-8 flex flex-col gap-4">
+      <div className="bg-bg-whiteColor/1 border border-br-primary rounded-2xl p-8 flex flex-col gap-4">
         <h2 className="text-xl font-medium">Questions?</h2>
         <p className="text-text-secondary">
           If you have questions about your account data or this privacy

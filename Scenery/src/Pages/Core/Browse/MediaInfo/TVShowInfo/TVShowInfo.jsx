@@ -173,7 +173,7 @@ const TVShowInfo = () => {
     mediaInfo?.external_ids?.instagram_id ||
     mediaInfo?.external_ids?.twitter_id ||
     mediaInfo?.external_ids?.wikidata_id ||
-    mediaInfo?.details?.homepage;
+    mediaInfo?.details?.homepage !== '';
 
   /* Rendering on the basis of avail of mediaInfo */
   return Object.keys(mediaInfo).length === 0 ? (
@@ -182,9 +182,9 @@ const TVShowInfo = () => {
     /* Main Container */
     <div className="w-full min-h-screen relative  overflow-x-hidden">
       {showTrailer && (
-        <div className="fixed inset-0 z-5000 w-full h-full overflow-y-auto bg-bg-blackcolor/95">
+        <div className="fixed inset-0 z-5000 w-full h-full overflow-y-auto bg-bg-blackColor/95">
           <div className="min-h-full flex justify-center items-center py-10 px-8 lg:px-20">
-            <div className="w-full max-w-5xl flex flex-col gap-3 bg-bg-blackcolor/20 rounded-2xl border-[0.1px] border-br-primary backdrop-blur-md">
+            <div className="w-full max-w-5xl flex flex-col gap-3 bg-bg-blackColor/20 rounded-2xl border-[0.1px] border-br-primary backdrop-blur-md">
               <div className="flex justify-between items-center p-4 sm:p-5 border-b border-br-primary">
                 <h1 className="text-lg sm:text-2xl font-medium">
                   {playTrailerInitialVideoKey?.[0]?.name
@@ -193,13 +193,13 @@ const TVShowInfo = () => {
                 </h1>
                 <div
                   onClick={() => setShowTrailer(false)}
-                  className="flex justify-center items-center w-9 h-9 p-2 rounded-full bg-bg-bg-whitecolorcolor/90 font-bold text-text-ternary cursor-pointer active:scale-95"
+                  className="flex justify-center items-center w-9 h-9 p-2 rounded-full bg-bg-bg-whiteColorcolor/90 font-bold text-text-ternary cursor-pointer active:scale-95"
                 >
                   <RiCloseFill />
                 </div>
               </div>
               <div className="p-2 sm:p-4">
-                <div className="relative w-full max-h-[60vh] aspect-video overflow-hidden rounded-xl bg-bg-blackcolor">
+                <div className="relative w-full max-h-[60vh] aspect-video overflow-hidden rounded-xl bg-bg-blackColor">
                   <iframe
                     className="absolute inset-0 w-full h-full"
                     src={`https://www.youtube.com/embed/${playTrailerVideoKey}?autoplay=1&modestbranding=1`}
@@ -225,9 +225,9 @@ const TVShowInfo = () => {
             alt="Background"
           />
           {/* Fades top & bottoms */}
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-bg-corecolor/10 via-transparent to-transparent" />
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-bg-corecolor via-bg-corecolor/10 to-transparent" />
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-bg-corecolor via-bg-corecolor/40 to-transparent" />
+          <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-bg-coreColor/10 via-transparent to-transparent" />
+          <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-bg-coreColor via-bg-coreColor/10 to-transparent" />
+          <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-bg-coreColor via-bg-coreColor/40 to-transparent" />
         </div>
       )}
 
@@ -249,7 +249,7 @@ const TVShowInfo = () => {
                   className={`w-full flex-1 min-h-0 aspect-[4/5] object-cover ${regionalWatchProviderFirstValue?.length > 0 ? "rounded-t-sm" : "rounded-sm"}`}
                 />
                 {regionalWatchProviderFirstValue?.length > 0 && (
-                  <div className="w-full flex justify-center items-center gap-3 bg-bg-blackcolor py-3 rounded-b-sm">
+                  <div className="w-full flex justify-center items-center gap-3 bg-bg-blackColor py-3 rounded-b-sm">
                     <img
                       src={
                         regionalWatchProviderFirstValue?.[0]?.logo_path
@@ -313,10 +313,10 @@ const TVShowInfo = () => {
                 {/* Ratings and Votes */}
                 {(mediaInfo?.details?.vote_average !== null ||
                   mediaInfo?.details?.vote_count !== null) && (
-                    <div className="flex gap-4 items-center text-base">
+                    <div className="flex gap-2 items-center text-base">
                       {mediaInfo?.details?.vote_average !== null && (
                         <h3 className="font-medium">
-                          <span className="text-text-fifth">★{" "}</span>
+                          <span className="text-text-fifth">★ </span>
                           {mediaInfo?.details?.vote_average?.toFixed(1) || "N/A"}
                         </h3>
                       )}
@@ -446,7 +446,7 @@ const TVShowInfo = () => {
             <div className="w-full flex flex-col gap-5 880:flex-row 880:gap-10">
               {/* First air date */}
               {mediaInfo?.details?.first_air_date && (
-                <div className="w-full flex gap-2 p-4 bg-bg-blackcolor/40 [clip-path:polygon(12px_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%,0_12px)] 880:justify-center">
+                <div className="w-full flex gap-2 p-4 bg-bg-blackColor/40 [clip-path:polygon(12px_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%,0_12px)] 880:justify-center">
                   <div className="flex justify-center items-center">
                     <RiCalendarEventLine className="w-7 h-7" />
                   </div>
@@ -465,7 +465,7 @@ const TVShowInfo = () => {
               )}
 
               {/* Total seasons */}
-              <div className="w-full flex gap-2 p-4 bg-bg-blackcolor/40 [clip-path:polygon(12px_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%,0_12px)]">
+              <div className="w-full flex gap-2 p-4 bg-bg-blackColor/40 [clip-path:polygon(12px_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%,0_12px)]">
                 <div className="flex justify-center items-center">
                   <RiSlideshowView className="w-7 h-7" />
                 </div>
@@ -480,7 +480,7 @@ const TVShowInfo = () => {
               </div>
 
               {/* Total Episodes */}
-              <div className="w-full flex gap-2 p-4 bg-bg-blackcolor/40 [clip-path:polygon(12px_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%,0_12px)]">
+              <div className="w-full flex gap-2 p-4 bg-bg-blackColor/40 [clip-path:polygon(12px_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%,0_12px)]">
                 <div className="flex justify-center items-center">
                   <RiVideoLine className="w-7 h-7" />
                 </div>
@@ -496,7 +496,7 @@ const TVShowInfo = () => {
 
               {/* Status */}
               {mediaInfo?.details?.status && (
-                <div className="w-full flex gap-2 p-4 bg-bg-blackcolor/40 [clip-path:polygon(12px_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%,0_12px)]">
+                <div className="w-full flex gap-2 p-4 bg-bg-blackColor/40 [clip-path:polygon(12px_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%,0_12px)]">
                   <div className="flex justify-center items-center">
                     <RiFilmAiLine className="w-7 h-7" />
                   </div>
@@ -551,7 +551,7 @@ const TVShowInfo = () => {
                           alt="Cast"
                           className="w-full aspect-[1/1] object-cover rounded-t-sm"
                         />
-                        <div className="flex-1 flex flex-col gap-2 bg-bg-blackcolor/40 rounded-b-sm p-3">
+                        <div className="flex-1 flex flex-col gap-2 bg-bg-blackColor/40 rounded-b-sm p-3">
                           {cast?.name && (
                             <h1 className="text-[0.85rem] font-medium">
                               {cast?.name}
@@ -594,7 +594,7 @@ const TVShowInfo = () => {
                       prev === "Networks" ? null : "Networks",
                     )
                   }
-                  className={`flex justify-between gap-4 bg-bg-blackcolor/40 p-5 rounded-lg ${sectionOneType === "Networks" && "underline text-text-primary/60"}`}
+                  className={`flex justify-between gap-4 bg-bg-blackColor/40 p-5 rounded-lg ${sectionOneType === "Networks" && "underline text-text-primary/60"}`}
                 >
                   <div className="flex gap-2">
                     <RiChatQuoteLine className="w-6 h-6 430:w-7 430:h-7" />
@@ -612,14 +612,14 @@ const TVShowInfo = () => {
                   (mediaInfo?.details?.networks?.length > 0 ? (
                     <div className="flex flex-row gap-5">
                       <div
-                        className="w-full bg-bg-blackcolor/40 flex flex-col gap-8 p-8 pt-12 rounded-md"
+                        className="w-full bg-bg-blackColor/40 flex flex-col gap-8 p-8 pt-12 rounded-md"
                         style={{
                           clipPath:
                             "polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)",
                         }}
                       >
                         <h1 className="text-base font-semibold underline">
-                          The Networks Behind
+                          The Networks Behind{" "}
                           <span className="italic">
                             {mediaInfo?.details?.name
                               ? mediaInfo?.details?.name
@@ -641,7 +641,7 @@ const TVShowInfo = () => {
                                 }
                                 className="w-full flex flex-col gap-2 items-start 460:items-center 460:flex-row"
                               >
-                                <div className="w-full h-13 bg-bg-whitecolor rounded-sm p-2 flex items-center justify-center overflow-hidden 460:max-w-[7rem]">
+                                <div className="w-full h-13 bg-bg-whiteColor rounded-sm p-2 flex items-center justify-center overflow-hidden 460:max-w-[7rem]">
                                   <img
                                     src={
                                       network?.logo_path
@@ -671,7 +671,7 @@ const TVShowInfo = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="w-full text-center py-20 px-10 bg-bg-blackcolor/40 rounded-sm">
+                    <div className="w-full text-center py-20 px-10 bg-bg-blackColor/40 rounded-sm">
                       <h1 className="text-base font-semibold sm:text-base">
                         Network information unavailable
                       </h1>
@@ -685,7 +685,7 @@ const TVShowInfo = () => {
                       prev === "Seasons" ? null : "Seasons",
                     )
                   }
-                  className={`flex justify-between gap-4 bg-bg-blackcolor/40 p-5 rounded-lg ${sectionOneType === "Seasons" && "underline text-text-primary/60"}`}
+                  className={`flex justify-between gap-4 bg-bg-blackColor/40 p-5 rounded-lg ${sectionOneType === "Seasons" && "underline text-text-primary/60"}`}
                 >
                   <div className="flex gap-2">
                     <RiChatQuoteLine className="w-6 h-6 430:w-7 430:h-7" />
@@ -708,9 +708,9 @@ const TVShowInfo = () => {
                           "polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)",
                       }}
                     >
-                      <div className="w-full bg-bg-blackcolor/40 flex flex-col gap-8 py-8 px-3 pt-12 rounded-md 430:px-8 430:py-8 430:pt-12">
+                      <div className="w-full bg-bg-blackColor/40 flex flex-col gap-8 py-8 px-3 pt-12 rounded-md 430:px-8 430:py-8 430:pt-12">
                         <h1 className="text-base font-semibold underline">
-                          All seasons of
+                          All seasons of{" "}
                           <span className="italic">
                             {mediaInfo?.details?.name
                               ? mediaInfo?.details?.name
@@ -759,7 +759,7 @@ const TVShowInfo = () => {
                                           <h2 className="text-xs text-text-secondary border-[0.5px] rounded-2xl px-[10px] py-[2px]">
                                             <span className="hidden 295:inline-block">
                                               Premiered :
-                                            </span>
+                                            </span>{" "}
                                             {season?.air_date?.replaceAll(
                                               "-",
                                               "/",
@@ -770,7 +770,7 @@ const TVShowInfo = () => {
 
                                       {/* Season's ratings and votes */}
                                       {season?.vote_average !== null && (
-                                        <div className="flex gap-4 items-center text-base">
+                                        <div className="flex gap-2 items-center text-base">
                                           {season?.vote_average !== null && (
                                             <h3 className="font-medium text-base">
                                               <span className="text-text-fifth">
@@ -789,14 +789,14 @@ const TVShowInfo = () => {
                                         season?.episode_count !== null) && (
                                           <div className="flex gap-2 items-center text-sm flex-wrap">
                                             {season?.season_number !== null && (
-                                              <h3 className="text-xs px-2 py-[0.10rem] rounded-4xl bg-bg-whitecolor/10 backdrop-blur-md border border-br-primary text-nowrap">
-                                                Season :
+                                              <h3 className="text-xs px-2 py-[0.10rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary text-nowrap">
+                                                Season :{" "}
                                                 {season?.season_number || "N/A"}
                                               </h3>
                                             )}
                                             {season?.episode_count !== null && (
-                                              <h3 className="text-xs px-2 py-[0.10rem] rounded-4xl bg-bg-whitecolor/10 backdrop-blur-md border border-br-primary text-nowrap">
-                                                Episodes :
+                                              <h3 className="text-xs px-2 py-[0.10rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary text-nowrap">
+                                                Episodes :{" "}
                                                 {season?.episode_count || "N/A"}
                                               </h3>
                                             )}
@@ -831,7 +831,7 @@ const TVShowInfo = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="w-full text-center py-20 px-10 bg-bg-blackcolor/40 rounded-sm">
+                    <div className="w-full text-center py-20 px-10 bg-bg-blackColor/40 rounded-sm">
                       <h1 className="text-base font-semibold sm:text-base">
                         Seasons's information unavailable
                       </h1>
@@ -845,7 +845,7 @@ const TVShowInfo = () => {
                       prev === "Airing" ? null : "Airing",
                     )
                   }
-                  className={`flex justify-between gap-4 bg-bg-blackcolor/40 p-5 rounded-lg ${sectionOneType === "Airing" && "underline text-text-primary/60"}`}
+                  className={`flex justify-between gap-4 bg-bg-blackColor/40 p-5 rounded-lg ${sectionOneType === "Airing" && "underline text-text-primary/60"}`}
                 >
                   <div className="flex gap-2">
                     <RiHourglass2Line className="w-6 h-6 430:w-7 430:h-7" />
@@ -869,14 +869,14 @@ const TVShowInfo = () => {
                           "polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)",
                       }}
                     >
-                      <div className="w-full bg-bg-blackcolor/40 py-8 px-3 pt-18 rounded-md overflow-y-auto custom-scrollbar 430:px-8 430:py-8 430:pt-18">
+                      <div className="w-full bg-bg-blackColor/40 py-8 px-3 pt-18 rounded-md overflow-y-auto custom-scrollbar 430:px-8 430:py-8 430:pt-18">
                         <div className="w-full flex flex-col py-2 gap-8 max-h-110 pr-3 overflow-y-auto custom-scrollbar 430:pr-5">
                           {/* Last episode to air */}
                           {mediaInfo?.details?.last_episode_to_air !== null ? (
                             <div className="flex flex-col gap-5 border-[0.1px] border-br-primary rounded-2xl">
                               <div className="p-5 border-b-[0.1px] border-br-primary">
                                 <h1 className="text-lg font-semibold">
-                                  <span className="italic">{`${mediaInfo?.details?.name ? mediaInfo?.details?.name : "Show"}'s`}</span>
+                                  <span className="italic">{`${mediaInfo?.details?.name ? mediaInfo?.details?.name : "Show"}'s`}</span>{" "}
                                   last episode
                                 </h1>
                               </div>
@@ -924,7 +924,7 @@ const TVShowInfo = () => {
                                         ?.episode_type && (
                                           <div className="flex">
                                             <h2>
-                                              •
+                                              •{" "}
                                               {mediaInfo?.details?.last_episode_to_air?.episode_type
                                                 ?.charAt(0)
                                                 ?.toUpperCase() +
@@ -942,7 +942,7 @@ const TVShowInfo = () => {
                                           ?.runtime && (
                                           <div className="flex">
                                             <h2>
-                                              •
+                                              •{" "}
                                               {`${Math.floor(mediaInfo?.details?.last_episode_to_air?.runtime / 60) === 0 ? "" : Math.floor(mediaInfo?.details?.last_episode_to_air?.runtime / 60)}${Math.floor(mediaInfo?.details?.last_episode_to_air?.runtime / 60) === 0 ? "" : "h"} ${(mediaInfo?.details?.last_episode_to_air?.runtime % 60)?.toString()?.padStart(2, "0")}m`}
                                             </h2>
                                           </div>
@@ -958,7 +958,9 @@ const TVShowInfo = () => {
                                           {mediaInfo?.details?.last_episode_to_air
                                             ?.vote_average !== null && (
                                               <h3 className="font-medium text-nowrap">
-                                                <span className="text-text-fifth">★{" "}</span>
+                                                <span className="text-text-fifth">
+                                                  ★{" "}
+                                                </span>
                                                 {mediaInfo?.details?.last_episode_to_air?.vote_average?.toFixed(
                                                   1,
                                                 ) || "N/A"}
@@ -983,11 +985,11 @@ const TVShowInfo = () => {
                                         <div className="flex gap-4 items-center text-base">
                                           {mediaInfo?.details?.last_episode_to_air
                                             ?.season_number !== null && (
-                                              <h3 className="text-sm px-2 py-[0.10rem] rounded-4xl bg-bg-whitecolor/10 backdrop-blur-md border border-br-primary text-nowrap">
+                                              <h3 className="text-sm px-2 py-[0.10rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary text-nowrap">
                                                 S
                                                 {mediaInfo?.details
                                                   ?.last_episode_to_air
-                                                  ?.season_number || "N/A"}
+                                                  ?.season_number || "N/A"}{" "}
                                                 {mediaInfo?.details
                                                   ?.last_episode_to_air
                                                   ?.episode_number !== null && (
@@ -1031,7 +1033,7 @@ const TVShowInfo = () => {
                               </div>
                             </div>
                           ) : (
-                            <div className="w-full text-center py-20 px-10 bg-bg-blackcolor/40 rounded-sm border-[0.1px] border-br-primary">
+                            <div className="w-full text-center py-20 px-10 bg-bg-blackColor/40 rounded-sm border-[0.1px] border-br-primary">
                               <h1 className="text-base font-semibold sm:text-base">
                                 Last episode information unavailable
                               </h1>
@@ -1090,7 +1092,7 @@ const TVShowInfo = () => {
                                         ?.episode_type && (
                                           <div className="flex">
                                             <h2>
-                                              •
+                                              •{" "}
                                               {mediaInfo?.details?.next_episode_to_air?.episode_type
                                                 ?.charAt(0)
                                                 ?.toUpperCase() +
@@ -1108,7 +1110,7 @@ const TVShowInfo = () => {
                                           ?.runtime && (
                                           <div className="flex">
                                             <h2>
-                                              •
+                                              •{" "}
                                               {`${Math.floor(mediaInfo?.details?.next_episode_to_air?.runtime / 60) === 0 ? "" : Math.floor(mediaInfo?.details?.next_episode_to_air?.runtime / 60)}${Math.floor(mediaInfo?.details?.next_episode_to_air?.runtime / 60) === 0 ? "" : "h"} ${(mediaInfo?.details?.next_episode_to_air?.runtime % 60)?.toString()?.padStart(2, "0")}m`}
                                             </h2>
                                           </div>
@@ -1151,11 +1153,11 @@ const TVShowInfo = () => {
                                         <div className="flex gap-4 items-center text-base">
                                           {mediaInfo?.details?.next_episode_to_air
                                             ?.season_number !== null && (
-                                              <h3 className="text-sm px-2 py-[0.10rem] rounded-4xl bg-bg-whitecolor/10 backdrop-blur-md border border-br-primary text-white text-nowrap">
+                                              <h3 className="text-sm px-2 py-[0.10rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary text-white text-nowrap">
                                                 S
                                                 {mediaInfo?.details
                                                   ?.next_episode_to_air
-                                                  ?.season_number || "N/A"}
+                                                  ?.season_number || "N/A"}{" "}
                                                 {mediaInfo?.details
                                                   ?.next_episode_to_air
                                                   ?.episode_number !== null && (
@@ -1199,7 +1201,7 @@ const TVShowInfo = () => {
                               </div>
                             </div>
                           ) : (
-                            <div className="w-full text-center py-20 px-10 bg-bg-blackcolor/40 rounded-sm border-[0.1px] border-br-primary">
+                            <div className="w-full text-center py-20 px-10 bg-bg-blackColor/40 rounded-sm border-[0.1px] border-br-primary">
                               <h1 className="text-base font-semibold sm:text-base">
                                 No upcoming episode available
                               </h1>
@@ -1209,7 +1211,7 @@ const TVShowInfo = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="w-full text-center py-20 px-10 bg-bg-blackcolor/40 rounded-sm">
+                    <div className="w-full text-center py-20 px-10 bg-bg-blackColor/40 rounded-sm">
                       <h1 className="text-base font-semibold sm:text-base">
                         Airing information unavailable
                       </h1>
@@ -1240,7 +1242,7 @@ const TVShowInfo = () => {
                           alt="thumbnail"
                           className="w-full h-full object-cover"
                         />
-                        <div className="absolute m-1 right-1 top-1 rounded-2xl px-3 py-1 bg-bg-blackcolor/60 border-sm opacity-0 group-hover:opacity-100">
+                        <div className="absolute m-1 right-1 top-1 rounded-2xl px-3 py-1 bg-bg-blackColor/60 border-sm opacity-0 group-hover:opacity-100">
                           {video?.name && (
                             <h1 className="text-xs font-semibold 460:text-sm">
                               {video?.name?.split(/:|-/)[0]}
@@ -1248,7 +1250,7 @@ const TVShowInfo = () => {
                           )}
                         </div>
                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                          <div className="p-1 rounded-full bg-bg-blackcolor/60 border-sm 460:p-2">
+                          <div className="p-1 rounded-full bg-bg-blackColor/60 border-sm 460:p-2">
                             <RiPlayLargeFill />
                           </div>
                         </div>
@@ -1259,7 +1261,7 @@ const TVShowInfo = () => {
               </div>
             )}
 
-            {/* Part 7 : Reviews, Production Companies, Watch Providers  & Socials */}
+            {/* Part 7 : Reviews, Production Companies, Watch Providers & Socials */}
             <div className="flex flex-col gap-4">
               <div className="font-medium text-xl">
                 <h1>Browse More</h1>
@@ -1272,7 +1274,7 @@ const TVShowInfo = () => {
                       prev === "Reviews" ? null : "Reviews",
                     )
                   }
-                  className={`flex justify-between gap-4 bg-bg-blackcolor/40 p-5 rounded-lg ${sectionTwoType === "Reviews" && "underline text-text-primary/60"}`}
+                  className={`flex justify-between gap-4 bg-bg-blackColor/40 p-5 rounded-lg ${sectionTwoType === "Reviews" && "underline text-text-primary/60"}`}
                 >
                   <div className="flex gap-2">
                     <RiChatQuoteLine className="w-6 h-6 430:w-7 430:h-7" />
@@ -1290,14 +1292,14 @@ const TVShowInfo = () => {
                   (mediaInfo?.reviews?.results?.length > 0 ? (
                     <div className="flex flex-row gap-5 no-scrollbar">
                       <div
-                        className="w-full bg-bg-blackcolor/40 flex flex-col gap-6 py-8 px-3 pt-12 rounded-md 430:px-8 430:py-8 430:pt-12"
+                        className="w-full bg-bg-blackColor/40 flex flex-col gap-6 py-8 px-3 pt-12 rounded-md 430:px-8 430:py-8 430:pt-12"
                         style={{
                           clipPath:
                             "polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)",
                         }}
                       >
                         <h1 className="text-base font-semibold underline">
-                          Audience Reactions on
+                          Audience Reactions on{" "}
                           <span className="italic">
                             {mediaInfo?.details?.name
                               ? mediaInfo?.details?.name
@@ -1309,7 +1311,7 @@ const TVShowInfo = () => {
                             return (
                               <div
                                 key={review.id}
-                                className="w-full bg-bg-blackcolor/40 p-5 pt-10 rounded-md"
+                                className="w-full bg-bg-blackColor/40 p-5 pt-10 rounded-md"
                                 style={{
                                   clipPath:
                                     "polygon(6% 5%, 100% 5%, 100% 100%, 0 100%, 0 0)",
@@ -1330,13 +1332,13 @@ const TVShowInfo = () => {
                                     </div>
                                     <div className="flex flex-col gap-1">
                                       <h1 className="text-sm font-semibold underline">
-                                        A review by
+                                        A review by{" "}
                                         {review?.author ||
                                           review?.author_details?.username ||
                                           "Scenery User"}
                                       </h1>
                                       <h1 className="text-xs">
-                                        Written by
+                                        Written by{" "}
                                         <span className="italic">
                                           {review?.author ||
                                             review?.author_details?.username ||
@@ -1358,7 +1360,7 @@ const TVShowInfo = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="w-full text-center py-20 px-10 bg-bg-blackcolor/40 rounded-sm">
+                    <div className="w-full text-center py-20 px-10 bg-bg-blackColor/40 rounded-sm">
                       <h1 className="text-base font-semibold sm:text-base">
                         No one’s spilled the tea yet
                       </h1>
@@ -1372,7 +1374,7 @@ const TVShowInfo = () => {
                       prev === "Studios" ? null : "Studios",
                     )
                   }
-                  className={`flex justify-between gap-4 bg-bg-blackcolor/40 p-5 rounded-lg ${sectionTwoType === "Studios" && "underline text-text-primary/60"}`}
+                  className={`flex justify-between gap-4 bg-bg-blackColor/40 p-5 rounded-lg ${sectionTwoType === "Studios" && "underline text-text-primary/60"}`}
                 >
                   <div className="flex gap-2">
                     <RiFilmLine className="w-6 h-6 430:w-7 430:h-7" />
@@ -1390,14 +1392,14 @@ const TVShowInfo = () => {
                   (mediaInfo?.details?.production_companies?.length > 0 ? (
                     <div className="flex flex-row gap-5">
                       <div
-                        className="w-full bg-bg-blackcolor/40 flex flex-col gap-8 p-8 pt-12 rounded-md"
+                        className="w-full bg-bg-blackColor/40 flex flex-col gap-8 p-8 pt-12 rounded-md"
                         style={{
                           clipPath:
                             "polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)",
                         }}
                       >
                         <h1 className="text-base font-semibold underline">
-                          The Studios Behind
+                          The Studios Behind{" "}
                           <span className="italic">
                             {mediaInfo?.details?.name
                               ? mediaInfo?.details?.name
@@ -1419,7 +1421,7 @@ const TVShowInfo = () => {
                                   }
                                   className="w-full flex flex-col gap-2 items-start 460:items-center 460:flex-row"
                                 >
-                                  <div className="w-full h-13 bg-bg-whitecolor rounded-sm p-2 flex items-center justify-center overflow-hidden 460:max-w-[7rem]">
+                                  <div className="w-full h-13 bg-bg-whiteColor rounded-sm p-2 flex items-center justify-center overflow-hidden 460:max-w-[7rem]">
                                     <img
                                       src={
                                         studio?.logo_path
@@ -1450,7 +1452,7 @@ const TVShowInfo = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="w-full text-center py-20 px-10 bg-bg-blackcolor/40 rounded-sm">
+                    <div className="w-full text-center py-20 px-10 bg-bg-blackColor/40 rounded-sm">
                       <h1 className="text-base font-semibold sm:text-base">
                         Studio information unavailable
                       </h1>
@@ -1464,7 +1466,7 @@ const TVShowInfo = () => {
                       prev === "Providers" ? null : "Providers",
                     )
                   }
-                  className={`flex justify-between gap-4 bg-bg-blackcolor/40 p-5 rounded-lg ${sectionTwoType === "Providers" && "underline text-text-primary/60"}`}
+                  className={`flex justify-between gap-4 bg-bg-blackColor/40 p-5 rounded-lg ${sectionTwoType === "Providers" && "underline text-text-primary/60"}`}
                 >
                   <div className="flex gap-2">
                     <RiMovie2Line className="w-6 h-6 430:w-7 430:h-7" />
@@ -1482,26 +1484,26 @@ const TVShowInfo = () => {
                   (regionalWatchProviderType?.length > 0 ? (
                     <div className="flex flex-row gap-5 no-scrollbar">
                       <div
-                        className="w-full bg-bg-blackcolor/40 flex flex-col gap-6 py-8 px-3 pt-12 rounded-md 430:px-8 430:py-8 430:pt-12"
+                        className="w-full bg-bg-blackColor/40 flex flex-col gap-6 py-8 px-3 pt-12 rounded-md 430:px-8 430:py-8 430:pt-12"
                         style={{
                           clipPath:
                             "polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)",
                         }}
                       >
                         <h1 className="text-base font-semibold underline">
-                          Streaming Options for
+                          Streaming Options for{" "}
                           <span className="italic">
                             {mediaInfo?.details?.name
                               ? mediaInfo?.details?.name
                               : "this TV Show"}
-                          </span>
+                          </span>{" "}
                           available on
                         </h1>
                         <div className="w-full max-h-100 overflow-y-auto custom-scrollbar flex flex-col gap-6 pr-3 cursor-pointer 430:pr-5">
                           {/* Buy */}
                           {regionalWatchProvider?.watchProviders?.buy?.length >
                             0 && (
-                              <div className="w-full bg-bg-blackcolor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
                                 <h1 className="text-base font-semibold underline">
                                   Buy to own
                                 </h1>
@@ -1538,7 +1540,7 @@ const TVShowInfo = () => {
                                             className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
                                           />
                                           <h1 className="text-xs font-semibold 430:text-sm">
-                                            —
+                                            —{" "}
                                             {platform?.provider_name ||
                                               "Name unavailable"}
                                           </h1>
@@ -1553,7 +1555,7 @@ const TVShowInfo = () => {
                           {/* Flatrate */}
                           {regionalWatchProvider?.watchProviders?.flatrate
                             ?.length > 0 && (
-                              <div className="w-full bg-bg-blackcolor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
                                 <h1 className="text-base font-semibold underline">
                                   Included with subscription
                                 </h1>
@@ -1590,7 +1592,7 @@ const TVShowInfo = () => {
                                             className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
                                           />
                                           <h1 className="text-xs font-semibold 430:text-sm">
-                                            —
+                                            —{" "}
                                             {platform?.provider_name ||
                                               "Name unavailable"}
                                           </h1>
@@ -1605,7 +1607,7 @@ const TVShowInfo = () => {
                           {/* Rent */}
                           {regionalWatchProvider?.watchProviders?.rent?.length >
                             0 && (
-                              <div className="w-full bg-bg-blackcolor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
                                 <h1 className="text-base font-semibold underline">
                                   Rent & watch
                                 </h1>
@@ -1642,7 +1644,7 @@ const TVShowInfo = () => {
                                             className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
                                           />
                                           <h1 className="text-xs font-semibold 430:text-sm">
-                                            —
+                                            —{" "}
                                             {platform?.provider_name ||
                                               "Name unavailable"}
                                           </h1>
@@ -1656,7 +1658,7 @@ const TVShowInfo = () => {
                           {/* Ads */}
                           {regionalWatchProvider?.watchProviders?.ads?.length >
                             0 && (
-                              <div className="w-full bg-bg-blackcolor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
                                 <h1 className="text-base font-semibold underline">
                                   Watch with ads
                                 </h1>
@@ -1693,7 +1695,7 @@ const TVShowInfo = () => {
                                             className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
                                           />
                                           <h1 className="text-xs font-semibold 430:text-sm">
-                                            —
+                                            —{" "}
                                             {platform?.provider_name ||
                                               "Name unavailable"}
                                           </h1>
@@ -1707,7 +1709,7 @@ const TVShowInfo = () => {
                           {/* Free */}
                           {regionalWatchProvider?.watchProviders?.free?.length >
                             0 && (
-                              <div className="w-full bg-bg-blackcolor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
                                 <h1 className="text-base font-semibold underline">
                                   Stream for free
                                 </h1>
@@ -1744,7 +1746,7 @@ const TVShowInfo = () => {
                                             className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
                                           />
                                           <h1 className="text-xs font-semibold 430:text-sm">
-                                            —
+                                            —{" "}
                                             {platform?.provider_name ||
                                               "Name unavailable"}
                                           </h1>
@@ -1759,7 +1761,7 @@ const TVShowInfo = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="w-full text-center py-20 px-10 bg-bg-blackcolor/40 rounded-sm">
+                    <div className="w-full text-center py-20 px-10 bg-bg-blackColor/40 rounded-sm">
                       <h1 className="text-base font-semibold sm:text-base">
                         No viewing options available
                       </h1>
@@ -1773,7 +1775,7 @@ const TVShowInfo = () => {
                       prev === "Socials" ? null : "Socials",
                     )
                   }
-                  className={`flex justify-between gap-4 bg-bg-blackcolor/40 p-5 rounded-lg ${sectionTwoType === "Socials" && "underline text-text-primary/60"}`}
+                  className={`flex justify-between gap-4 bg-bg-blackColor/40 p-5 rounded-lg ${sectionTwoType === "Socials" && "underline text-text-primary/60"}`}
                 >
                   <div className="flex gap-2">
                     <RiHashtag className="w-6 h-6 430:w-7 430:h-7" />
@@ -1788,22 +1790,22 @@ const TVShowInfo = () => {
                   )}
                 </div>
                 {sectionTwoType === "Socials" &&
-                  (mediasSocialsCheck !== null ? (
+                  (mediasSocialsCheck ? (
                     <div className="flex flex-row gap-5">
                       <div
-                        className="w-full bg-bg-blackcolor/40 flex flex-col gap-8 p-8 pt-12 rounded-md"
+                        className="w-full bg-bg-blackColor/40 flex flex-col gap-8 p-8 pt-12 rounded-md"
                         style={{
                           clipPath:
                             "polygon(calc(100% - 40px) 20px, 100% 0, 100% 100%, 0 100%, 0 20px)",
                         }}
                       >
                         <h1 className="text-base font-semibold underline">
-                          Follow
+                          Follow{" "}
                           <span className="italic">
                             {mediaInfo?.details?.name
                               ? mediaInfo?.details?.name
                               : "this TV Show"}
-                          </span>
+                          </span>{" "}
                           on Social Media
                         </h1>
                         <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-5 gap-y-6 mx-auto cursor-pointer">
@@ -1930,7 +1932,7 @@ const TVShowInfo = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="w-full text-center py-20 px-10 bg-bg-blackcolor/40 rounded-sm">
+                    <div className="w-full text-center py-20 px-10 bg-bg-blackColor/40 rounded-sm">
                       <h1 className="text-base font-semibold sm:text-base">
                         No official links available
                       </h1>
@@ -1944,7 +1946,7 @@ const TVShowInfo = () => {
               <div className="w-full flex flex-col gap-5">
                 <div className="font-medium text-xl">
                   <h1>
-                    If you liked
+                    If you liked{" "}
                     <span className="italic text-text-secondary">
                       {(mediaInfo?.details?.name || "this TV Show")?.replace(
                         ".",
@@ -1973,7 +1975,7 @@ const TVShowInfo = () => {
                             className="absolute z-0 w-full h-full object-cover"
                           />
                           {/* About movie or show - on hover drop down */}
-                          <div className="absolute z-1 bottom-0 bg-bg-blackcolor/90 w-full flex flex-col gap-[5px] px-2 py-[5px] opacity-0 group-hover:opacity-100 transition duration-200 460:gap-2 460:py-2">
+                          <div className="absolute z-1 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-[5px] px-2 py-[5px] opacity-0 group-hover:opacity-100 transition duration-200 460:gap-2 460:py-2">
                             <div className="flex justify-between items-center">
                               <div
                                 onClick={(e) => {
@@ -1992,9 +1994,9 @@ const TVShowInfo = () => {
                                     content,
                                     "watchLater",
                                   ) ? (
-                                    <RiBookmarkFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                    <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                   ) : (
-                                    <RiBookmarkLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                    <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                   )}
                                 </div>
                                 <div
@@ -2007,24 +2009,24 @@ const TVShowInfo = () => {
                                     content,
                                     "favourite",
                                   ) ? (
-                                    <RiHeartFill className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-fourth" />
+                                    <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                   ) : (
-                                    <RiHeartLine className="w-[1.80rem] h-[1.80rem] lg:w-[1.9rem] lg:h-[1.9rem] text-text-secondary" />
+                                    <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                   )}
                                 </div>
                               </div>
                               <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                <Info className="w-6 h-6" />
+                                <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                               </div>
                             </div>
                             <div className="flex items-center gap-2 font-medium text-text-secondary text-xs 460:text-sm">
                               <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                <h1>
-                                  ★{" "}{content.vote_average.toFixed(1) || "0.0"}
+                                <h1 className="text-xs lg:text-sm font-regular">
+                                  ★ {content.vote_average.toFixed(1) || "0.0"}
                                 </h1>
                               </div>
                               <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
-                                <h1>
+                                <h1 className="text-xs lg:text-sm font-regular">
                                   {(
                                     content.release_date ||
                                     content.first_air_date
@@ -2033,8 +2035,8 @@ const TVShowInfo = () => {
                               </div>
                             </div>
                             <div className="flex gap-2">
-                              {content.genre_ids.length === 0 ? (
-                                <h1 className="text-sm font-medium">
+                              {content.genre_ids?.length === 0 ? (
+                                <h1 className="text-xs lg:text-sm font-regular">
                                   Uncategorized
                                 </h1>
                               ) : (
@@ -2046,7 +2048,7 @@ const TVShowInfo = () => {
                                   .map((val) => (
                                     <h1
                                       key={val.id}
-                                      className="text-sm font-medium"
+                                      className="text-xs lg:text-sm font-regular"
                                     >
                                       {val?.name === "Science Fiction"
                                         ? "Sci-Fi"
@@ -2057,10 +2059,10 @@ const TVShowInfo = () => {
                             </div>
                           </div>
                           {(content?.title || content?.name) && (
-                            <div className="absolute m-1 left-1 bottom-1 rounded-2xl px-3 py-1 bg-bg-blackcolor/60 border-sm transition-transform duration-200 group-hover:-translate-y-23 460:group-hover:-translate-y-30">
+                            <div className="absolute m-1 left-1 bottom-1 rounded-2xl px-3 py-1 bg-bg-blackColor/60 border-sm transition-transform duration-200 group-hover:-translate-y-23 460:group-hover:-translate-y-30">
                               <h1 className="text-xs font-semibold 460:text-sm">
                                 {(content?.title || content?.name).split(
-                                  /:|-/,
+                                  /:|-|,/,
                                 )[0] || "N/A"}
                               </h1>
                             </div>

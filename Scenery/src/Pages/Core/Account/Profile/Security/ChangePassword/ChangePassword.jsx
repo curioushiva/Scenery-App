@@ -106,7 +106,7 @@ const ChangePassword = () => {
                                                             requiresReauth: false
                                                         });
                                                     }}
-                                                    className="w-full text-sm sm:text-base px-5 pr-14 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputcolor placeholder-text-secondary focus:outline focus:outline-white"
+                                                    className="w-full text-sm sm:text-base px-5 pr-14 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
                                                     type={showAuthPassword ? "text" : "password"}
                                                     placeholder="Password" />
                                                 <div onClick={() => setShowAuthPassword(prev => !prev)} className="absolute z-10 right-5 top-4 cursor-pointer text-text-secondary">
@@ -131,14 +131,14 @@ const ChangePassword = () => {
                                             </button>
                                             <Link
                                                 to="/account"
-                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whitecolor/60"
+                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whiteColor/60"
                                             >
                                                 Cancel
                                             </Link>
                                         </div>
                                         {/* Forget password */}
-                                        <Link to="/account/password" className="flex gap-2 pt-2">
-                                            <h1 className="text-sm font-regular text-text-secondary underline">Forgot your password? Change it from here</h1>
+                                        <Link to="/resetpassword" className="flex gap-2 pt-2">
+                                            <h1 className="text-sm font-regular text-text-secondary underline">Forgot your password? Reset it from here</h1>
                                         </Link>
                                     </div>
                                 ) : (
@@ -159,7 +159,7 @@ const ChangePassword = () => {
                                                             requiresReauth: false
                                                         });
                                                     }}
-                                                    className="w-full text-sm sm:text-base px-5 pr-14 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputcolor placeholder-text-secondary focus:outline focus:outline-white"
+                                                    className="w-full text-sm sm:text-base px-5 pr-14 py-3 rounded-sm border text-text-secondary border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
                                                     type={showNewPassword ? "text" : "password"}
                                                     placeholder="Password" />
                                                 <div onClick={() => setShowNewPassword(prev => !prev)} className="absolute z-10 right-5 top-4 cursor-pointer text-text-secondary">
@@ -186,7 +186,7 @@ const ChangePassword = () => {
                                             </button>
                                             <Link
                                                 to="/account"
-                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whitecolor/60"
+                                                className="w-full px-5 py-2 text-sm sm:text-base font-medium text-center rounded-sm cursor-pointer transition-colors duration-300 ease-in-out hover:bg-bg-whiteColor/60"
                                             >
                                                 Cancel
                                             </Link>
