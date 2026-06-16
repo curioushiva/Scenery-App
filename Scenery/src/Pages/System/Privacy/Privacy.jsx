@@ -1,11 +1,6 @@
-import React, { useState } from "react";
-import { RiArrowUpWideLine, RiArrowDownWideLine } from "@remixicon/react";
-import { AboutObsidianMockData } from "@/Utils/Mockdata/Mockdata";
+import React from "react";
 
 const Privacy = () => {
-  /* Select question type obsidian */
-  const [aboutQueType, setAboutQueType] = useState(null);
-
   return (
     <div className="flex flex-col gap-12">
       {/* Overview */}

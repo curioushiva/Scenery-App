@@ -1,11 +1,9 @@
 import useContent from "@/Utils/Hooks/useContent/useContent";
 import {
   IMG_POSTER_BASE_URL,
-  IMG_BACKDROP_BASE_URL,
 } from "@/Utils/SceneryAPI/SceneryAPI";
 import { useNavigate } from "react-router";
 import { ReasonToJoinMockData } from "@/Utils/Mockdata/Mockdata";
-import { RiArrowRightSLine, RiArrowRightWideLine } from "@remixicon/react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth } from "@/Utils/Hooks/useAuth/useAuth";
@@ -89,7 +87,7 @@ const Landing = () => {
                   setUpperTypedEmail(e.target.value);
                   dispatch(setLandingPageErrors({ upperEmailInvalid: null }));
                 }}
-                className="w-full text-sm px-5 py-3 rounded-sm border-1 border-border border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
+                className="w-full text-sm px-5 py-3 rounded-sm border border-border border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
                 type="email"
                 placeholder="Email Address"
               />
@@ -97,7 +95,7 @@ const Landing = () => {
             </div>
             <div
               onClick={() => validateUpperEmail(upperTypedEmail)}
-              className="w-full flex-shrink-0 375:w-fit text-sm font-medium px-4 py-3 rounded-sm bg-btn-primary flex justify-center items-center cursor-pointer transition duration-200 ease-in-out active:scale-[0.95]"
+              className="w-full shrink-0 375:w-fit text-sm font-medium px-4 py-3 rounded-sm bg-btn-primary flex justify-center items-center cursor-pointer transition duration-200 ease-in-out active:scale-[0.95]"
             >
               <h1>Get Started</h1>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="18" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg>
@@ -110,7 +108,7 @@ const Landing = () => {
             <div className="w-full flex flex-col gap-3 pt-8">
               {popularContent?.content?.slice(0, 2)?.map((poster) => {
                 return (
-                  <div key={poster.id} className="relative w-full max-w-[9rem] aspect-[2/3]">
+                  <div key={poster.id} className="relative w-full max-w-36 aspect-2/3">
                     <img
                       src={`${IMG_POSTER_BASE_URL}${poster?.poster_path}`}
                       alt="Poster"
@@ -124,7 +122,7 @@ const Landing = () => {
             <div className="w-full flex flex-col gap-3">
               {popularContent?.content?.slice(2, 4)?.map((poster) => {
                 return (
-                  <div key={poster.id} className="relative w-full max-w-[9rem] aspect-[2/3]">
+                  <div key={poster.id} className="relative w-full max-w-36 aspect-2/3">
                     <img
                       src={`${IMG_POSTER_BASE_URL}${poster?.poster_path}`}
                       alt="Poster"
@@ -138,7 +136,7 @@ const Landing = () => {
             <div className="w-full flex flex-col gap-3 pt-8">
               {popularContent?.content?.slice(4, 6)?.map((poster) => {
                 return (
-                  <div key={poster.id} className="relative w-full max-w-[9rem] aspect-[2/3]">
+                  <div key={poster.id} className="relative w-full max-w-36 aspect-2/3">
                     <img
                       src={`${IMG_POSTER_BASE_URL}${poster?.poster_path}`}
                       alt="Poster"
@@ -208,9 +206,9 @@ const Landing = () => {
                 return (
                   <div
                     key={content.id || index}
-                    className="relative flex-shrink-0"
+                    className="relative shrink-0"
                   >
-                    <div className="relative rounded-2xl overflow-hidden w-[7rem] sm:w-[8rem] md:w-[9rem] aspect-[2/3]">
+                    <div className="relative rounded-2xl overflow-hidden w-28 sm:w-32 md:w-36 aspect-2/3">
                       <img
                         src={`${IMG_POSTER_BASE_URL}${content.poster_path}`}
                         alt="Poster"
@@ -363,7 +361,7 @@ const Landing = () => {
                 setLowerTypedEmail(e.target.value);
                 dispatch(setLandingPageErrors({ lowerEmailInvalid: null }));
               }}
-              className="w-full text-sm px-5 py-3 rounded-sm border-1 border-border border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
+              className="w-full text-sm px-5 py-3 rounded-sm border border-border border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
               type="email"
               placeholder="Email Address"
             />
@@ -371,7 +369,7 @@ const Landing = () => {
           </div>
           <div
             onClick={() => validateLowerEmail(lowerTypedEmail)}
-            className="w-full flex-shrink-0 375:w-fit text-sm font-medium px-4 py-3 rounded-sm bg-btn-primary flex justify-center items-center cursor-pointer transition duration-200 ease-in-out active:scale-[0.95]"
+            className="w-full shrink-0 375:w-fit text-sm font-medium px-4 py-3 rounded-sm bg-btn-primary flex justify-center items-center cursor-pointer transition duration-200 ease-in-out active:scale-[0.95]"
           >
             <h1>Get Started</h1>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="18" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg>

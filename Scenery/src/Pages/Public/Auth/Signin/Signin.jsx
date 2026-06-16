@@ -70,7 +70,7 @@ const Signin = () => {
                   }),
                 );
               }}
-              className="w-full px-5 pr-14 py-3 rounded-sm border-1 border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
+              className="w-full px-5 pr-14 py-3 rounded-sm border border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
               type={showPassword ? "text" : "password"}
               placeholder="Password"
             />
@@ -153,7 +153,7 @@ const Signin = () => {
                 }),
               );
             }}
-            className="w-full px-5 py-3 rounded-sm border-1 border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
+            className="w-full px-5 py-3 rounded-sm border border-br-primary bg-bg-inputColor placeholder-text-secondary focus:outline focus:outline-white"
             type="email"
             placeholder="Email Address"
           />

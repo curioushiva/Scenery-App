@@ -5,6 +5,7 @@ import { WhatsNewMockData } from "@/Utils/Mockdata/Mockdata";
 const WhatsNew = () => {
   /* Select question type obsidian */
   const [aboutQueType, setAboutQueType] = useState(null);
+  
   return (
     <div className="w-full flex flex-col gap-10">
       {/* Overview */}

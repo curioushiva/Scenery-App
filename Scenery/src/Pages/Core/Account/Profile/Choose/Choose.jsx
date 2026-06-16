@@ -81,9 +81,9 @@ const Choose = () => {
     if (showUpdateProfileForm) {
         /* Update profile form */
         return (
-            <div className="w-full h-screen min-h-screen px-5 py-5 bg-gradient-to-b from-bg-topColor to-bg-bottomColor text-text-primary">
+            <div className="w-full h-screen min-h-screen px-5 py-5 bg-linear-to-b from-bg-topColor to-bg-bottomColor text-text-primary">
                 <div className="w-full h-full flex justify-center items-center px-0 py-5">
-                    <div className="w-full max-w-[40rem] bg-cardColor-primary flex flex-col gap-4 justify-center items-center border-1 border-br-primary rounded-3xl px-2 py-8 220:px-10">
+                    <div className="w-full max-w-160 bg-cardColor-primary flex flex-col gap-4 justify-center items-center border border-br-primary rounded-3xl px-2 py-8 220:px-10">
                         {/* Headings */}
                         <h1 className="text-xl sm:text-2xl font-medium text-center">
                             Update your profile
@@ -96,7 +96,7 @@ const Choose = () => {
                             <img
                                 src={AvatarsMockData[newAvatar].avatar}
                                 alt="avatar"
-                                className="w-full aspect-[1/1] object-cover"
+                                className="w-full aspect-square object-cover"
                             />
                         </div>
                         {/* Inputs & buttons */}
@@ -113,7 +113,7 @@ const Choose = () => {
                                     setNewName(e.target.value);
                                     setNewNameValidation(null);
                                 }}
-                                className="text-xs 220:text-sm sm:text-sm font-medium px-4 py-3 rounded-3xl border-1 border-br-primary bg-bg-inputColor placeholder-text-secondary outline-none"
+                                className="text-xs 220:text-sm sm:text-sm font-medium px-4 py-3 rounded-3xl border border-br-primary bg-bg-inputColor placeholder-text-secondary outline-none"
                                 type="text"
                                 placeholder="Name"
                             />
@@ -144,13 +144,13 @@ const Choose = () => {
     } else {
         /* Updated profile */
         return (
-            <div className="w-full h-screen min-h-screen px-5 py-5 bg-gradient-to-b from-bg-topColor to-bg-bottomColor text-text-primary">
+            <div className="w-full h-screen min-h-screen px-5 py-5 bg-linear-to-b from-bg-topColor to-bg-bottomColor text-text-primary">
                 <div className="w-full h-full flex flex-col justify-center items-center gap-6">
                     {/* Headings */}
                     <h1 className="text-2xl sm:text-3xl font-medium text-center">
                         Ready to explore ?
                     </h1>
-                    <p className="max-w-[15rem] lg:max-w-[18rem] text-center text-sm text-text-secondary">
+                    <p className="max-w-60 lg:max-w-[18rem] text-center text-sm text-text-secondary">
                         Continue with your profile and pick up where you left off
                     </p>
                     {/* Image */}

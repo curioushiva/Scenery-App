@@ -102,9 +102,9 @@ const TVShows = () => {
             )}
 
             {/* Fades top & bottoms */}
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-bg-coreColor/10 via-transparent to-transparent" />
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-bg-coreColor via-bg-coreColor/10 to-transparent" />
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-bg-coreColor via-bg-coreColor/40 to-transparent" />
+            <div className="absolute inset-0 pointer-events-none bg-linear-to-b from-bg-coreColor/10 via-transparent to-transparent" />
+            <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-bg-coreColor via-bg-coreColor/10 to-transparent" />
+            <div className="absolute inset-0 pointer-events-none bg-linear-to-t from-bg-coreColor via-bg-coreColor/40 to-transparent" />
           </div>
           {/* Top Layer */}
           <div className="relative z-10 w-full min-h-[75dvh] flex flex-col justify-between gap-10 navPadding">
@@ -118,7 +118,7 @@ const TVShows = () => {
                     dispatch(addSelectedTvShowGenreIndex(null));
                     setIsBgVideoPlaying(false);
                   }}
-                  className="text-xl font-normal leading-[2rem] text-text-primary/90 cursor-pointer"
+                  className="text-xl font-normal leading-8 text-text-primary/90 cursor-pointer"
                 >{`TV Shows >`}</h1>
                 <h1 className="text-3xl font-medium leading-none">
                   {tvShowsGenre[0]?.genre} Shows
@@ -133,7 +133,7 @@ const TVShows = () => {
                   onClick={() => {
                     setIsTvShowsGenreClicked((prev) => !prev);
                   }}
-                  className="flex justify-center items-center gap-2 cursor-pointer px-2 border-1 lg:gap-7 lg:py-[0.1rem] hover:bg-bg-whiteColor/30"
+                  className="flex justify-center items-center gap-2 cursor-pointer px-2 border lg:gap-7 lg:py-[0.1rem] hover:bg-bg-whiteColor/30"
                 >
                   <h1 className="font-medium text-[0.70rem] lg:text-[0.80rem]">
                     Genres
@@ -148,7 +148,7 @@ const TVShows = () => {
                   {/* TV Shows Genre Types */}
                   {isTvShowsGenreClicked && (
                     <div className="showsGenreDropdown">
-                      <div className="w-40 text-sm max-h-30 sm:max-h-40 overflow-y-scroll no-scrollbar bg-bg-blackColor border-1 border-br-primary flex flex-col items-start justify-center">
+                      <div className="w-40 text-sm max-h-30 sm:max-h-40 overflow-y-scroll no-scrollbar bg-bg-blackColor border border-br-primary flex flex-col items-start justify-center">
                         <div className="flex flex-col gap-4 px-4 mt-70 sm:mt-60 pb-5">
                           {tvShowsGenreData?.map((val, index) => {
                             return (
@@ -214,14 +214,14 @@ const TVShows = () => {
               </p>
               {(tvShowsBGVideo?.video?.release_date ||
                 tvShowsBGVideo?.video?.first_air_date) && (
-                  <h2 className="text-xm font-semibold lg:text-base">
-                    Released in
-                    {(
-                      tvShowsBGVideo?.video?.release_date ||
-                      tvShowsBGVideo?.video?.first_air_date
-                    )?.slice(0, 4)}
-                  </h2>
-                )}
+                <h2 className="text-xm font-semibold lg:text-base">
+                  Released in{" "}
+                  {(
+                    tvShowsBGVideo?.video?.release_date ||
+                    tvShowsBGVideo?.video?.first_air_date
+                  )?.slice(0, 4)}
+                </h2>
+              )}
               <div className="flex flex-col gap-4 350:flex-row">
                 {tvShowsBGVideo?.videoKey && (
                   <div
@@ -279,9 +279,9 @@ const TVShows = () => {
                           <div
                             key={tvShow?.id}
                             onClick={() => mediaType(tvShow)}
-                            className="relative flex-shrink-0 group"
+                            className="relative shrink-0 group"
                           >
-                            <div className="relative rounded-sm overflow-hidden w-[8.5rem] sm:w-[9.5rem] lg:w-[10.5rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
+                            <div className="relative rounded-sm overflow-hidden w-34 sm:w-38 lg:w-42 aspect-2/3 transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
                                 src={`${IMG_POSTER_BASE_URL}${tvShow?.poster_path}`}
                                 alt="Poster"
@@ -307,9 +307,9 @@ const TVShows = () => {
                                         tvShow,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -322,9 +322,9 @@ const TVShows = () => {
                                         tvShow,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                        <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
@@ -333,12 +333,14 @@ const TVShows = () => {
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
-                                      ★{" "}{tvShow?.vote_average?.toFixed(1) || "0.0"}
+                                      ★{" "}
+                                      {tvShow?.vote_average?.toFixed(1) ||
+                                        "0.0"}
                                     </h1>
                                   </div>
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
                                       {(
                                         tvShow?.release_date ||
@@ -401,9 +403,9 @@ const TVShows = () => {
                           <div
                             key={tvShow?.id}
                             onClick={() => mediaType(tvShow)}
-                            className="relative flex-shrink-0 group"
+                            className="relative shrink-0 group"
                           >
-                            <div className="relative rounded-sm overflow-hidden w-[8.5rem] sm:w-[9.5rem] lg:w-[10.5rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
+                            <div className="relative rounded-sm overflow-hidden w-34 sm:w-38 lg:w-42 aspect-2/3 transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
                                 src={`${IMG_POSTER_BASE_URL}${tvShow?.poster_path}`}
                                 alt="Poster"
@@ -429,9 +431,9 @@ const TVShows = () => {
                                         tvShow,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -444,9 +446,9 @@ const TVShows = () => {
                                         tvShow,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                        <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
@@ -455,13 +457,14 @@ const TVShows = () => {
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
                                       ★{" "}
-                                      {tvShow?.vote_average?.toFixed(1) || "0.0"}
+                                      {tvShow?.vote_average?.toFixed(1) ||
+                                        "0.0"}
                                     </h1>
                                   </div>
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
                                       {(
                                         tvShow?.release_date ||
@@ -518,13 +521,15 @@ const TVShows = () => {
                       <div className="flex flex-row gap-4 overflow-x-scroll no-scrollbar cursor-pointer">
                         {/* 1-9 */}
                         {categorie?.tvShows
-                          ?.filter((tvShow) => tvShow?.id && tvShow?.poster_path)
+                          ?.filter(
+                            (tvShow) => tvShow?.id && tvShow?.poster_path,
+                          )
                           ?.slice(0, 9)
                           ?.map((tvShow, index) => (
                             <div
                               key={tvShow?.id}
                               onClick={() => mediaType(tvShow)}
-                              className="relative w-[16rem] h-[12rem] md:w-[18rem] md:h-[14rem] flex-shrink-0 group"
+                              className="relative w-[16rem] h-48 md:w-[18rem] md:h-56 shrink-0 group"
                             >
                               <div className="relative flex justify-center items-center rounded-sm overflow-hidden w-full h-full transition-transform duration-300 ease-out group-hover:scale-95">
                                 <img
@@ -558,9 +563,9 @@ const TVShows = () => {
                                           tvShow,
                                           "watchLater",
                                         ) ? (
-                                          <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                          <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                         ) : (
-                                          <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                          <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                         )}
                                       </div>
                                       <div
@@ -573,9 +578,9 @@ const TVShows = () => {
                                           tvShow,
                                           "favourite",
                                         ) ? (
-                                          <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                          <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                         ) : (
-                                          <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                          <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                         )}
                                       </div>
                                     </div>
@@ -584,14 +589,14 @@ const TVShows = () => {
                                     </div>
                                   </div>
                                   <div className="flex items-center gap-2 font-medium text-text-secondary">
-                                    <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                    <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                       <h1 className="text-xs lg:text-sm font-regular">
                                         ★{" "}
                                         {tvShow?.vote_average?.toFixed(1) ||
                                           "0.0"}
                                       </h1>
                                     </div>
-                                    <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                    <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                       <h1 className="text-xs lg:text-sm font-regular">
                                         {(
                                           tvShow?.release_date ||
@@ -629,13 +634,15 @@ const TVShows = () => {
                           ))}
                         {/* 10-15 */}
                         {categorie.tvShows
-                          ?.filter((tvShow) => tvShow?.id && tvShow?.poster_path)
+                          ?.filter(
+                            (tvShow) => tvShow?.id && tvShow?.poster_path,
+                          )
                           ?.slice(9, 15)
                           ?.map((tvShow, index) => (
                             <div
                               key={tvShow?.id}
                               onClick={() => mediaType(tvShow)}
-                              className="relative w-[23rem] h-[12rem] md:w-[25rem] md:h-[14rem] flex-shrink-0 group"
+                              className="relative w-92 h-48 md:w-100 md:h-56 shrink-0 group"
                             >
                               <div className="relative flex justify-center items-center rounded-sm overflow-hidden w-full h-full transition-transform duration-300 ease-out group-hover:scale-95">
                                 <img
@@ -669,9 +676,9 @@ const TVShows = () => {
                                           tvShow,
                                           "watchLater",
                                         ) ? (
-                                          <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                          <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                         ) : (
-                                          <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                          <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                         )}
                                       </div>
                                       <div
@@ -684,9 +691,9 @@ const TVShows = () => {
                                           tvShow,
                                           "favourite",
                                         ) ? (
-                                          <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                          <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                         ) : (
-                                          <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                          <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                         )}
                                       </div>
                                     </div>
@@ -695,14 +702,14 @@ const TVShows = () => {
                                     </div>
                                   </div>
                                   <div className="flex items-center gap-2 font-medium text-text-secondary">
-                                    <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                    <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                       <h1 className="text-xs lg:text-sm font-regular">
                                         ★{" "}
                                         {tvShow?.vote_average?.toFixed(1) ||
                                           "0.0"}
                                       </h1>
                                     </div>
-                                    <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                    <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                       <h1 className="text-xs lg:text-sm font-regular">
                                         {(
                                           tvShow?.release_date ||
@@ -763,9 +770,9 @@ const TVShows = () => {
                           <div
                             key={tvShow?.id}
                             onClick={() => mediaType(tvShow)}
-                            className="relative flex-shrink-0 group"
+                            className="relative shrink-0 group"
                           >
-                            <div className="relative rounded-sm overflow-hidden w-[8.5rem] sm:w-[9.5rem] lg:w-[10.5rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
+                            <div className="relative rounded-sm overflow-hidden w-34 sm:w-38 lg:w-42 aspect-2/3 transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
                                 src={`${IMG_POSTER_BASE_URL}${tvShow?.poster_path}`}
                                 alt="Poster"
@@ -791,9 +798,9 @@ const TVShows = () => {
                                         tvShow,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -806,9 +813,9 @@ const TVShows = () => {
                                         tvShow,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                        <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
@@ -817,12 +824,14 @@ const TVShows = () => {
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
-                                      ★{" "}{tvShow?.vote_average?.toFixed(1) || "0.0"}
+                                      ★{" "}
+                                      {tvShow?.vote_average?.toFixed(1) ||
+                                        "0.0"}
                                     </h1>
                                   </div>
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
                                       {(
                                         tvShow?.release_date ||

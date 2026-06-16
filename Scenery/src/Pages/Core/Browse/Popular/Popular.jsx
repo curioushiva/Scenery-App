@@ -59,9 +59,9 @@ const Popular = () => {
                         <div
                           key={content?.id}
                           onClick={() => mediaType(content)}
-                          className="relative flex-shrink-0 group"
+                          className="relative shrink-0 group"
                         >
-                          <div className="relative rounded-sm overflow-hidden w-[8.5rem] sm:w-[9.5rem] lg:w-[10.5rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
+                          <div className="relative rounded-sm overflow-hidden w-34 sm:w-38 lg:w-42 aspect-2/3 transition-transform duration-300 ease-out group-hover:scale-95">
                             <img
                               src={`${IMG_POSTER_BASE_URL}${content?.poster_path}`}
                               alt="Poster"
@@ -87,9 +87,9 @@ const Popular = () => {
                                       content,
                                       "watchLater",
                                     ) ? (
-                                      <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                      <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     ) : (
-                                      <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                      <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                   <div
@@ -99,9 +99,9 @@ const Popular = () => {
                                     className="p-[0.1rem]"
                                   >
                                     {showSavedProfileMedia(content, "favourite") ? (
-                                      <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                      <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                     ) : (
-                                      <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                      <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                 </div>
@@ -110,12 +110,12 @@ const Popular = () => {
                                 </div>
                               </div>
                               <div className="flex items-center gap-2 font-medium text-text-secondary">
-                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                   <h1 className="text-xs lg:text-sm font-regular">
                                     ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                   </h1>
                                 </div>
-                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                   <h1 className="text-xs lg:text-sm font-regular">
                                     {(
                                       content?.release_date ||
@@ -179,7 +179,7 @@ const Popular = () => {
                           <div
                             key={content?.id}
                             onClick={() => mediaType(content)}
-                            className="relative w-[16rem] h-[12rem] md:w-[18rem] md:h-[14rem] flex-shrink-0 group"
+                            className="relative w-[16rem] h-48 md:w-[18rem] md:h-56 shrink-0 group"
                           >
                             <div className="relative flex justify-center items-center rounded-sm overflow-hidden w-full h-full transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
@@ -213,9 +213,9 @@ const Popular = () => {
                                         content,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -228,9 +228,9 @@ const Popular = () => {
                                         content,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                        <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
@@ -239,12 +239,12 @@ const Popular = () => {
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
                                       ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
 
                                       {(
@@ -289,7 +289,7 @@ const Popular = () => {
                           <div
                             key={content?.id}
                             onClick={() => mediaType(content)}
-                            className="relative w-[23rem] h-[12rem] md:w-[25rem] md:h-[14rem] flex-shrink-0 group"
+                            className="relative w-92 h-48 md:w-100 md:h-56 shrink-0 group"
                           >
                             <div className="relative flex justify-center items-center rounded-sm overflow-hidden w-full h-full transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
@@ -323,9 +323,9 @@ const Popular = () => {
                                         content,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -338,9 +338,9 @@ const Popular = () => {
                                         content,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                        <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
@@ -349,12 +349,12 @@ const Popular = () => {
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
                                       ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
 
                                       {(
@@ -414,9 +414,9 @@ const Popular = () => {
                         <div
                           key={content?.id}
                           onClick={() => mediaType(content)}
-                          className="relative flex-shrink-0 group"
+                          className="relative shrink-0 group"
                         >
-                          <div className="relative rounded-sm overflow-hidden w-[8.5rem] sm:w-[9.5rem] lg:w-[10.5rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
+                          <div className="relative rounded-sm overflow-hidden w-34 sm:w-38 lg:w-42 aspect-2/3 transition-transform duration-300 ease-out group-hover:scale-95">
                             <img
                               src={`${IMG_POSTER_BASE_URL}${content?.poster_path}`}
                               alt="Poster"
@@ -442,9 +442,9 @@ const Popular = () => {
                                       content,
                                       "watchLater",
                                     ) ? (
-                                      <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                      <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     ) : (
-                                      <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                      <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                   <div
@@ -454,9 +454,9 @@ const Popular = () => {
                                     className="p-[0.1rem]"
                                   >
                                     {showSavedProfileMedia(content, "favourite") ? (
-                                      <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                      <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                     ) : (
-                                      <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                      <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                 </div>
@@ -465,12 +465,12 @@ const Popular = () => {
                                 </div>
                               </div>
                               <div className="flex items-center gap-2 font-medium text-text-secondary">
-                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                   <h1 className="text-xs lg:text-sm font-regular">
                                     ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                   </h1>
                                 </div>
-                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                   <h1 className="text-xs lg:text-sm font-regular">
 
                                     {(
@@ -535,7 +535,7 @@ const Popular = () => {
                           <div
                             key={content?.id}
                             onClick={() => mediaType(content)}
-                            className="relative w-[16rem] h-[12rem] md:w-[18rem] md:h-[14rem] flex-shrink-0 group"
+                            className="relative w-[16rem] h-48 md:w-[18rem] md:h-56 shrink-0 group"
                           >
                             <div className="relative flex justify-center items-center rounded-sm overflow-hidden w-full h-full transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
@@ -569,9 +569,9 @@ const Popular = () => {
                                         content,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -584,9 +584,9 @@ const Popular = () => {
                                         content,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                        <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
@@ -595,12 +595,12 @@ const Popular = () => {
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
                                       ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
 
                                       {(
@@ -645,7 +645,7 @@ const Popular = () => {
                           <div
                             key={content?.id}
                             onClick={() => mediaType(content)}
-                            className="relative w-[23rem] h-[12rem] md:w-[25rem] md:h-[14rem] flex-shrink-0 group"
+                            className="relative w-92 h-48 md:w-100 md:h-56 shrink-0 group"
                           >
                             <div className="relative flex justify-center items-center rounded-sm overflow-hidden w-full h-full transition-transform duration-300 ease-out group-hover:scale-95">
                               <img
@@ -679,9 +679,9 @@ const Popular = () => {
                                         content,
                                         "watchLater",
                                       ) ? (
-                                        <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       ) : (
-                                        <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                     <div
@@ -694,9 +694,9 @@ const Popular = () => {
                                         content,
                                         "favourite",
                                       ) ? (
-                                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                        <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                       ) : (
-                                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                        <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                       )}
                                     </div>
                                   </div>
@@ -705,12 +705,12 @@ const Popular = () => {
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 font-medium text-text-secondary">
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
                                       ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                     </h1>
                                   </div>
-                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                  <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                     <h1 className="text-xs lg:text-sm font-regular">
 
                                       {(
@@ -770,9 +770,9 @@ const Popular = () => {
                         <div
                           key={content?.id}
                           onClick={() => mediaType(content)}
-                          className="relative flex-shrink-0 group"
+                          className="relative shrink-0 group"
                         >
-                          <div className="relative rounded-sm overflow-hidden w-[8.5rem] sm:w-[9.5rem] lg:w-[10.5rem] aspect-[2/3] transition-transform duration-300 ease-out group-hover:scale-95">
+                          <div className="relative rounded-sm overflow-hidden w-34 sm:w-38 lg:w-42 aspect-2/3 transition-transform duration-300 ease-out group-hover:scale-95">
                             <img
                               src={`${IMG_POSTER_BASE_URL}${content?.poster_path}`}
                               alt="Poster"
@@ -798,9 +798,9 @@ const Popular = () => {
                                       content,
                                       "watchLater",
                                     ) ? (
-                                      <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                      <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     ) : (
-                                      <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                      <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                   <div
@@ -810,9 +810,9 @@ const Popular = () => {
                                     className="p-[0.1rem]"
                                   >
                                     {showSavedProfileMedia(content, "favourite") ? (
-                                      <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                      <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                     ) : (
-                                      <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                      <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                     )}
                                   </div>
                                 </div>
@@ -821,12 +821,12 @@ const Popular = () => {
                                 </div>
                               </div>
                               <div className="flex items-center gap-2 font-medium text-text-secondary">
-                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                   <h1 className="text-xs lg:text-sm font-regular">
                                     ★ {content?.vote_average?.toFixed(1) || "0.0"}
                                   </h1>
                                 </div>
-                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                   <h1 className="text-xs lg:text-sm font-regular">
 
                                     {(

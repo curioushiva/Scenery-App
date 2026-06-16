@@ -173,7 +173,7 @@ const TVShowInfo = () => {
     mediaInfo?.external_ids?.instagram_id ||
     mediaInfo?.external_ids?.twitter_id ||
     mediaInfo?.external_ids?.wikidata_id ||
-    mediaInfo?.details?.homepage !== '';
+    mediaInfo?.details?.homepage !== "";
 
   /* Rendering on the basis of avail of mediaInfo */
   return Object.keys(mediaInfo).length === 0 ? (
@@ -218,16 +218,16 @@ const TVShowInfo = () => {
 
       {/* Background Media */}
       {mediaInfo?.details?.backdrop_path && (
-        <div className="absolute z-0 w-full h-[75dvh] min-h-[400px] overflow-hidden">
+        <div className="absolute z-0 w-full h-[75dvh] min-h-100 overflow-hidden">
           <img
             className="absolute z-0 inset-0 w-full h-full object-cover object-top"
             src={`${IMG_HERO_BACKDROP_BASE_URL}${mediaInfo?.details?.backdrop_path}`}
             alt="Background"
           />
           {/* Fades top & bottoms */}
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-bg-coreColor/10 via-transparent to-transparent" />
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-bg-coreColor via-bg-coreColor/10 to-transparent" />
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-bg-coreColor via-bg-coreColor/40 to-transparent" />
+          <div className="absolute inset-0 pointer-events-none bg-linear-to-b from-bg-coreColor/10 via-transparent to-transparent" />
+          <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-bg-coreColor via-bg-coreColor/10 to-transparent" />
+          <div className="absolute inset-0 pointer-events-none bg-linear-to-t from-bg-coreColor via-bg-coreColor/40 to-transparent" />
         </div>
       )}
 
@@ -238,7 +238,7 @@ const TVShowInfo = () => {
             {/* Part 1 & 2 */}
             <div className="w-full h-full flex flex-col gap-12 items-stretch 880:flex-row">
               {/* Part 1 : Media Poster */}
-              <div className="hidden w-full flex-col flex-shrink-0 880:flex 880:w-[18rem]">
+              <div className="hidden w-full flex-col shrink-0 880:flex 880:w-[18rem]">
                 <img
                   src={
                     mediaInfo?.details?.poster_path
@@ -246,7 +246,7 @@ const TVShowInfo = () => {
                       : NoPoster
                   }
                   alt="Poster"
-                  className={`w-full flex-1 min-h-0 aspect-[4/5] object-cover ${regionalWatchProviderFirstValue?.length > 0 ? "rounded-t-sm" : "rounded-sm"}`}
+                  className={`w-full flex-1 min-h-0 aspect-4/5 object-cover ${regionalWatchProviderFirstValue?.length > 0 ? "rounded-t-sm" : "rounded-sm"}`}
                 />
                 {regionalWatchProviderFirstValue?.length > 0 && (
                   <div className="w-full flex justify-center items-center gap-3 bg-bg-blackColor py-3 rounded-b-sm">
@@ -277,7 +277,7 @@ const TVShowInfo = () => {
                 <div className="flex items-center flex-wrap text-sm gap-2">
                   {/* Certification */}
                   {mediaCertification && (
-                    <h2 className="text-text-secondary border-1 rounded-sm px-[6px] whitespace-nowrap">
+                    <h2 className="text-text-secondary border rounded-sm px-1.5 whitespace-nowrap">
                       {mediaCertification}
                     </h2>
                   )}
@@ -285,15 +285,15 @@ const TVShowInfo = () => {
                   {/* Release / First Air Date - for movies & tv shows & Origin country */}
                   {(mediaInfo?.details?.first_air_date ||
                     mediaInfo?.details?.origin_country?.[0]) && (
-                      <div className="flex gap-1">
-                        <span>
-                          {mediaInfo?.details?.first_air_date?.slice(0, 4)}
-                        </span>
-                        {mediaInfo?.details?.origin_country?.[0] && (
-                          <span>({mediaInfo?.details?.origin_country?.[0]})</span>
-                        )}
-                      </div>
-                    )}
+                    <div className="flex gap-1">
+                      <span>
+                        {mediaInfo?.details?.first_air_date?.slice(0, 4)}
+                      </span>
+                      {mediaInfo?.details?.origin_country?.[0] && (
+                        <span>({mediaInfo?.details?.origin_country?.[0]})</span>
+                      )}
+                    </div>
+                  )}
 
                   {/* Genres */}
                   {mediaInfo?.details?.genres?.length > 0 && (
@@ -313,21 +313,21 @@ const TVShowInfo = () => {
                 {/* Ratings and Votes */}
                 {(mediaInfo?.details?.vote_average !== null ||
                   mediaInfo?.details?.vote_count !== null) && (
-                    <div className="flex gap-2 items-center text-base">
-                      {mediaInfo?.details?.vote_average !== null && (
-                        <h3 className="font-medium">
-                          <span className="text-text-fifth">★ </span>
-                          {mediaInfo?.details?.vote_average?.toFixed(1) || "N/A"}
-                        </h3>
-                      )}
+                  <div className="flex gap-2 items-center text-base">
+                    {mediaInfo?.details?.vote_average !== null && (
+                      <h3 className="font-medium">
+                        <span className="text-text-fifth">★ </span>
+                        {mediaInfo?.details?.vote_average?.toFixed(1) || "N/A"}
+                      </h3>
+                    )}
 
-                      {mediaInfo?.details?.vote_count !== null && (
-                        <h3 className="text-sm">
-                          ({`${mediaInfo?.details?.vote_count} Votes`})
-                        </h3>
-                      )}
-                    </div>
-                  )}
+                    {mediaInfo?.details?.vote_count !== null && (
+                      <h3 className="text-sm">
+                        ({`${mediaInfo?.details?.vote_count} Votes`})
+                      </h3>
+                    )}
+                  </div>
+                )}
 
                 {/* Tagline */}
                 {mediaInfo?.details?.tagline && (
@@ -401,7 +401,7 @@ const TVShowInfo = () => {
                       onClick={() =>
                         saveProfileMedia(mediaInfo?.details, "watchLater")
                       }
-                      className="w-full flex justify-center items-center gap-2 border-1 border-br-secondary/60 pl-2 pr-3 py-2 rounded cursor-pointer active:scale-[0.95]"
+                      className="w-full flex justify-center items-center gap-2 border border-br-secondary/60 pl-2 pr-3 py-2 rounded cursor-pointer active:scale-[0.95]"
                     >
                       {showSavedProfileMedia(
                         mediaInfo?.details,
@@ -426,7 +426,7 @@ const TVShowInfo = () => {
                       onClick={() =>
                         saveProfileMedia(mediaInfo?.details, "favourite")
                       }
-                      className="w-full flex justify-center items-center gap-2 border-1 border-br-secondary/60 px-3 py-2 rounded cursor-pointer active:scale-[0.95]"
+                      className="w-full flex justify-center items-center gap-2 border border-br-secondary/60 px-3 py-2 rounded cursor-pointer active:scale-[0.95]"
                     >
                       {showSavedProfileMedia(
                         mediaInfo?.details,
@@ -519,15 +519,15 @@ const TVShowInfo = () => {
                     const castRoles =
                       cast?.roles?.length > 0
                         ? cast?.roles
-                          ?.slice(0, 1)
-                          ?.map((roles) => roles?.character)
-                          ?.join(", ")
+                            ?.slice(0, 1)
+                            ?.map((roles) => roles?.character)
+                            ?.join(", ")
                         : null;
                     const query =
                       cast?.name && castRoles && mediaInfo?.details?.name
                         ? encodeURIComponent(
-                          `${cast?.name} as ${castRoles} of ${mediaInfo?.details?.name}`,
-                        )?.replace(/%20/g, "+")
+                            `${cast?.name} as ${castRoles} of ${mediaInfo?.details?.name}`,
+                          )?.replace(/%20/g, "+")
                         : null;
                     return (
                       <div
@@ -549,7 +549,7 @@ const TVShowInfo = () => {
                               : NoProfile
                           }
                           alt="Cast"
-                          className="w-full aspect-[1/1] object-cover rounded-t-sm"
+                          className="w-full aspect-square object-cover rounded-t-sm"
                         />
                         <div className="flex-1 flex flex-col gap-2 bg-bg-blackColor/40 rounded-b-sm p-3">
                           {cast?.name && (
@@ -559,15 +559,15 @@ const TVShowInfo = () => {
                           )}
                           {cast?.roles?.length > 3
                             ? castRoles && (
-                              <h1 className="text-sm text-text-secondary line-clamp-0">
-                                {castRoles} more...
-                              </h1>
-                            )
+                                <h1 className="text-sm text-text-secondary line-clamp-0">
+                                  {castRoles} more...
+                                </h1>
+                              )
                             : castRoles && (
-                              <h1 className="text-sm text-text-secondary line-clamp-0">
-                                {castRoles}
-                              </h1>
-                            )}
+                                <h1 className="text-sm text-text-secondary line-clamp-0">
+                                  {castRoles}
+                                </h1>
+                              )}
                           {cast?.total_episode_count && (
                             <h2 className="text-sm text-text-secondary line-clamp-0">
                               {cast?.total_episode_count} Episodes
@@ -641,7 +641,7 @@ const TVShowInfo = () => {
                                 }
                                 className="w-full flex flex-col gap-2 items-start 460:items-center 460:flex-row"
                               >
-                                <div className="w-full h-13 bg-bg-whiteColor rounded-sm p-2 flex items-center justify-center overflow-hidden 460:max-w-[7rem]">
+                                <div className="w-full h-13 bg-bg-whiteColor rounded-sm p-2 flex items-center justify-center overflow-hidden 460:max-w-28">
                                   <img
                                     src={
                                       network?.logo_path
@@ -733,16 +733,16 @@ const TVShowInfo = () => {
                                 <div className="w-full flex flex-col gap-5 p-5">
                                   <div className="w-full h-full flex flex-col gap-8 700:flex-row">
                                     {/* Season's poster */}
-                                    <div className="relative w-full overflow-hidden rounded-sm flex-shrink-0 700:w-[14rem]">
+                                    <div className="relative w-full overflow-hidden rounded-sm shrink-0 700:w-56">
                                       <img
                                         src={
                                           season?.poster_path ||
-                                            mediaInfo?.details?.poster_path
+                                          mediaInfo?.details?.poster_path
                                             ? `${IMG_POSTER_BASE_URL}${season?.poster_path || mediaInfo?.details?.poster_path}`
                                             : NoPoster
                                         }
                                         alt="SeasonPoster"
-                                        className="w-full aspect-[1/1] object-cover object-top 700:h-full 700:aspect-auto"
+                                        className="w-full aspect-square object-cover object-top 700:h-full 700:aspect-auto"
                                       />
                                     </div>
 
@@ -756,7 +756,7 @@ const TVShowInfo = () => {
                                       {/* Seasons's air date */}
                                       {season?.air_date && (
                                         <div className="flex text-sm">
-                                          <h2 className="text-xs text-text-secondary border-[0.5px] rounded-2xl px-[10px] py-[2px]">
+                                          <h2 className="text-xs text-text-secondary border-[0.5px] rounded-2xl px-2.5 py-0.5">
                                             <span className="hidden 295:inline-block">
                                               Premiered :
                                             </span>{" "}
@@ -787,21 +787,21 @@ const TVShowInfo = () => {
                                       {/* Season number & episode count */}
                                       {(season?.season_number !== null ||
                                         season?.episode_count !== null) && (
-                                          <div className="flex gap-2 items-center text-sm flex-wrap">
-                                            {season?.season_number !== null && (
-                                              <h3 className="text-xs px-2 py-[0.10rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary text-nowrap">
-                                                Season :{" "}
-                                                {season?.season_number || "N/A"}
-                                              </h3>
-                                            )}
-                                            {season?.episode_count !== null && (
-                                              <h3 className="text-xs px-2 py-[0.10rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary text-nowrap">
-                                                Episodes :{" "}
-                                                {season?.episode_count || "N/A"}
-                                              </h3>
-                                            )}
-                                          </div>
-                                        )}
+                                        <div className="flex gap-2 items-center text-sm flex-wrap">
+                                          {season?.season_number !== null && (
+                                            <h3 className="text-xs px-2 py-[0.10rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary text-nowrap">
+                                              Season :{" "}
+                                              {season?.season_number || "N/A"}
+                                            </h3>
+                                          )}
+                                          {season?.episode_count !== null && (
+                                            <h3 className="text-xs px-2 py-[0.10rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary text-nowrap">
+                                              Episodes :{" "}
+                                              {season?.episode_count || "N/A"}
+                                            </h3>
+                                          )}
+                                        </div>
+                                      )}
 
                                       {/* If season's poster unavailable */}
                                       {season?.poster_path === null && (
@@ -883,12 +883,12 @@ const TVShowInfo = () => {
                               <div className="w-full flex flex-col gap-5 cursor-pointer p-5">
                                 <div className="w-full h-full flex flex-col gap-8 840:flex-row">
                                   {/* Episode's poster */}
-                                  <div className="relative w-full aspect-video overflow-hidden rounded-sm flex-shrink-0 840:w-[20rem]">
+                                  <div className="relative w-full aspect-video overflow-hidden rounded-sm shrink-0 840:w-[20rem]">
                                     <img
                                       src={
                                         mediaInfo?.details?.last_episode_to_air
                                           ?.still_path ||
-                                          mediaInfo?.details?.backdrop_path
+                                        mediaInfo?.details?.backdrop_path
                                           ? `${IMG_POSTER_BASE_URL}${mediaInfo?.details?.last_episode_to_air?.still_path || mediaInfo?.details?.backdrop_path}`
                                           : NoBackdrop
                                       }
@@ -909,31 +909,31 @@ const TVShowInfo = () => {
                                       {/* Episode's air date */}
                                       {mediaInfo?.details?.last_episode_to_air
                                         ?.air_date && (
-                                          <h2>
-                                            (
-                                            {mediaInfo?.details?.last_episode_to_air?.air_date?.replaceAll(
-                                              "-",
-                                              "/",
-                                            )}
-                                            )
-                                          </h2>
-                                        )}
+                                        <h2>
+                                          (
+                                          {mediaInfo?.details?.last_episode_to_air?.air_date?.replaceAll(
+                                            "-",
+                                            "/",
+                                          )}
+                                          )
+                                        </h2>
+                                      )}
 
                                       {/* Episode's type */}
                                       {mediaInfo?.details?.last_episode_to_air
                                         ?.episode_type && (
-                                          <div className="flex">
-                                            <h2>
-                                              •{" "}
-                                              {mediaInfo?.details?.last_episode_to_air?.episode_type
-                                                ?.charAt(0)
-                                                ?.toUpperCase() +
-                                                mediaInfo?.details?.last_episode_to_air?.episode_type?.slice(
-                                                  1,
-                                                )}
-                                            </h2>
-                                          </div>
-                                        )}
+                                        <div className="flex">
+                                          <h2>
+                                            •{" "}
+                                            {mediaInfo?.details?.last_episode_to_air?.episode_type
+                                              ?.charAt(0)
+                                              ?.toUpperCase() +
+                                              mediaInfo?.details?.last_episode_to_air?.episode_type?.slice(
+                                                1,
+                                              )}
+                                          </h2>
+                                        </div>
+                                      )}
 
                                       {/* Episode's runtime */}
                                       {mediaInfo?.details?.last_episode_to_air
@@ -954,80 +954,80 @@ const TVShowInfo = () => {
                                       ?.vote_average !== null ||
                                       mediaInfo?.details?.last_episode_to_air
                                         ?.vote_count !== null) && (
-                                        <div className="flex gap-2 items-center text-base flex-wrap">
-                                          {mediaInfo?.details?.last_episode_to_air
-                                            ?.vote_average !== null && (
-                                              <h3 className="font-medium text-nowrap">
-                                                <span className="text-text-fifth">
-                                                  ★{" "}
-                                                </span>
-                                                {mediaInfo?.details?.last_episode_to_air?.vote_average?.toFixed(
-                                                  1,
-                                                ) || "N/A"}
-                                              </h3>
-                                            )}
-                                          {mediaInfo?.details?.last_episode_to_air
-                                            ?.vote_count !== null && (
-                                              <h3 className="text-sm text-nowrap">
-                                                (
-                                                {`${mediaInfo?.details?.last_episode_to_air?.vote_count} Votes`}
-                                                )
-                                              </h3>
-                                            )}
-                                        </div>
-                                      )}
+                                      <div className="flex gap-2 items-center text-base flex-wrap">
+                                        {mediaInfo?.details?.last_episode_to_air
+                                          ?.vote_average !== null && (
+                                          <h3 className="font-medium text-nowrap">
+                                            <span className="text-text-fifth">
+                                              ★{" "}
+                                            </span>
+                                            {mediaInfo?.details?.last_episode_to_air?.vote_average?.toFixed(
+                                              1,
+                                            ) || "N/A"}
+                                          </h3>
+                                        )}
+                                        {mediaInfo?.details?.last_episode_to_air
+                                          ?.vote_count !== null && (
+                                          <h3 className="text-sm text-nowrap">
+                                            (
+                                            {`${mediaInfo?.details?.last_episode_to_air?.vote_count} Votes`}
+                                            )
+                                          </h3>
+                                        )}
+                                      </div>
+                                    )}
 
                                     {/* Season & episode number */}
                                     {(mediaInfo?.details?.last_episode_to_air
                                       ?.season_number !== null ||
                                       mediaInfo?.details?.last_episode_to_air
                                         ?.episode_number !== null) && (
-                                        <div className="flex gap-4 items-center text-base">
-                                          {mediaInfo?.details?.last_episode_to_air
-                                            ?.season_number !== null && (
-                                              <h3 className="text-sm px-2 py-[0.10rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary text-nowrap">
-                                                S
+                                      <div className="flex gap-4 items-center text-base">
+                                        {mediaInfo?.details?.last_episode_to_air
+                                          ?.season_number !== null && (
+                                          <h3 className="text-sm px-2 py-[0.10rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary text-nowrap">
+                                            S
+                                            {mediaInfo?.details
+                                              ?.last_episode_to_air
+                                              ?.season_number || "N/A"}{" "}
+                                            {mediaInfo?.details
+                                              ?.last_episode_to_air
+                                              ?.episode_number !== null && (
+                                              <span>
+                                                • E
                                                 {mediaInfo?.details
                                                   ?.last_episode_to_air
-                                                  ?.season_number || "N/A"}{" "}
-                                                {mediaInfo?.details
-                                                  ?.last_episode_to_air
-                                                  ?.episode_number !== null && (
-                                                    <span>
-                                                      • E
-                                                      {mediaInfo?.details
-                                                        ?.last_episode_to_air
-                                                        ?.episode_number || "N/A"}
-                                                    </span>
-                                                  )}
-                                              </h3>
+                                                  ?.episode_number || "N/A"}
+                                              </span>
                                             )}
-                                        </div>
-                                      )}
+                                          </h3>
+                                        )}
+                                      </div>
+                                    )}
 
                                     {/* If episode's poster unavailable */}
                                     {mediaInfo?.details?.last_episode_to_air
                                       ?.still_path === null && (
-                                        <h4 className="italic text-text-secondary text-sm">
-                                          (Episode's poster unavailable)
-                                        </h4>
-                                      )}
+                                      <h4 className="italic text-text-secondary text-sm">
+                                        (Episode's poster unavailable)
+                                      </h4>
+                                    )}
 
                                     {/* Episodes's overview */}
                                     {mediaInfo?.details?.last_episode_to_air
                                       ?.overview && (
-                                        <div className="flex flex-col gap-2">
-                                          <h1 className="text-base font-medium">
-                                            Overview
-                                          </h1>
-                                          <p className="text-sm">
-                                            {
-                                              mediaInfo?.details
-                                                ?.last_episode_to_air?.overview
-                                            }
-                                          </p>
-                                        </div>
-                                      )}
+                                      <div className="flex flex-col gap-2">
+                                        <h1 className="text-base font-medium">
+                                          Overview
+                                        </h1>
+                                        <p className="text-sm">
+                                          {
+                                            mediaInfo?.details
+                                              ?.last_episode_to_air?.overview
+                                          }
+                                        </p>
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
                               </div>
@@ -1051,12 +1051,12 @@ const TVShowInfo = () => {
                               <div className="w-full flex flex-col gap-5 cursor-pointer p-5">
                                 <div className="w-full h-full flex flex-col gap-8 840:flex-row">
                                   {/* Episode's poster */}
-                                  <div className="relative w-full aspect-video overflow-hidden rounded-sm flex-shrink-0 840:w-[20rem]">
+                                  <div className="relative w-full aspect-video overflow-hidden rounded-sm shrink-0 840:w-[20rem]">
                                     <img
                                       src={
                                         mediaInfo?.details?.next_episode_to_air
                                           ?.still_path ||
-                                          mediaInfo?.details?.backdrop_path
+                                        mediaInfo?.details?.backdrop_path
                                           ? `${IMG_POSTER_BASE_URL}${mediaInfo?.details?.next_episode_to_air?.still_path || mediaInfo?.details?.backdrop_path}`
                                           : NoBackdrop
                                       }
@@ -1077,31 +1077,31 @@ const TVShowInfo = () => {
                                       {/* Episode's air date */}
                                       {mediaInfo?.details?.next_episode_to_air
                                         ?.air_date && (
-                                          <h2>
-                                            (
-                                            {mediaInfo?.details?.next_episode_to_air?.air_date?.replaceAll(
-                                              "-",
-                                              "/",
-                                            )}
-                                            )
-                                          </h2>
-                                        )}
+                                        <h2>
+                                          (
+                                          {mediaInfo?.details?.next_episode_to_air?.air_date?.replaceAll(
+                                            "-",
+                                            "/",
+                                          )}
+                                          )
+                                        </h2>
+                                      )}
 
                                       {/* Episode's type */}
                                       {mediaInfo?.details?.next_episode_to_air
                                         ?.episode_type && (
-                                          <div className="flex">
-                                            <h2>
-                                              •{" "}
-                                              {mediaInfo?.details?.next_episode_to_air?.episode_type
-                                                ?.charAt(0)
-                                                ?.toUpperCase() +
-                                                mediaInfo?.details?.next_episode_to_air?.episode_type?.slice(
-                                                  1,
-                                                )}
-                                            </h2>
-                                          </div>
-                                        )}
+                                        <div className="flex">
+                                          <h2>
+                                            •{" "}
+                                            {mediaInfo?.details?.next_episode_to_air?.episode_type
+                                              ?.charAt(0)
+                                              ?.toUpperCase() +
+                                              mediaInfo?.details?.next_episode_to_air?.episode_type?.slice(
+                                                1,
+                                              )}
+                                          </h2>
+                                        </div>
+                                      )}
 
                                       {/* Episode's runtime */}
                                       {mediaInfo?.details?.next_episode_to_air
@@ -1122,80 +1122,80 @@ const TVShowInfo = () => {
                                       ?.vote_average !== null ||
                                       mediaInfo?.details?.next_episode_to_air
                                         ?.vote_count !== null) && (
-                                        <div className="flex gap-2 items-center text-base flex-wrap">
-                                          {mediaInfo?.details?.next_episode_to_air
-                                            ?.vote_average !== null && (
-                                              <h3 className="font-medium text-nowrap">
-                                                <span className="text-text-fifth">
-                                                  ★{" "}
-                                                </span>
-                                                {mediaInfo?.details?.next_episode_to_air?.vote_average?.toFixed(
-                                                  1,
-                                                ) || "N/A"}
-                                              </h3>
-                                            )}
-                                          {mediaInfo?.details?.next_episode_to_air
-                                            ?.vote_count !== null && (
-                                              <h3 className="text-sm text-nowrap">
-                                                (
-                                                {`${mediaInfo?.details?.next_episode_to_air?.vote_count} Votes`}
-                                                )
-                                              </h3>
-                                            )}
-                                        </div>
-                                      )}
+                                      <div className="flex gap-2 items-center text-base flex-wrap">
+                                        {mediaInfo?.details?.next_episode_to_air
+                                          ?.vote_average !== null && (
+                                          <h3 className="font-medium text-nowrap">
+                                            <span className="text-text-fifth">
+                                              ★{" "}
+                                            </span>
+                                            {mediaInfo?.details?.next_episode_to_air?.vote_average?.toFixed(
+                                              1,
+                                            ) || "N/A"}
+                                          </h3>
+                                        )}
+                                        {mediaInfo?.details?.next_episode_to_air
+                                          ?.vote_count !== null && (
+                                          <h3 className="text-sm text-nowrap">
+                                            (
+                                            {`${mediaInfo?.details?.next_episode_to_air?.vote_count} Votes`}
+                                            )
+                                          </h3>
+                                        )}
+                                      </div>
+                                    )}
 
                                     {/* Season & episode number */}
                                     {(mediaInfo?.details?.next_episode_to_air
                                       ?.season_number !== null ||
                                       mediaInfo?.details?.next_episode_to_air
                                         ?.episode_number !== null) && (
-                                        <div className="flex gap-4 items-center text-base">
-                                          {mediaInfo?.details?.next_episode_to_air
-                                            ?.season_number !== null && (
-                                              <h3 className="text-sm px-2 py-[0.10rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary text-white text-nowrap">
-                                                S
+                                      <div className="flex gap-4 items-center text-base">
+                                        {mediaInfo?.details?.next_episode_to_air
+                                          ?.season_number !== null && (
+                                          <h3 className="text-sm px-2 py-[0.10rem] rounded-4xl bg-bg-whiteColor/10 backdrop-blur-md border border-br-primary text-white text-nowrap">
+                                            S
+                                            {mediaInfo?.details
+                                              ?.next_episode_to_air
+                                              ?.season_number || "N/A"}{" "}
+                                            {mediaInfo?.details
+                                              ?.next_episode_to_air
+                                              ?.episode_number !== null && (
+                                              <span>
+                                                • E
                                                 {mediaInfo?.details
                                                   ?.next_episode_to_air
-                                                  ?.season_number || "N/A"}{" "}
-                                                {mediaInfo?.details
-                                                  ?.next_episode_to_air
-                                                  ?.episode_number !== null && (
-                                                    <span>
-                                                      • E
-                                                      {mediaInfo?.details
-                                                        ?.next_episode_to_air
-                                                        ?.episode_number || "N/A"}
-                                                    </span>
-                                                  )}
-                                              </h3>
+                                                  ?.episode_number || "N/A"}
+                                              </span>
                                             )}
-                                        </div>
-                                      )}
+                                          </h3>
+                                        )}
+                                      </div>
+                                    )}
 
                                     {/* If episode's poster unavailable */}
                                     {mediaInfo?.details?.next_episode_to_air
                                       ?.still_path === null && (
-                                        <h4 className="italic text-text-secondary text-sm">
-                                          (Episode's poster unavailable)
-                                        </h4>
-                                      )}
+                                      <h4 className="italic text-text-secondary text-sm">
+                                        (Episode's poster unavailable)
+                                      </h4>
+                                    )}
 
                                     {/* Episodes's overview */}
                                     {mediaInfo?.details?.next_episode_to_air
                                       ?.overview && (
-                                        <div className="flex flex-col gap-2">
-                                          <h1 className="text-base font-medium">
-                                            Overview
-                                          </h1>
-                                          <p className="text-sm">
-                                            {
-                                              mediaInfo?.details
-                                                ?.next_episode_to_air?.overview
-                                            }
-                                          </p>
-                                        </div>
-                                      )}
+                                      <div className="flex flex-col gap-2">
+                                        <h1 className="text-base font-medium">
+                                          Overview
+                                        </h1>
+                                        <p className="text-sm">
+                                          {
+                                            mediaInfo?.details
+                                              ?.next_episode_to_air?.overview
+                                          }
+                                        </p>
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
                               </div>
@@ -1235,7 +1235,7 @@ const TVShowInfo = () => {
                           setShowTrailer(true);
                         }}
                         key={video?.key}
-                        className="relative w-[16rem] aspect-video overflow-hidden rounded-sm flex-shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out 880:w-[24rem] 460:w-[20rem]"
+                        className="relative w-[16rem] aspect-video overflow-hidden rounded-sm shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out 880:w-[24rem] 460:w-[20rem]"
                       >
                         <img
                           src={`https://img.youtube.com/vi/${video?.key}/sddefault.jpg`}
@@ -1319,7 +1319,7 @@ const TVShowInfo = () => {
                               >
                                 <div className="w-full flex flex-col gap-3 max-h-80 pr-3 overflow-y-auto custom-scrollbar 430:pr-5">
                                   <div className="flex flex-col gap-5 375:flex-row">
-                                    <div className="w-[3.5rem]">
+                                    <div className="w-14">
                                       <img
                                         src={
                                           review?.author_details?.avatar_path
@@ -1327,7 +1327,7 @@ const TVShowInfo = () => {
                                             : NoProfile
                                         }
                                         alt="Profile"
-                                        className="w-full aspect-[1/1] rounded-full object-cover"
+                                        className="w-full aspect-square rounded-full object-cover"
                                       />
                                     </div>
                                     <div className="flex flex-col gap-1">
@@ -1421,7 +1421,7 @@ const TVShowInfo = () => {
                                   }
                                   className="w-full flex flex-col gap-2 items-start 460:items-center 460:flex-row"
                                 >
-                                  <div className="w-full h-13 bg-bg-whiteColor rounded-sm p-2 flex items-center justify-center overflow-hidden 460:max-w-[7rem]">
+                                  <div className="w-full h-13 bg-bg-whiteColor rounded-sm p-2 flex items-center justify-center overflow-hidden 460:max-w-28">
                                     <img
                                       src={
                                         studio?.logo_path
@@ -1503,260 +1503,260 @@ const TVShowInfo = () => {
                           {/* Buy */}
                           {regionalWatchProvider?.watchProviders?.buy?.length >
                             0 && (
-                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
-                                <h1 className="text-base font-semibold underline">
-                                  Buy to own
-                                </h1>
-                                <div className="flex flex-col gap-5 cursor-pointer">
-                                  {regionalWatchProvider?.watchProviders?.buy?.map(
-                                    (platform) => {
-                                      const query =
-                                        mediaInfo?.details?.name &&
-                                          mediaInfo?.details?.overview &&
-                                          platform?.provider_name
-                                          ? encodeURIComponent(
+                            <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <h1 className="text-base font-semibold underline">
+                                Buy to own
+                              </h1>
+                              <div className="flex flex-col gap-5 cursor-pointer">
+                                {regionalWatchProvider?.watchProviders?.buy?.map(
+                                  (platform) => {
+                                    const query =
+                                      mediaInfo?.details?.name &&
+                                      mediaInfo?.details?.overview &&
+                                      platform?.provider_name
+                                        ? encodeURIComponent(
                                             `Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`,
                                           )?.replace(/%20/g, "+")
-                                          : null;
-                                      return (
-                                        <div
-                                          onClick={() =>
-                                            query &&
-                                            window.open(
-                                              `https://www.google.com/search?q=${query}`,
-                                              "_blank",
-                                            )
+                                        : null;
+                                    return (
+                                      <div
+                                        onClick={() =>
+                                          query &&
+                                          window.open(
+                                            `https://www.google.com/search?q=${query}`,
+                                            "_blank",
+                                          )
+                                        }
+                                        key={platform.provider_id}
+                                        className="flex gap-3 items-center"
+                                      >
+                                        <img
+                                          src={
+                                            platform?.logo_path
+                                              ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
+                                              : NoProvider
                                           }
-                                          key={platform.provider_id}
-                                          className="flex gap-3 items-center"
-                                        >
-                                          <img
-                                            src={
-                                              platform?.logo_path
-                                                ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
-                                                : NoProvider
-                                            }
-                                            alt="ProvidersLogo"
-                                            className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
-                                          />
-                                          <h1 className="text-xs font-semibold 430:text-sm">
-                                            —{" "}
-                                            {platform?.provider_name ||
-                                              "Name unavailable"}
-                                          </h1>
-                                        </div>
-                                      );
-                                    },
-                                  )}
-                                </div>
+                                          alt="ProvidersLogo"
+                                          className="w-14 aspect-square rounded-2xl object-cover"
+                                        />
+                                        <h1 className="text-xs font-semibold 430:text-sm">
+                                          —{" "}
+                                          {platform?.provider_name ||
+                                            "Name unavailable"}
+                                        </h1>
+                                      </div>
+                                    );
+                                  },
+                                )}
                               </div>
-                            )}
+                            </div>
+                          )}
 
                           {/* Flatrate */}
                           {regionalWatchProvider?.watchProviders?.flatrate
                             ?.length > 0 && (
-                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
-                                <h1 className="text-base font-semibold underline">
-                                  Included with subscription
-                                </h1>
-                                <div className="flex flex-col gap-5 cursor-pointer">
-                                  {regionalWatchProvider?.watchProviders?.flatrate?.map(
-                                    (platform) => {
-                                      const query =
-                                        mediaInfo?.details?.name &&
-                                          mediaInfo?.details?.overview &&
-                                          platform?.provider_name
-                                          ? encodeURIComponent(
+                            <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <h1 className="text-base font-semibold underline">
+                                Included with subscription
+                              </h1>
+                              <div className="flex flex-col gap-5 cursor-pointer">
+                                {regionalWatchProvider?.watchProviders?.flatrate?.map(
+                                  (platform) => {
+                                    const query =
+                                      mediaInfo?.details?.name &&
+                                      mediaInfo?.details?.overview &&
+                                      platform?.provider_name
+                                        ? encodeURIComponent(
                                             `Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`,
                                           )?.replace(/%20/g, "+")
-                                          : null;
-                                      return (
-                                        <div
-                                          onClick={() =>
-                                            query &&
-                                            window.open(
-                                              `https://www.google.com/search?q=${query}`,
-                                              "_blank",
-                                            )
+                                        : null;
+                                    return (
+                                      <div
+                                        onClick={() =>
+                                          query &&
+                                          window.open(
+                                            `https://www.google.com/search?q=${query}`,
+                                            "_blank",
+                                          )
+                                        }
+                                        key={platform.provider_id}
+                                        className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
+                                      >
+                                        <img
+                                          src={
+                                            platform?.logo_path
+                                              ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
+                                              : NoProvider
                                           }
-                                          key={platform.provider_id}
-                                          className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
-                                        >
-                                          <img
-                                            src={
-                                              platform?.logo_path
-                                                ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
-                                                : NoProvider
-                                            }
-                                            alt="ProvidersLogo"
-                                            className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
-                                          />
-                                          <h1 className="text-xs font-semibold 430:text-sm">
-                                            —{" "}
-                                            {platform?.provider_name ||
-                                              "Name unavailable"}
-                                          </h1>
-                                        </div>
-                                      );
-                                    },
-                                  )}
-                                </div>
+                                          alt="ProvidersLogo"
+                                          className="w-14 aspect-square rounded-2xl object-cover"
+                                        />
+                                        <h1 className="text-xs font-semibold 430:text-sm">
+                                          —{" "}
+                                          {platform?.provider_name ||
+                                            "Name unavailable"}
+                                        </h1>
+                                      </div>
+                                    );
+                                  },
+                                )}
                               </div>
-                            )}
+                            </div>
+                          )}
 
                           {/* Rent */}
                           {regionalWatchProvider?.watchProviders?.rent?.length >
                             0 && (
-                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
-                                <h1 className="text-base font-semibold underline">
-                                  Rent & watch
-                                </h1>
-                                <div className="flex flex-col gap-5 cursor-pointer">
-                                  {regionalWatchProvider?.watchProviders?.rent?.map(
-                                    (platform) => {
-                                      const query =
-                                        mediaInfo?.details?.name &&
-                                          mediaInfo?.details?.overview &&
-                                          platform?.provider_name
-                                          ? encodeURIComponent(
+                            <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <h1 className="text-base font-semibold underline">
+                                Rent & watch
+                              </h1>
+                              <div className="flex flex-col gap-5 cursor-pointer">
+                                {regionalWatchProvider?.watchProviders?.rent?.map(
+                                  (platform) => {
+                                    const query =
+                                      mediaInfo?.details?.name &&
+                                      mediaInfo?.details?.overview &&
+                                      platform?.provider_name
+                                        ? encodeURIComponent(
                                             `Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`,
                                           )?.replace(/%20/g, "+")
-                                          : null;
-                                      return (
-                                        <div
-                                          onClick={() =>
-                                            query &&
-                                            window.open(
-                                              `https://www.google.com/search?q=${query}`,
-                                              "_blank",
-                                            )
+                                        : null;
+                                    return (
+                                      <div
+                                        onClick={() =>
+                                          query &&
+                                          window.open(
+                                            `https://www.google.com/search?q=${query}`,
+                                            "_blank",
+                                          )
+                                        }
+                                        key={platform.provider_id}
+                                        className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
+                                      >
+                                        <img
+                                          src={
+                                            platform?.logo_path
+                                              ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
+                                              : NoProvider
                                           }
-                                          key={platform.provider_id}
-                                          className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
-                                        >
-                                          <img
-                                            src={
-                                              platform?.logo_path
-                                                ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
-                                                : NoProvider
-                                            }
-                                            alt="ProvidersLogo"
-                                            className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
-                                          />
-                                          <h1 className="text-xs font-semibold 430:text-sm">
-                                            —{" "}
-                                            {platform?.provider_name ||
-                                              "Name unavailable"}
-                                          </h1>
-                                        </div>
-                                      );
-                                    },
-                                  )}
-                                </div>
+                                          alt="ProvidersLogo"
+                                          className="w-14 aspect-square rounded-2xl object-cover"
+                                        />
+                                        <h1 className="text-xs font-semibold 430:text-sm">
+                                          —{" "}
+                                          {platform?.provider_name ||
+                                            "Name unavailable"}
+                                        </h1>
+                                      </div>
+                                    );
+                                  },
+                                )}
                               </div>
-                            )}
+                            </div>
+                          )}
                           {/* Ads */}
                           {regionalWatchProvider?.watchProviders?.ads?.length >
                             0 && (
-                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
-                                <h1 className="text-base font-semibold underline">
-                                  Watch with ads
-                                </h1>
-                                <div className="flex flex-col gap-5 cursor-pointer">
-                                  {regionalWatchProvider?.watchProviders?.ads?.map(
-                                    (platform) => {
-                                      const query =
-                                        mediaInfo?.details?.name &&
-                                          mediaInfo?.details?.overview &&
-                                          platform?.provider_name
-                                          ? encodeURIComponent(
+                            <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <h1 className="text-base font-semibold underline">
+                                Watch with ads
+                              </h1>
+                              <div className="flex flex-col gap-5 cursor-pointer">
+                                {regionalWatchProvider?.watchProviders?.ads?.map(
+                                  (platform) => {
+                                    const query =
+                                      mediaInfo?.details?.name &&
+                                      mediaInfo?.details?.overview &&
+                                      platform?.provider_name
+                                        ? encodeURIComponent(
                                             `Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`,
                                           )?.replace(/%20/g, "+")
-                                          : null;
-                                      return (
-                                        <div
-                                          onClick={() =>
-                                            query &&
-                                            window.open(
-                                              `https://www.google.com/search?q=${query}`,
-                                              "_blank",
-                                            )
+                                        : null;
+                                    return (
+                                      <div
+                                        onClick={() =>
+                                          query &&
+                                          window.open(
+                                            `https://www.google.com/search?q=${query}`,
+                                            "_blank",
+                                          )
+                                        }
+                                        key={platform.provider_id}
+                                        className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
+                                      >
+                                        <img
+                                          src={
+                                            platform?.logo_path
+                                              ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
+                                              : NoProvider
                                           }
-                                          key={platform.provider_id}
-                                          className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
-                                        >
-                                          <img
-                                            src={
-                                              platform?.logo_path
-                                                ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
-                                                : NoProvider
-                                            }
-                                            alt="ProvidersLogo"
-                                            className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
-                                          />
-                                          <h1 className="text-xs font-semibold 430:text-sm">
-                                            —{" "}
-                                            {platform?.provider_name ||
-                                              "Name unavailable"}
-                                          </h1>
-                                        </div>
-                                      );
-                                    },
-                                  )}
-                                </div>
+                                          alt="ProvidersLogo"
+                                          className="w-14 aspect-square rounded-2xl object-cover"
+                                        />
+                                        <h1 className="text-xs font-semibold 430:text-sm">
+                                          —{" "}
+                                          {platform?.provider_name ||
+                                            "Name unavailable"}
+                                        </h1>
+                                      </div>
+                                    );
+                                  },
+                                )}
                               </div>
-                            )}
+                            </div>
+                          )}
                           {/* Free */}
                           {regionalWatchProvider?.watchProviders?.free?.length >
                             0 && (
-                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
-                                <h1 className="text-base font-semibold underline">
-                                  Stream for free
-                                </h1>
-                                <div className="flex flex-col gap-5 cursor-pointer">
-                                  {regionalWatchProvider?.watchProviders?.free?.map(
-                                    (platform) => {
-                                      const query =
-                                        mediaInfo?.details?.name &&
-                                          mediaInfo?.details?.overview &&
-                                          platform?.provider_name
-                                          ? encodeURIComponent(
+                            <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <h1 className="text-base font-semibold underline">
+                                Stream for free
+                              </h1>
+                              <div className="flex flex-col gap-5 cursor-pointer">
+                                {regionalWatchProvider?.watchProviders?.free?.map(
+                                  (platform) => {
+                                    const query =
+                                      mediaInfo?.details?.name &&
+                                      mediaInfo?.details?.overview &&
+                                      platform?.provider_name
+                                        ? encodeURIComponent(
                                             `Show ${mediaInfo?.details?.name} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`,
                                           )?.replace(/%20/g, "+")
-                                          : null;
-                                      return (
-                                        <div
-                                          onClick={() =>
-                                            query &&
-                                            window.open(
-                                              `https://www.google.com/search?q=${query}`,
-                                              "_blank",
-                                            )
+                                        : null;
+                                    return (
+                                      <div
+                                        onClick={() =>
+                                          query &&
+                                          window.open(
+                                            `https://www.google.com/search?q=${query}`,
+                                            "_blank",
+                                          )
+                                        }
+                                        key={platform.provider_id}
+                                        className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
+                                      >
+                                        <img
+                                          src={
+                                            platform?.logo_path
+                                              ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
+                                              : NoProvider
                                           }
-                                          key={platform.provider_id}
-                                          className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
-                                        >
-                                          <img
-                                            src={
-                                              platform?.logo_path
-                                                ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
-                                                : NoProvider
-                                            }
-                                            alt="ProvidersLogo"
-                                            className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
-                                          />
-                                          <h1 className="text-xs font-semibold 430:text-sm">
-                                            —{" "}
-                                            {platform?.provider_name ||
-                                              "Name unavailable"}
-                                          </h1>
-                                        </div>
-                                      );
-                                    },
-                                  )}
-                                </div>
+                                          alt="ProvidersLogo"
+                                          className="w-14 aspect-square rounded-2xl object-cover"
+                                        />
+                                        <h1 className="text-xs font-semibold 430:text-sm">
+                                          —{" "}
+                                          {platform?.provider_name ||
+                                            "Name unavailable"}
+                                        </h1>
+                                      </div>
+                                    );
+                                  },
+                                )}
                               </div>
-                            )}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1962,9 +1962,9 @@ const TVShowInfo = () => {
                       <div
                         key={content?.id}
                         onClick={() => mediaType(content)}
-                        className="relative flex-shrink-0 group"
+                        className="relative shrink-0 group"
                       >
-                        <div className="relative w-[15rem] aspect-video overflow-hidden rounded-t-sm flex-shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out 460:w-[18rem]">
+                        <div className="relative w-60 aspect-video overflow-hidden rounded-t-sm shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out 460:w-[18rem]">
                           <img
                             src={
                               content.backdrop_path
@@ -1975,7 +1975,7 @@ const TVShowInfo = () => {
                             className="absolute z-0 w-full h-full object-cover"
                           />
                           {/* About movie or show - on hover drop down */}
-                          <div className="absolute z-1 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-[5px] px-2 py-[5px] opacity-0 group-hover:opacity-100 transition duration-200 460:gap-2 460:py-2">
+                          <div className="absolute z-1 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-1.25 px-2 py-1.25 opacity-0 group-hover:opacity-100 transition duration-200 460:gap-2 460:py-2">
                             <div className="flex justify-between items-center">
                               <div
                                 onClick={(e) => {
@@ -1994,9 +1994,9 @@ const TVShowInfo = () => {
                                     content,
                                     "watchLater",
                                   ) ? (
-                                    <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                    <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                   ) : (
-                                    <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                    <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                   )}
                                 </div>
                                 <div
@@ -2009,9 +2009,9 @@ const TVShowInfo = () => {
                                     content,
                                     "favourite",
                                   ) ? (
-                                    <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                    <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                   ) : (
-                                    <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                    <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                   )}
                                 </div>
                               </div>
@@ -2020,12 +2020,12 @@ const TVShowInfo = () => {
                               </div>
                             </div>
                             <div className="flex items-center gap-2 font-medium text-text-secondary text-xs 460:text-sm">
-                              <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                              <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                 <h1 className="text-xs lg:text-sm font-regular">
                                   ★ {content.vote_average.toFixed(1) || "0.0"}
                                 </h1>
                               </div>
-                              <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                              <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                 <h1 className="text-xs lg:text-sm font-regular">
                                   {(
                                     content.release_date ||

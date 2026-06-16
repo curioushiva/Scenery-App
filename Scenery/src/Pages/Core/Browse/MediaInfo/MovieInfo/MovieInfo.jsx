@@ -213,16 +213,16 @@ const MovieInfo = () => {
 
       {/* Background Media */}
       {mediaInfo?.details?.backdrop_path && (
-        <div className="absolute z-0 w-full h-[75dvh] min-h-[400px] overflow-hidden">
+        <div className="absolute z-0 w-full h-[75dvh] min-h-100 overflow-hidden">
           <img
             className="absolute z-0 inset-0 w-full h-full object-cover object-top"
             src={`${IMG_HERO_BACKDROP_BASE_URL}${mediaInfo?.details?.backdrop_path}`}
             alt="Background"
           />
           {/* Fades top & bottoms */}
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-bg-coreColor/10 via-transparent to-transparent" />
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-bg-coreColor via-bg-coreColor/10 to-transparent" />
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-bg-coreColor via-bg-coreColor/40 to-transparent" />
+          <div className="absolute inset-0 pointer-events-none bg-linear-to-b from-bg-coreColor/10 via-transparent to-transparent" />
+          <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-bg-coreColor via-bg-coreColor/10 to-transparent" />
+          <div className="absolute inset-0 pointer-events-none bg-linear-to-t from-bg-coreColor via-bg-coreColor/40 to-transparent" />
         </div>
       )}
 
@@ -233,7 +233,7 @@ const MovieInfo = () => {
             {/* Part 1 & 2 */}
             <div className="w-full h-full flex flex-col gap-12 items-stretch 880:flex-row">
               {/* Part 1 : Media Poster */}
-              <div className="hidden flex-col flex-shrink-0  880:flex 880:w-[18rem]">
+              <div className="hidden flex-col shrink-0  880:flex 880:w-[18rem]">
                 <img
                   src={
                     mediaInfo?.details?.poster_path
@@ -241,7 +241,7 @@ const MovieInfo = () => {
                       : NoPoster
                   }
                   alt="Poster"
-                  className={`w-full flex-1 min-h-0 aspect-[4/5] object-cover ${regionalWatchProviderFirstValue?.length > 0 ? "rounded-t-sm" : "rounded-sm"}`}
+                  className={`w-full flex-1 min-h-0 aspect-4/5 object-cover ${regionalWatchProviderFirstValue?.length > 0 ? "rounded-t-sm" : "rounded-sm"}`}
                 />
                 {regionalWatchProviderFirstValue?.length > 0 && (
                   <div className="w-full flex justify-center items-center gap-3 bg-bg-blackColor py-3 rounded-b-sm">
@@ -274,7 +274,7 @@ const MovieInfo = () => {
                 <div className="flex items-center flex-wrap text-sm gap-2">
                   {/* Certifications */}
                   {mediaCertification && (
-                    <h2 className="text-text-secondary border-1 rounded-sm px-[6px] whitespace-nowrap">
+                    <h2 className="text-text-secondary border rounded-sm px-1.5 whitespace-nowrap">
                       {mediaCertification}
                     </h2>
                   )}
@@ -428,7 +428,7 @@ const MovieInfo = () => {
                       onClick={() =>
                         saveProfileMedia(mediaInfo?.details, "watchLater")
                       }
-                      className="w-full flex justify-center items-center gap-2 border-1 border-br-secondary/60 pl-2 pr-3 py-2 rounded cursor-pointer active:scale-[0.95]"
+                      className="w-full flex justify-center items-center gap-2 border border-br-secondary/60 pl-2 pr-3 py-2 rounded cursor-pointer active:scale-[0.95]"
                     >
                       {showSavedProfileMedia(
                         mediaInfo?.details,
@@ -453,15 +453,15 @@ const MovieInfo = () => {
                       onClick={() =>
                         saveProfileMedia(mediaInfo?.details, "favourite")
                       }
-                      className="w-full flex justify-center items-center gap-2 border-1 border-br-secondary/60 px-3 py-2 rounded cursor-pointer active:scale-[0.95]"
+                      className="w-full flex justify-center items-center gap-2 border border-br-secondary/60 px-3 py-2 rounded cursor-pointer active:scale-[0.95]"
                     >
                       {showSavedProfileMedia(
                         mediaInfo?.details,
                         "favourite",
                       ) ? (
-                        <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                        <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                       ) : (
-                        <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                        <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                       )}
                     </div>
                   </div>
@@ -565,7 +565,7 @@ const MovieInfo = () => {
                               : NoProfile
                           }
                           alt="Cast"
-                          className="w-full aspect-[1/1] object-cover rounded-t-sm"
+                          className="w-full aspect-square object-cover rounded-t-sm"
                         />
                         <div className="flex-1 flex flex-col gap-2 bg-bg-blackColor/40 rounded-b-sm p-3">
                           {cast?.name && (
@@ -601,7 +601,7 @@ const MovieInfo = () => {
                           setShowTrailer(true);
                         }}
                         key={video?.key}
-                        className="relative w-[16rem] aspect-video overflow-hidden rounded-sm flex-shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out 880:w-[24rem] 460:w-[20rem]"
+                        className="relative w-[16rem] aspect-video overflow-hidden rounded-sm shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out 880:w-[24rem] 460:w-[20rem]"
                       >
                         <img
                           src={`https://img.youtube.com/vi/${video?.key}/sddefault.jpg`}
@@ -685,7 +685,7 @@ const MovieInfo = () => {
                               >
                                 <div className="w-full flex flex-col gap-3 max-h-80 pr-3 overflow-y-auto custom-scrollbar overflow-x-hidden 430:pr-5">
                                   <div className="flex flex-col gap-5 375:flex-row">
-                                    <div className="w-[3.5rem]">
+                                    <div className="w-14">
                                       <img
                                         src={
                                           review?.author_details?.avatar_path
@@ -693,7 +693,7 @@ const MovieInfo = () => {
                                             : NoProfile
                                         }
                                         alt="Profile"
-                                        className="w-full aspect-[1/1] rounded-full object-cover"
+                                        className="w-full aspect-square rounded-full object-cover"
                                       />
                                     </div>
                                     <div className="flex flex-col gap-1">
@@ -788,7 +788,7 @@ const MovieInfo = () => {
                                   }
                                   className="w-full flex flex-col gap-2 items-start 460:items-center 460:flex-row"
                                 >
-                                  <div className="w-full h-13 bg-bg-whiteColor rounded-sm p-2 flex items-center justify-center overflow-hidden 460:max-w-[7rem]">
+                                  <div className="w-full h-13 bg-bg-whiteColor rounded-sm p-2 flex items-center justify-center overflow-hidden 460:max-w-28">
                                     <img
                                       src={
                                         studio?.logo_path
@@ -903,7 +903,7 @@ const MovieInfo = () => {
                                                 : NoProvider
                                             }
                                             alt="ProvidersLogo"
-                                            className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
+                                            className="w-14 aspect-square rounded-2xl object-cover"
                                           />
                                           <h1 className="text-xs font-semibold 430:text-sm">
                                             —{" "}
@@ -955,7 +955,7 @@ const MovieInfo = () => {
                                                 : NoProvider
                                             }
                                             alt="ProvidersLogo"
-                                            className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
+                                            className="w-14 aspect-square rounded-2xl object-cover"
                                           />
                                           <h1 className="text-xs font-semibold 430:text-sm">
                                             —{" "}
@@ -1007,7 +1007,7 @@ const MovieInfo = () => {
                                                 : NoProvider
                                             }
                                             alt="ProvidersLogo"
-                                            className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
+                                            className="w-14 aspect-square rounded-2xl object-cover"
                                           />
                                           <h1 className="text-xs font-semibold 430:text-sm">
                                             —{" "}
@@ -1058,7 +1058,7 @@ const MovieInfo = () => {
                                                 : NoProvider
                                             }
                                             alt="ProvidersLogo"
-                                            className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
+                                            className="w-14 aspect-square rounded-2xl object-cover"
                                           />
                                           <h1 className="text-xs font-semibold 430:text-sm">
                                             —{" "}
@@ -1109,7 +1109,7 @@ const MovieInfo = () => {
                                                 : NoProvider
                                             }
                                             alt="ProvidersLogo"
-                                            className="w-[3.5rem] aspect-[1/1] rounded-2xl object-cover"
+                                            className="w-14 aspect-square rounded-2xl object-cover"
                                           />
                                           <h1 className="text-xs font-semibold 430:text-sm">
                                             —{" "}
@@ -1312,9 +1312,9 @@ const MovieInfo = () => {
                       <div
                         key={content?.id}
                         onClick={() => mediaType(content)}
-                        className="relative flex-shrink-0 group"
+                        className="relative shrink-0 group"
                       >
-                        <div className="relative w-[15rem] aspect-video overflow-hidden rounded-t-sm flex-shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out 460:w-[18rem]">
+                        <div className="relative w-60 aspect-video overflow-hidden rounded-t-sm shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out 460:w-[18rem]">
                           <img
                             src={
                               content.backdrop_path
@@ -1325,7 +1325,7 @@ const MovieInfo = () => {
                             className="absolute z-0 w-full h-full object-cover"
                           />
                           {/* About movie or show - on hover drop down */}
-                          <div className="absolute z-1 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-[5px] px-2 py-[5px] opacity-0 group-hover:opacity-100 transition duration-200 460:gap-2 460:py-2">
+                          <div className="absolute z-1 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-1.25 px-2 py-1.25 opacity-0 group-hover:opacity-100 transition duration-200 460:gap-2 460:py-2">
                             <div className="flex justify-between items-center">
                               <div
                                 onClick={(e) => {
@@ -1344,9 +1344,9 @@ const MovieInfo = () => {
                                     content,
                                     "watchLater",
                                   ) ? (
-                                    <RiBookmarkFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                    <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                   ) : (
-                                    <RiBookmarkLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                    <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                   )}
                                 </div>
                                 <div
@@ -1359,9 +1359,9 @@ const MovieInfo = () => {
                                     content,
                                     "favourite",
                                   ) ? (
-                                    <RiHeartFill className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                    <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
                                   ) : (
-                                    <RiHeartLine className="w-[1.75rem] h-[1.75rem] sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                    <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
                                   )}
                                 </div>
                               </div>
@@ -1370,12 +1370,12 @@ const MovieInfo = () => {
                               </div>
                             </div>
                             <div className="flex items-center gap-2 font-medium text-text-secondary text-xs 460:text-sm">
-                              <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                              <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                 <h1 className="text-xs lg:text-sm font-regular">
                                   ★ {content.vote_average.toFixed(1) || "0.0"}
                                 </h1>
                               </div>
-                              <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border-1">
+                              <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
                                 <h1 className="text-xs lg:text-sm font-regular">
                                   {(
                                     content.release_date ||

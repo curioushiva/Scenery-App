@@ -10,6 +10,11 @@ const initialState = {
         selectedResult: [],
         selectedResultTitle: null
     },
+    /* Ask AI data */
+    askAIData: {
+        queryString: '',
+        mediaResults: [],
+    }
 };
 
 /* Reducers and actions */
@@ -22,6 +27,10 @@ const DiscoverSlice = createSlice({
             state.searchData = { ...state.searchData, ...action.payload };
         },
 
+        addAskAIData: (state, action) => {
+            state.askAIData = { ...state.askAIData, ...action.payload };
+        },
+
         /* Remove discover data */
         removeDiscover: () => {
             return initialState;
@@ -32,6 +41,9 @@ const DiscoverSlice = createSlice({
 export const {
     /* Search data */
     addSearchData,
+    /* Ask AI Data */
+    addAskAIData,
+    /* Remove discover */
     removeDiscover
 
 } = DiscoverSlice.actions;
