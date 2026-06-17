@@ -5,7 +5,7 @@ import {
   IMG_HERO_BACKDROP_BASE_URL,
   IMG_HERO_POSTER_BASE_URL,
 } from "@/Utils/SceneryAPI/SceneryAPI";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   RiAddFill,
@@ -31,6 +31,8 @@ import {
   RiCheckboxMultipleLine,
   RiArrowUpWideLine,
   RiArrowDownWideLine,
+  RiArrowLeftWideLine,
+  RiArrowRightWideLine,
 } from "@remixicon/react";
 import { Info, Wikipedia } from "react-bootstrap-icons";
 import NoProfile from "@/Assets/Imgs/Avatars/NoProfile.png";
@@ -168,7 +170,11 @@ const MovieInfo = () => {
     mediaInfo?.external_ids?.instagram_id ||
     mediaInfo?.external_ids?.twitter_id ||
     mediaInfo?.external_ids?.wikidata_id ||
-    mediaInfo?.details?.homepage !== '';
+    mediaInfo?.details?.homepage !== "";
+
+  /* For scrolling in x */
+  const recScrollRefs = useRef({});
+  const castScrollRefs = useRef({});
 
   /* Rendering on the basis of avail of mediaInfo */
   return Object.keys(mediaInfo).length === 0 ? (
@@ -282,67 +288,67 @@ const MovieInfo = () => {
                   {/* Movie release date & Origin country */}
                   {(mediaInfo?.details?.release_date ||
                     mediaInfo?.details?.origin_country?.[0]) && (
-                      <div className="flex gap-1">
-                        <h2>{mediaInfo?.details?.release_date?.slice(0, 4)}</h2>
-                        {mediaInfo?.details?.origin_country?.[0] && (
-                          <h2>({mediaInfo?.details?.origin_country?.[0]})</h2>
-                        )}
-                      </div>
-                    )}
+                    <div className="flex gap-1">
+                      <h2>{mediaInfo?.details?.release_date?.slice(0, 4)}</h2>
+                      {mediaInfo?.details?.origin_country?.[0] && (
+                        <h2>({mediaInfo?.details?.origin_country?.[0]})</h2>
+                      )}
+                    </div>
+                  )}
 
                   {/* Genre & movie runtime */}
                   {(mediaInfo?.detls?.genres?.length > 0 ||
                     (mediaInfo?.details?.runtime !== 0 &&
                       mediaInfo?.details?.runtime)) && (
-                      <div className="flex gap-2 flex-wrap">
-                        {/* Genres */}
-                        {mediaInfo?.details?.genres?.length > 0 && (
+                    <div className="flex gap-2 flex-wrap">
+                      {/* Genres */}
+                      {mediaInfo?.details?.genres?.length > 0 && (
+                        <div className="flex gap-2">
+                          <h2>•</h2>
+                          {mediaInfo?.details?.genres
+                            ?.slice(0, 2)
+                            ?.map((val) => (
+                              <h2 key={val.id}>
+                                {val?.name === "Science Fiction"
+                                  ? "Sci-Fi"
+                                  : val?.name?.split(" ")[0]}
+                              </h2>
+                            ))}
+                        </div>
+                      )}
+
+                      {/* Movie runtime */}
+                      {mediaInfo?.details?.runtime !== 0 &&
+                        mediaInfo?.details?.runtime && (
                           <div className="flex gap-2">
                             <h2>•</h2>
-                            {mediaInfo?.details?.genres
-                              ?.slice(0, 2)
-                              ?.map((val) => (
-                                <h2 key={val.id}>
-                                  {val?.name === "Science Fiction"
-                                    ? "Sci-Fi"
-                                    : val?.name?.split(" ")[0]}
-                                </h2>
-                              ))}
+                            <h2>
+                              {`${Math.floor(mediaInfo?.details?.runtime / 60) === 0 ? "" : Math.floor(mediaInfo?.details?.runtime / 60)}${Math.floor(mediaInfo?.details?.runtime / 60) === 0 ? "" : "h"} ${(mediaInfo?.details?.runtime % 60)?.toString()?.padStart(2, "0")}m`}
+                            </h2>
                           </div>
                         )}
-
-                        {/* Movie runtime */}
-                        {mediaInfo?.details?.runtime !== 0 &&
-                          mediaInfo?.details?.runtime && (
-                            <div className="flex gap-2">
-                              <h2>•</h2>
-                              <h2>
-                                {`${Math.floor(mediaInfo?.details?.runtime / 60) === 0 ? "" : Math.floor(mediaInfo?.details?.runtime / 60)}${Math.floor(mediaInfo?.details?.runtime / 60) === 0 ? "" : "h"} ${(mediaInfo?.details?.runtime % 60)?.toString()?.padStart(2, "0")}m`}
-                              </h2>
-                            </div>
-                          )}
-                      </div>
-                    )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Ratings and Votes */}
                 {(mediaInfo?.details?.vote_average !== null ||
                   mediaInfo?.details?.vote_count !== null) && (
-                    <div className="flex gap-2 items-center text-base">
-                      {mediaInfo?.details?.vote_average !== null && (
-                        <h3 className="font-medium">
-                          <span className="text-text-fifth">★ </span>
-                          {mediaInfo?.details?.vote_average?.toFixed(1) || "N/A"}
-                        </h3>
-                      )}
+                  <div className="flex gap-2 items-center text-base">
+                    {mediaInfo?.details?.vote_average !== null && (
+                      <h3 className="font-medium">
+                        <span className="text-text-fifth">★ </span>
+                        {mediaInfo?.details?.vote_average?.toFixed(1) || "N/A"}
+                      </h3>
+                    )}
 
-                      {mediaInfo?.details?.vote_count !== null && (
-                        <h3 className="text-sm">
-                          ({`${mediaInfo?.details?.vote_count} Votes`})
-                        </h3>
-                      )}
-                    </div>
-                  )}
+                    {mediaInfo?.details?.vote_count !== null && (
+                      <h3 className="text-sm">
+                        ({`${mediaInfo?.details?.vote_count} Votes`})
+                      </h3>
+                    )}
+                  </div>
+                )}
 
                 {/* Tagline */}
                 {mediaInfo?.details?.tagline && (
@@ -414,7 +420,7 @@ const MovieInfo = () => {
                         );
                         setShowTrailer(true);
                       }}
-                      className="w-full flex justify-center items-center gap-1 bg-btn-primary pl-2 pr-3 py-2 rounded cursor-pointer active:scale-[0.95]"
+                      className="w-full flex justify-center items-center gap-1 bg-btn-primary pl-2 pr-3 py-2 rounded cursor-pointer active:scale-95"
                     >
                       <RiPlayFill />
                       <span className="font-semibold whitespace-nowrap">
@@ -428,7 +434,7 @@ const MovieInfo = () => {
                       onClick={() =>
                         saveProfileMedia(mediaInfo?.details, "watchLater")
                       }
-                      className="w-full flex justify-center items-center gap-2 border border-br-secondary/60 pl-2 pr-3 py-2 rounded cursor-pointer active:scale-[0.95]"
+                      className="w-full flex justify-center items-center gap-2 border border-br-secondary/60 pl-2 pr-3 py-2 rounded cursor-pointer active:scale-95"
                     >
                       {showSavedProfileMedia(
                         mediaInfo?.details,
@@ -453,7 +459,7 @@ const MovieInfo = () => {
                       onClick={() =>
                         saveProfileMedia(mediaInfo?.details, "favourite")
                       }
-                      className="w-full flex justify-center items-center gap-2 border border-br-secondary/60 px-3 py-2 rounded cursor-pointer active:scale-[0.95]"
+                      className="w-full flex justify-center items-center gap-2 border border-br-secondary/60 px-3 py-2 rounded cursor-pointer active:scale-95"
                     >
                       {showSavedProfileMedia(
                         mediaInfo?.details,
@@ -537,51 +543,82 @@ const MovieInfo = () => {
                 <div className="font-medium text-xl">
                   <h1>Top Cast</h1>
                 </div>
-                <div className="grid grid-flow-col auto-cols-[10rem] gap-4 overflow-x-auto no-scrollbar items-stretch">
-                  {mediaInfo?.credits?.cast?.map((cast) => {
-                    const query =
-                      cast?.name && cast?.character && mediaInfo?.details?.title
-                        ? encodeURIComponent(
-                          `${cast?.name} as ${cast?.character} from ${mediaInfo?.details?.title}`,
-                        )?.replace(/%20/g, "+")
-                        : null;
-                    return (
-                      <div
-                        onClick={() =>
-                          query &&
-                          window.open(
-                            `https://www.google.com/search?q=${query}`,
-                            "_blank",
-                          )
-                        }
-                        target="_blank"
-                        key={cast.id}
-                        className="cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out h-full flex flex-col"
-                      >
-                        <img
-                          src={
-                            cast?.profile_path
-                              ? `${IMG_POSTER_BASE_URL}${cast?.profile_path}`
-                              : NoProfile
+                <div className="relative w-full group/carousel">
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      castScrollRefs.current?.scrollBy({
+                        left: -600,
+                        behavior: "smooth",
+                      });
+                    }}
+                    className="absolute flex justify-start items-center z-1 left-3 sm:left-4 top-4 p-1 bg-bg-blackColor/60 backdrop-blur-4 rounded-full text-text-primary/80 cursor-pointer transition duration-200 ease-in-out group-hover/carousel:scale-120 opacity-0 group-hover/carousel:opacity-100"
+                  >
+                    <RiArrowLeftWideLine className="w-5 h-5 sm:w-7 sm:h-7" />
+                  </div>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      castScrollRefs.current?.scrollBy({
+                        left: 600,
+                        behavior: "smooth",
+                      });
+                    }}
+                    className="absolute flex justify-end items-center z-1 right-3 sm:right-4 top-4 p-1 bg-bg-blackColor/60 backdrop-blur-4 rounded-full text-text-primary/80 cursor-pointer transition duration-200 ease-in-out group-hover/carousel:scale-120 opacity-0 group-hover/carousel:opacity-100"
+                  >
+                    <RiArrowRightWideLine className="w-5 h-5 sm:w-7 sm:h-7" />
+                  </div>
+                  <div
+                    ref={castScrollRefs}
+                    className="grid grid-flow-col auto-cols-[10rem] gap-4 overflow-x-auto no-scrollbar items-stretch"
+                  >
+                    {mediaInfo?.credits?.cast?.map((cast) => {
+                      const query =
+                        cast?.name &&
+                        cast?.character &&
+                        mediaInfo?.details?.title
+                          ? encodeURIComponent(
+                              `${cast?.name} as ${cast?.character} from ${mediaInfo?.details?.title}`,
+                            )?.replace(/%20/g, "+")
+                          : null;
+                      return (
+                        <div
+                          onClick={() =>
+                            query &&
+                            window.open(
+                              `https://www.google.com/search?q=${query}`,
+                              "_blank",
+                            )
                           }
-                          alt="Cast"
-                          className="w-full aspect-square object-cover rounded-t-sm"
-                        />
-                        <div className="flex-1 flex flex-col gap-2 bg-bg-blackColor/40 rounded-b-sm p-3">
-                          {cast?.name && (
-                            <h1 className="text-[0.85rem] font-medium">
-                              {cast?.name}
-                            </h1>
-                          )}
-                          {cast?.character && (
-                            <h2 className="text-sm text-text-secondary">
-                              {cast?.character}
-                            </h2>
-                          )}
+                          target="_blank"
+                          key={cast.id}
+                          className="cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out h-full flex flex-col"
+                        >
+                          <img
+                            src={
+                              cast?.profile_path
+                                ? `${IMG_POSTER_BASE_URL}${cast?.profile_path}`
+                                : NoProfile
+                            }
+                            alt="Cast"
+                            className="w-full aspect-square object-cover rounded-t-sm"
+                          />
+                          <div className="flex-1 flex flex-col gap-2 bg-bg-blackColor/40 rounded-b-sm p-3">
+                            {cast?.name && (
+                              <h1 className="text-[0.85rem] font-medium">
+                                {cast?.name}
+                              </h1>
+                            )}
+                            {cast?.character && (
+                              <h2 className="text-sm text-text-secondary">
+                                {cast?.character}
+                              </h2>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             )}
@@ -869,260 +906,260 @@ const MovieInfo = () => {
                           {/* Buy */}
                           {regionalWatchProvider?.watchProviders?.buy?.length >
                             0 && (
-                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
-                                <h1 className="text-lg font-semibold underline">
-                                  Buy to own
-                                </h1>
-                                <div className="flex flex-col gap-5 cursor-pointer">
-                                  {regionalWatchProvider?.watchProviders?.buy?.map(
-                                    (platform) => {
-                                      const query =
-                                        mediaInfo?.details?.title &&
-                                          mediaInfo?.details?.overview &&
-                                          platform?.provider_name
-                                          ? encodeURIComponent(
+                            <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <h1 className="text-lg font-semibold underline">
+                                Buy to own
+                              </h1>
+                              <div className="flex flex-col gap-5 cursor-pointer">
+                                {regionalWatchProvider?.watchProviders?.buy?.map(
+                                  (platform) => {
+                                    const query =
+                                      mediaInfo?.details?.title &&
+                                      mediaInfo?.details?.overview &&
+                                      platform?.provider_name
+                                        ? encodeURIComponent(
                                             `Show ${mediaInfo?.details?.title} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`,
                                           )?.replace(/%20/g, "+")
-                                          : null;
-                                      return (
-                                        <div
-                                          onClick={() =>
-                                            query &&
-                                            window.open(
-                                              `https://www.google.com/search?q=${query}`,
-                                              "_blank",
-                                            )
+                                        : null;
+                                    return (
+                                      <div
+                                        onClick={() =>
+                                          query &&
+                                          window.open(
+                                            `https://www.google.com/search?q=${query}`,
+                                            "_blank",
+                                          )
+                                        }
+                                        key={platform.provider_id}
+                                        className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
+                                      >
+                                        <img
+                                          src={
+                                            platform?.logo_path
+                                              ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
+                                              : NoProvider
                                           }
-                                          key={platform.provider_id}
-                                          className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
-                                        >
-                                          <img
-                                            src={
-                                              platform?.logo_path
-                                                ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
-                                                : NoProvider
-                                            }
-                                            alt="ProvidersLogo"
-                                            className="w-14 aspect-square rounded-2xl object-cover"
-                                          />
-                                          <h1 className="text-xs font-semibold 430:text-sm">
-                                            —{" "}
-                                            {platform?.provider_name ||
-                                              "Name unavailable"}
-                                          </h1>
-                                        </div>
-                                      );
-                                    },
-                                  )}
-                                </div>
+                                          alt="ProvidersLogo"
+                                          className="w-14 aspect-square rounded-2xl object-cover"
+                                        />
+                                        <h1 className="text-xs font-semibold 430:text-sm">
+                                          —{" "}
+                                          {platform?.provider_name ||
+                                            "Name unavailable"}
+                                        </h1>
+                                      </div>
+                                    );
+                                  },
+                                )}
                               </div>
-                            )}
+                            </div>
+                          )}
 
                           {/* Flatrate */}
                           {regionalWatchProvider?.watchProviders?.flatrate
                             ?.length > 0 && (
-                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
-                                <h1 className="text-lg font-semibold underline">
-                                  Included with subscription
-                                </h1>
-                                <div className="flex flex-col gap-5 cursor-pointer">
-                                  {regionalWatchProvider?.watchProviders?.flatrate?.map(
-                                    (platform) => {
-                                      const query =
-                                        mediaInfo?.details?.title &&
-                                          mediaInfo?.details?.overview &&
-                                          platform?.provider_name
-                                          ? encodeURIComponent(
+                            <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <h1 className="text-lg font-semibold underline">
+                                Included with subscription
+                              </h1>
+                              <div className="flex flex-col gap-5 cursor-pointer">
+                                {regionalWatchProvider?.watchProviders?.flatrate?.map(
+                                  (platform) => {
+                                    const query =
+                                      mediaInfo?.details?.title &&
+                                      mediaInfo?.details?.overview &&
+                                      platform?.provider_name
+                                        ? encodeURIComponent(
                                             `Show ${mediaInfo?.details?.title} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`,
                                           )?.replace(/%20/g, "+")
-                                          : null;
-                                      return (
-                                        <div
-                                          onClick={() =>
-                                            query &&
-                                            window.open(
-                                              `https://www.google.com/search?q=${query}`,
-                                              "_blank",
-                                            )
+                                        : null;
+                                    return (
+                                      <div
+                                        onClick={() =>
+                                          query &&
+                                          window.open(
+                                            `https://www.google.com/search?q=${query}`,
+                                            "_blank",
+                                          )
+                                        }
+                                        key={platform.provider_id}
+                                        className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
+                                      >
+                                        <img
+                                          src={
+                                            platform?.logo_path
+                                              ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
+                                              : NoProvider
                                           }
-                                          key={platform.provider_id}
-                                          className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
-                                        >
-                                          <img
-                                            src={
-                                              platform?.logo_path
-                                                ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
-                                                : NoProvider
-                                            }
-                                            alt="ProvidersLogo"
-                                            className="w-14 aspect-square rounded-2xl object-cover"
-                                          />
-                                          <h1 className="text-xs font-semibold 430:text-sm">
-                                            —{" "}
-                                            {platform?.provider_name ||
-                                              "Name unavailable"}
-                                          </h1>
-                                        </div>
-                                      );
-                                    },
-                                  )}
-                                </div>
+                                          alt="ProvidersLogo"
+                                          className="w-14 aspect-square rounded-2xl object-cover"
+                                        />
+                                        <h1 className="text-xs font-semibold 430:text-sm">
+                                          —{" "}
+                                          {platform?.provider_name ||
+                                            "Name unavailable"}
+                                        </h1>
+                                      </div>
+                                    );
+                                  },
+                                )}
                               </div>
-                            )}
+                            </div>
+                          )}
 
                           {/* Rent */}
                           {regionalWatchProvider?.watchProviders?.rent?.length >
                             0 && (
-                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
-                                <h1 className="text-lg font-semibold underline">
-                                  Rent & watch
-                                </h1>
-                                <div className="flex flex-col gap-5 cursor-pointer">
-                                  {regionalWatchProvider?.watchProviders?.rent?.map(
-                                    (platform) => {
-                                      const query =
-                                        mediaInfo?.details?.title &&
-                                          mediaInfo?.details?.overview &&
-                                          platform?.provider_name
-                                          ? encodeURIComponent(
+                            <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <h1 className="text-lg font-semibold underline">
+                                Rent & watch
+                              </h1>
+                              <div className="flex flex-col gap-5 cursor-pointer">
+                                {regionalWatchProvider?.watchProviders?.rent?.map(
+                                  (platform) => {
+                                    const query =
+                                      mediaInfo?.details?.title &&
+                                      mediaInfo?.details?.overview &&
+                                      platform?.provider_name
+                                        ? encodeURIComponent(
                                             `Show ${mediaInfo?.details?.title} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`,
                                           )?.replace(/%20/g, "+")
-                                          : null;
-                                      return (
-                                        <div
-                                          onClick={() =>
-                                            query &&
-                                            window.open(
-                                              `https://www.google.com/search?q=${query}`,
-                                              "_blank",
-                                            )
+                                        : null;
+                                    return (
+                                      <div
+                                        onClick={() =>
+                                          query &&
+                                          window.open(
+                                            `https://www.google.com/search?q=${query}`,
+                                            "_blank",
+                                          )
+                                        }
+                                        key={platform.provider_id}
+                                        className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
+                                      >
+                                        <img
+                                          src={
+                                            platform?.logo_path
+                                              ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
+                                              : NoProvider
                                           }
-                                          key={platform.provider_id}
-                                          className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
-                                        >
-                                          <img
-                                            src={
-                                              platform?.logo_path
-                                                ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
-                                                : NoProvider
-                                            }
-                                            alt="ProvidersLogo"
-                                            className="w-14 aspect-square rounded-2xl object-cover"
-                                          />
-                                          <h1 className="text-xs font-semibold 430:text-sm">
-                                            —{" "}
-                                            {platform?.provider_name ||
-                                              "Name unavailable"}
-                                          </h1>
-                                        </div>
-                                      );
-                                    },
-                                  )}
-                                </div>
+                                          alt="ProvidersLogo"
+                                          className="w-14 aspect-square rounded-2xl object-cover"
+                                        />
+                                        <h1 className="text-xs font-semibold 430:text-sm">
+                                          —{" "}
+                                          {platform?.provider_name ||
+                                            "Name unavailable"}
+                                        </h1>
+                                      </div>
+                                    );
+                                  },
+                                )}
                               </div>
-                            )}
+                            </div>
+                          )}
                           {/* Ads */}
                           {regionalWatchProvider?.watchProviders?.ads?.length >
                             0 && (
-                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
-                                <h1 className="text-lg font-semibold underline">
-                                  Watch with ads
-                                </h1>
-                                <div className="flex flex-col gap-5 cursor-pointer">
-                                  {regionalWatchProvider?.watchProviders?.ads?.map(
-                                    (platform) => {
-                                      const query =
-                                        mediaInfo?.details?.title &&
-                                          mediaInfo?.details?.overview &&
-                                          platform?.provider_name
-                                          ? encodeURIComponent(
+                            <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <h1 className="text-lg font-semibold underline">
+                                Watch with ads
+                              </h1>
+                              <div className="flex flex-col gap-5 cursor-pointer">
+                                {regionalWatchProvider?.watchProviders?.ads?.map(
+                                  (platform) => {
+                                    const query =
+                                      mediaInfo?.details?.title &&
+                                      mediaInfo?.details?.overview &&
+                                      platform?.provider_name
+                                        ? encodeURIComponent(
                                             `Show ${mediaInfo?.details?.title} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`,
                                           )?.replace(/%20/g, "+")
-                                          : null;
-                                      return (
-                                        <div
-                                          onClick={() =>
-                                            query &&
-                                            window.open(
-                                              `https://www.google.com/search?q=${query}`,
-                                              "_blank",
-                                            )
+                                        : null;
+                                    return (
+                                      <div
+                                        onClick={() =>
+                                          query &&
+                                          window.open(
+                                            `https://www.google.com/search?q=${query}`,
+                                            "_blank",
+                                          )
+                                        }
+                                        key={platform.provider_id}
+                                        className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
+                                      >
+                                        <img
+                                          src={
+                                            platform?.logo_path
+                                              ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
+                                              : NoProvider
                                           }
-                                          key={platform.provider_id}
-                                          className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
-                                        >
-                                          <img
-                                            src={
-                                              platform?.logo_path
-                                                ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
-                                                : NoProvider
-                                            }
-                                            alt="ProvidersLogo"
-                                            className="w-14 aspect-square rounded-2xl object-cover"
-                                          />
-                                          <h1 className="text-xs font-semibold 430:text-sm">
-                                            —{" "}
-                                            {platform?.provider_name ||
-                                              "Name unavailable"}
-                                          </h1>
-                                        </div>
-                                      );
-                                    },
-                                  )}
-                                </div>
+                                          alt="ProvidersLogo"
+                                          className="w-14 aspect-square rounded-2xl object-cover"
+                                        />
+                                        <h1 className="text-xs font-semibold 430:text-sm">
+                                          —{" "}
+                                          {platform?.provider_name ||
+                                            "Name unavailable"}
+                                        </h1>
+                                      </div>
+                                    );
+                                  },
+                                )}
                               </div>
-                            )}
+                            </div>
+                          )}
                           {/* Free */}
                           {regionalWatchProvider?.watchProviders?.free?.length >
                             0 && (
-                              <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
-                                <h1 className="text-lg font-semibold underline">
-                                  Stream for free
-                                </h1>
-                                <div className="flex flex-col gap-5 cursor-pointer">
-                                  {regionalWatchProvider?.watchProviders?.free?.map(
-                                    (platform) => {
-                                      const query =
-                                        mediaInfo?.details?.title &&
-                                          mediaInfo?.details?.overview &&
-                                          platform?.provider_name
-                                          ? encodeURIComponent(
+                            <div className="w-full bg-bg-blackColor/40 flex flex-col gap-5 p-8 rounded-md">
+                              <h1 className="text-lg font-semibold underline">
+                                Stream for free
+                              </h1>
+                              <div className="flex flex-col gap-5 cursor-pointer">
+                                {regionalWatchProvider?.watchProviders?.free?.map(
+                                  (platform) => {
+                                    const query =
+                                      mediaInfo?.details?.title &&
+                                      mediaInfo?.details?.overview &&
+                                      platform?.provider_name
+                                        ? encodeURIComponent(
                                             `Show ${mediaInfo?.details?.title} with overview ${mediaInfo?.details?.overview} on ${platform?.provider_name}`,
                                           )?.replace(/%20/g, "+")
-                                          : null;
-                                      return (
-                                        <div
-                                          onClick={() =>
-                                            query &&
-                                            window.open(
-                                              `https://www.google.com/search?q=${query}`,
-                                              "_blank",
-                                            )
+                                        : null;
+                                    return (
+                                      <div
+                                        onClick={() =>
+                                          query &&
+                                          window.open(
+                                            `https://www.google.com/search?q=${query}`,
+                                            "_blank",
+                                          )
+                                        }
+                                        key={platform.provider_id}
+                                        className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
+                                      >
+                                        <img
+                                          src={
+                                            platform?.logo_path
+                                              ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
+                                              : NoProvider
                                           }
-                                          key={platform.provider_id}
-                                          className="flex gap-3 flex-col items-start 310:flex-row 310:items-center"
-                                        >
-                                          <img
-                                            src={
-                                              platform?.logo_path
-                                                ? `${IMG_POSTER_BASE_URL}${platform?.logo_path}`
-                                                : NoProvider
-                                            }
-                                            alt="ProvidersLogo"
-                                            className="w-14 aspect-square rounded-2xl object-cover"
-                                          />
-                                          <h1 className="text-xs font-semibold 430:text-sm">
-                                            —{" "}
-                                            {platform?.provider_name ||
-                                              "Name unavailable"}
-                                          </h1>
-                                        </div>
-                                      );
-                                    },
-                                  )}
-                                </div>
+                                          alt="ProvidersLogo"
+                                          className="w-14 aspect-square rounded-2xl object-cover"
+                                        />
+                                        <h1 className="text-xs font-semibold 430:text-sm">
+                                          —{" "}
+                                          {platform?.provider_name ||
+                                            "Name unavailable"}
+                                        </h1>
+                                      </div>
+                                    );
+                                  },
+                                )}
                               </div>
-                            )}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1306,121 +1343,151 @@ const MovieInfo = () => {
                     , you might also like
                   </h1>
                 </div>
-                <div className="flex flex-row gap-4 no-scrollbar overflow-x-scroll">
-                  {mediaInfo?.recommendations?.results?.map((content) => {
-                    return (
-                      <div
-                        key={content?.id}
-                        onClick={() => mediaType(content)}
-                        className="relative shrink-0 group"
-                      >
-                        <div className="relative w-60 aspect-video overflow-hidden rounded-t-sm shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out 460:w-[18rem]">
-                          <img
-                            src={
-                              content.backdrop_path
-                                ? `${IMG_POSTER_BASE_URL}${content.backdrop_path}`
-                                : NoBackdrop
-                            }
-                            alt="Recomendations"
-                            className="absolute z-0 w-full h-full object-cover"
-                          />
-                          {/* About movie or show - on hover drop down */}
-                          <div className="absolute z-1 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-1.25 px-2 py-1.25 opacity-0 group-hover:opacity-100 transition duration-200 460:gap-2 460:py-2">
-                            <div className="flex justify-between items-center">
-                              <div
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                }}
-                                className="flex gap-1"
-                              >
+                <div className="relative w-full group/carousel">
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      recScrollRefs.current?.scrollBy({
+                        left: -600,
+                        behavior: "smooth",
+                      });
+                    }}
+                    className="absolute flex justify-start items-center z-1 left-3 sm:left-4 top-3 p-1 bg-bg-blackColor/60 backdrop-blur-4 rounded-full text-text-primary/80 cursor-pointer transition duration-200 ease-in-out group-hover/carousel:scale-120 opacity-0 group-hover/carousel:opacity-100"
+                  >
+                    <RiArrowLeftWideLine className="w-4 h-4 460:w-6 460:h-6" />
+                  </div>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      recScrollRefs.current?.scrollBy({
+                        left: 600,
+                        behavior: "smooth",
+                      });
+                    }}
+                    className="absolute flex justify-end items-center z-1 right-3 sm:right-4 top-3 p-1 bg-bg-blackColor/60 backdrop-blur-4 rounded-full text-text-primary/80 cursor-pointer transition duration-200 ease-in-out group-hover/carousel:scale-120 opacity-0 group-hover/carousel:opacity-100"
+                  >
+                    <RiArrowRightWideLine className="w-4 h-4 460:w-6 460:h-6" />
+                  </div>
+
+                  <div
+                    ref={recScrollRefs}
+                    className="flex flex-row gap-4 no-scrollbar overflow-x-scroll"
+                  >
+                    {mediaInfo?.recommendations?.results?.map((content) => {
+                      return (
+                        <div
+                          key={content?.id}
+                          onClick={() => mediaType(content)}
+                          className="relative shrink-0 group"
+                        >
+                          <div className="relative w-60 aspect-video overflow-hidden rounded-t-sm shrink-0 cursor-pointer group hover:scale-95 transition-transform duration-300 ease-out 460:w-[18rem]">
+                            <img
+                              src={
+                                content.backdrop_path
+                                  ? `${IMG_POSTER_BASE_URL}${content.backdrop_path}`
+                                  : NoBackdrop
+                              }
+                              alt="Recomendations"
+                              className="absolute z-0 w-full h-full object-cover"
+                            />
+                            {/* About movie or show - on hover drop down */}
+                            <div className="absolute z-1 bottom-0 bg-bg-blackColor/90 w-full flex flex-col gap-1.25 px-2 py-1.25 opacity-0 group-hover:opacity-100 transition duration-200 460:gap-2 460:py-2">
+                              <div className="flex justify-between items-center">
                                 <div
-                                  onClick={() =>
-                                    saveProfileMedia(content, "watchLater")
-                                  }
-                                  className="p-[0.1rem]"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                  }}
+                                  className="flex gap-1"
                                 >
-                                  {showSavedProfileMedia(
-                                    content,
-                                    "watchLater",
-                                  ) ? (
-                                    <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
-                                  ) : (
-                                    <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
-                                  )}
+                                  <div
+                                    onClick={() =>
+                                      saveProfileMedia(content, "watchLater")
+                                    }
+                                    className="p-[0.1rem]"
+                                  >
+                                    {showSavedProfileMedia(
+                                      content,
+                                      "watchLater",
+                                    ) ? (
+                                      <RiBookmarkFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                    ) : (
+                                      <RiBookmarkLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                    )}
+                                  </div>
+                                  <div
+                                    onClick={() =>
+                                      saveProfileMedia(content, "favourite")
+                                    }
+                                    className="p-[0.1rem]"
+                                  >
+                                    {showSavedProfileMedia(
+                                      content,
+                                      "favourite",
+                                    ) ? (
+                                      <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
+                                    ) : (
+                                      <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
+                                    )}
+                                  </div>
                                 </div>
-                                <div
-                                  onClick={() =>
-                                    saveProfileMedia(content, "favourite")
-                                  }
-                                  className="p-[0.1rem]"
-                                >
-                                  {showSavedProfileMedia(
-                                    content,
-                                    "favourite",
-                                  ) ? (
-                                    <RiHeartFill className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-fourth" />
-                                  ) : (
-                                    <RiHeartLine className="w-7 h-7 sm:w-[1.80rem] sm:h-[1.80rem] lg:w-[1.85rem] lg:h-[1.85rem] text-text-secondary" />
-                                  )}
+                                <div className="rounded-full text-text-secondary border p-[0.1rem]">
+                                  <Info className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </div>
                               </div>
-                              <div className="rounded-full text-text-secondary border p-[0.1rem]">
-                                <Info className="w-5 h-5 sm:w-6 sm:h-6" />
+                              <div className="flex items-center gap-2 font-medium text-text-secondary text-xs 460:text-sm">
+                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
+                                  <h1 className="text-xs lg:text-sm font-regular">
+                                    ★ {content.vote_average.toFixed(1) || "0.0"}
+                                  </h1>
+                                </div>
+                                <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
+                                  <h1 className="text-xs lg:text-sm font-regular">
+                                    {(
+                                      content.release_date ||
+                                      content.first_air_date
+                                    )?.slice(0, 4) || "N/A"}
+                                  </h1>
+                                </div>
+                              </div>
+                              <div className="flex gap-2">
+                                {content.genre_ids?.length === 0 ? (
+                                  <h1 className="text-xs lg:text-sm font-regular">
+                                    Uncategorized
+                                  </h1>
+                                ) : (
+                                  allGenres
+                                    .filter((list) =>
+                                      content.genre_ids.includes(list.id),
+                                    )
+                                    .slice(0, 2)
+                                    .map((val) => (
+                                      <h1
+                                        key={val.id}
+                                        className="text-xs lg:text-sm font-regular"
+                                      >
+                                        {val?.name === "Science Fiction"
+                                          ? "Sci-Fi"
+                                          : val?.name?.split(" ")[0]}
+                                      </h1>
+                                    ))
+                                )}
                               </div>
                             </div>
-                            <div className="flex items-center gap-2 font-medium text-text-secondary text-xs 460:text-sm">
-                              <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
-                                <h1 className="text-xs lg:text-sm font-regular">
-                                  ★ {content.vote_average.toFixed(1) || "0.0"}
+                            {(content?.title || content?.name) && (
+                              <div className="absolute m-1 right-1 bottom-1 rounded-2xl px-3 py-1 bg-bg-blackColor/60 border-sm transition-transform duration-200 group-hover:-translate-y-23 460:group-hover:-translate-y-30">
+                                <h1 className="text-xs font-semibold 460:text-sm">
+                                  {(content?.title || content?.name).split(
+                                    /:|-|,/,
+                                  )[0] || "N/A"}
                                 </h1>
                               </div>
-                              <div className="flex justify-center items-center gap-1 py-[0.05rem] px-2 border">
-                                <h1 className="text-xs lg:text-sm font-regular">
-                                  {(
-                                    content.release_date ||
-                                    content.first_air_date
-                                  )?.slice(0, 4) || "N/A"}
-                                </h1>
-                              </div>
-                            </div>
-                            <div className="flex gap-2">
-                              {content.genre_ids?.length === 0 ? (
-                                <h1 className="text-xs lg:text-sm font-regular">
-                                  Uncategorized
-                                </h1>
-                              ) : (
-                                allGenres
-                                  .filter((list) =>
-                                    content.genre_ids.includes(list.id),
-                                  )
-                                  .slice(0, 2)
-                                  .map((val) => (
-                                    <h1
-                                      key={val.id}
-                                      className="text-xs lg:text-sm font-regular"
-                                    >
-                                      {val?.name === "Science Fiction"
-                                        ? "Sci-Fi"
-                                        : val?.name?.split(" ")[0]}
-                                    </h1>
-                                  ))
-                              )}
-                            </div>
+                            )}
                           </div>
-                          {(content?.title || content?.name) && (
-                            <div className="absolute m-1 left-1 bottom-1 rounded-2xl px-3 py-1 bg-bg-blackColor/60 border-sm transition-transform duration-200 group-hover:-translate-y-23 460:group-hover:-translate-y-30">
-                              <h1 className="text-xs font-semibold 460:text-sm">
-                                {(content?.title || content?.name).split(
-                                  /:|-|,/,
-                                )[0] || "N/A"}
-                              </h1>
-                            </div>
-                          )}
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             )}

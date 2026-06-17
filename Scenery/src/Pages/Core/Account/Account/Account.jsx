@@ -53,7 +53,7 @@ const Account = () => {
                 <div className="flex items-center justify-center gap-2">
                   <RiArticleLine className="h-5 w-5 sm:h-6 sm:w-6" />
                   <h1 className="text-sm lg:text-base font-medium">
-                    Change username
+                    Change name
                   </h1>
                 </div>
                 <RiArrowRightSLine />

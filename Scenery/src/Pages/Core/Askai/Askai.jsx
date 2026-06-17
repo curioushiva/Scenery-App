@@ -144,7 +144,7 @@ const Askai = () => {
                   </div>
                   <div
                     onClick={() => handelGetAskAI()}
-                    className="flex items-center justify-center gap-2 py-1 px-4 bg-btn-primary rounded-sm cursor-pointer duration-200 ease-in-out active:scale-[0.95]"
+                    className="flex items-center justify-center gap-2 py-1 px-4 bg-btn-primary rounded-sm cursor-pointer duration-200 ease-in-out active:scale-95"
                   >
                     <h1 className="text-xs sm:text-sm font-regular">Ask</h1>
                     <RiArrowRightLine className="w-4 h-4 shrink-0" />

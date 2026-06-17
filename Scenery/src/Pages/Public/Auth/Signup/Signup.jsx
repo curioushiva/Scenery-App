@@ -103,7 +103,7 @@ const Signup = () => {
           onClick={() =>
             validateSignupCred(typedSignupEmail, typedSignupPassword)
           }
-          className="w-full px-5 py-3 rounded-sm text-base bg-btn-primary font-medium cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
+          className="w-full px-5 py-3 rounded-sm text-base bg-btn-primary font-medium cursor-pointer transition duration-100 ease-out active:scale-95"
         >
           {signupLoader ? "Creating account..." : "Sign Up"}
         </button>

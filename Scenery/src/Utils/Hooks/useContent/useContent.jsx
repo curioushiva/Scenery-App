@@ -269,7 +269,7 @@ const useContent = () => {
     {
       type: "underrated",
       title: "Hidden Gems",
-      url: "/discover/movie?sort_by=vote_average.desc&vote_count.gte=100&vote_count.lte=500",
+      url: "/discover/movie?sort_by=vote_average.desc&vote_count.gte=200&vote_count.lte=500",
     },
     {
       type: "tvScifi",
@@ -775,7 +775,7 @@ const useContent = () => {
         ),
       );
 
-       /* To get & dispatch movies genre */
+      /* To get & dispatch movies genre */
       const moviesGenreList = moviesGenreData[
         selectedMovieGenreIndex
       ].genreMovies.reduce((acc, val, i) => {
@@ -862,7 +862,7 @@ const useContent = () => {
         ),
       );
 
-       /* To get & dispatch tvshows */
+      /* To get & dispatch tvshows */
       const tvShowsCatList = tvShowsCatData.reduce((acc, val, i) => {
         const res = responses[i];
         if (res.status === "fulfilled") {
@@ -1230,32 +1230,32 @@ const useContent = () => {
         {
           type: "top",
           title: "Top Anime Series",
-          url: "/discover/tv?with_genres=16&with_original_language=ja&vote_average.gte=7",
+          url: "/discover/tv?with_genres=16&with_origin_country=JP&sort_by=vote_average.desc&vote_count.gte=500",
         },
         {
           type: "popular",
           title: "Popular Anime Shows",
-          url: "/discover/tv?with_genres=16&with_original_language=ja&sort_by=popularity.desc",
+          url: "/discover/tv?with_genres=16&with_origin_country=JP&sort_by=vote_average.desc&vote_count.gte=3000",
         },
         {
-          type: "action",
-          title: "Action Anime",
-          url: "/discover/tv?with_genres=16,10759&with_original_language=ja",
+          type: "recent",
+          title: "Recent Anime",
+          url: `/discover/tv?with_genres=16&with_origin_country=JP&first_air_date.gte=${new Date().getFullYear() - 4}-01-01&sort_by=vote_average.desc&vote_count.gte=500`,
         },
         {
-          type: "scifi",
-          title: "Sci-Fi Anime",
-          url: "/discover/tv?with_genres=16,10765&with_original_language=ja",
+          type: "classic",
+          title: "Classic Anime",
+          url: "/discover/tv?with_genres=16&with_origin_country=JP&first_air_date.lte=2010-12-31&sort_by=vote_average.desc",
+        },
+        {
+          type: "drama",
+          title: "Drama Anime",
+          url: "/discover/tv?with_genres=16,18&with_original_language=ja",
         },
         {
           type: "romance",
           title: "Romantic Anime",
           url: "/discover/tv?with_genres=16,10749&with_original_language=ja",
-        },
-        {
-          type: "fantasy",
-          title: "Fantasy Anime",
-          url: "/discover/tv?with_genres=16,14&with_original_language=ja",
         },
       ],
     },
@@ -1272,7 +1272,7 @@ const useContent = () => {
         ),
       );
 
-       /* To get & dispatch tvshows genre */
+      /* To get & dispatch tvshows genre */
       const tvShowsGenreList = tvShowsGenreData[
         selectedTvShowGenreIndex
       ].genreTvShows.reduce((acc, val, i) => {
@@ -1350,7 +1350,7 @@ const useContent = () => {
         ),
       );
 
-       /* To get & dispatch popolar page's content */
+      /* To get & dispatch popolar page's content */
       const popularCatList = popularCatData.reduce((acc, val, i) => {
         const res = responses[i];
         if (res.status === "fulfilled") {
@@ -1428,7 +1428,7 @@ const useContent = () => {
         ),
       );
 
-       /* To get & dispatch movie info */
+      /* To get & dispatch movie info */
       const movieInfoList = movieInfoData.reduce((acc, val, i) => {
         const res = responses[i];
         if (res.status === "fulfilled") {
@@ -1488,7 +1488,7 @@ const useContent = () => {
           }),
         ),
       );
-       /* To get & dispatch tvshow info */
+      /* To get & dispatch tvshow info */
       const tvShowInfoList = tvShowInfoData.reduce((acc, val, i) => {
         const res = responses[i];
         if (res.status === "fulfilled") {

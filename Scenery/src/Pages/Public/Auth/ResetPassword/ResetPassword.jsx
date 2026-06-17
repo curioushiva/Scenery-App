@@ -58,7 +58,7 @@ const ResetPassword = () => {
           </p>
           <button
             onClick={() => handleResetPassword()}
-            className="w-full px-5 py-3 rounded-sm text-base font-medium bg-btn-primary cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
+            className="w-full px-5 py-3 rounded-sm text-base font-medium bg-btn-primary cursor-pointer transition duration-100 ease-out active:scale-95"
           >
             {btnActionLabel}
           </button>

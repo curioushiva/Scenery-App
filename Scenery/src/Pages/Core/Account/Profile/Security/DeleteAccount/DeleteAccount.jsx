@@ -141,7 +141,7 @@ const DeleteAccount = () => {
                     <div className="flex flex-col gap-2">
                       <button
                         onClick={() => handleAccountReauth()}
-                        className="w-full px-5 py-2 text-sm sm:text-base font-medium rounded-sm bg-btn-primary cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
+                        className="w-full px-5 py-2 text-sm sm:text-base font-medium rounded-sm bg-btn-primary cursor-pointer transition duration-100 ease-out active:scale-95"
                       >
                         {authBtnActionLabel}
                       </button>
@@ -195,7 +195,7 @@ const DeleteAccount = () => {
                     <div className="flex flex-col gap-2">
                       <button
                         onClick={() => handelDeleteAccount()}
-                        className="w-full px-5 py-2 text-sm sm:text-base font-medium rounded-sm bg-btn-primary cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
+                        className="w-full px-5 py-2 text-sm sm:text-base font-medium rounded-sm bg-btn-primary cursor-pointer transition duration-100 ease-out active:scale-95"
                       >
                         {btnActionLabel}
                       </button>

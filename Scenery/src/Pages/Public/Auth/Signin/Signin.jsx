@@ -96,7 +96,7 @@ const Signin = () => {
             onClick={() => {
               validateSigninPassword(typedSigninPassword, typedSigninEmail);
             }}
-            className="w-full px-5 py-3 rounded-sm text-base bg-btn-primary font-medium cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
+            className="w-full px-5 py-3 rounded-sm text-base bg-btn-primary font-medium cursor-pointer transition duration-100 ease-out active:scale-95"
           >
             {signinLoader ? "Signing in..." : "Sign In"}
           </button>
@@ -162,7 +162,7 @@ const Signin = () => {
           {/* Button */}
           <button
             onClick={() => validateSigninEmail(typedSigninEmail)}
-            className="w-full px-5 py-3 rounded-sm text-base bg-btn-primary font-medium cursor-pointer transition duration-100 ease-out active:scale-[0.95]"
+            className="w-full px-5 py-3 rounded-sm text-base bg-btn-primary font-medium cursor-pointer transition duration-100 ease-out active:scale-95"
           >
             Continue
           </button>
