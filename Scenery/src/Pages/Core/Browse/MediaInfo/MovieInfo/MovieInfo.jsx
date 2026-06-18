@@ -753,8 +753,7 @@ const MovieInfo = () => {
                                     </div>
                                   </div>
                                   <h1 className="text-[0.85rem]">
-                                    {(review?.content).split(/https:/)[0] ||
-                                      "Review unavailable"}
+                                    {review?.content || "Review unavailable"}
                                   </h1>
                                 </div>
                               </div>

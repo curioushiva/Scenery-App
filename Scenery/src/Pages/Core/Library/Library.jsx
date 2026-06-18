@@ -29,7 +29,6 @@ const Library = () => {
   const { savedMovies, savedTVShows } = useSelector(
     (store) => store.account.profile,
   );
-  console.log(savedMovies?.watchLater);
 
   /* To select saved type */
   const [selectedSavedType, setSelectedSavedType] = useState('totalMovies&TVShows')

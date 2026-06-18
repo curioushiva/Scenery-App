@@ -1,5 +1,8 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import useAppInit from "@/Utils/Hooks/useAppInit/useAppInit";
+import useOnlineStatus from "@/Utils/Hooks/useOnlineStatus/useOnlineStatus";
+import OnlineStatus from "@/Pages/System/OnlineStatus/OnlineStatus";
+import ValidRoute from "@/Pages/System/ValidRoute/ValidRoute";
 import LandingLayout from "@/Pages/Layouts/LandingLayout/LandingLayout";
 import Landing from "@/Pages/Public/Landing/Landing";
 import SystemLayout from "@/Pages/Layouts/SystemLayout/SystemLayout";
@@ -30,13 +33,16 @@ import TVShowInfo from "@/Pages/Core/Browse/MediaInfo/TVShowInfo/TVShowInfo";
 
 const Layout = () => {
 
+    /* To check for online status */
+    const isOnline = useOnlineStatus();
+
     /* To initialize user's data using scenery */
     useAppInit();
 
     /* Main layout for the app */
     return (
         <div>
-            <Outlet />
+            {isOnline ? <Outlet /> : <OnlineStatus />}
         </div>
     );
 };
@@ -47,6 +53,7 @@ const App = () => {
         {
             path: "/",
             element: <Layout />,
+            errorElement: <ValidRoute />,
             children: [
 
                 /* Landing Layout */
