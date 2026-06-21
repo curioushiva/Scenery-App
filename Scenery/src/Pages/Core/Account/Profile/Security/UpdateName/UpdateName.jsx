@@ -5,6 +5,9 @@ import { useSelector } from "react-redux";
 import useAccount from "@/Utils/Hooks/useAccount/useAccount";
 
 const UpdateName = () => {
+
+  /* -------------- For name updation --------------------- */
+
   /* To update the name */
   const { changeName } = useAccount();
 

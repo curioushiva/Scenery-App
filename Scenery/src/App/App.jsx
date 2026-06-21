@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import useAppInit from "@/Utils/Hooks/useAppInit/useAppInit";
 import useOnlineStatus from "@/Utils/Hooks/useOnlineStatus/useOnlineStatus";
 import OnlineStatus from "@/Pages/System/OnlineStatus/OnlineStatus";
-import ValidRoute from "@/Pages/System/ValidRoute/ValidRoute";
+import ErrorPage from "@/Pages/System/ErrorPage/ErrorPage";
 import LandingLayout from "@/Pages/Layouts/LandingLayout/LandingLayout";
 import Landing from "@/Pages/Public/Landing/Landing";
 import SystemLayout from "@/Pages/Layouts/SystemLayout/SystemLayout";
@@ -53,7 +53,7 @@ const App = () => {
         {
             path: "/",
             element: <Layout />,
-            errorElement: <ValidRoute />,
+            errorElement: <ErrorPage />,
             children: [
 
                 /* Landing Layout */

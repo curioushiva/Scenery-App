@@ -48,7 +48,7 @@ const useContent = () => {
     },
   ];
 
-  /* Function to get landing poster data */
+  /* Function to get landing poster data - no fallback */
   const getLandingContentData = async () => {
     try {
       const responses = await Promise.allSettled(
@@ -89,7 +89,7 @@ const useContent = () => {
     },
   ];
 
-  /* Function to call movies & tv shows genres */
+  /* Function to call movies & tv shows genres - no fallback */
   const getAllGenres = async () => {
     try {
       const responses = await Promise.allSettled(
@@ -116,7 +116,7 @@ const useContent = () => {
     }
   };
 
-  /* Function to get Background Video availability */
+  /* Function to get Background Video availability - added fallback */
   const getBackgroundVideo = async (getVideoList) => {
     const validBackgroundVideo = getVideoList.find((val) => val.backdrop_path);
     try {
@@ -170,7 +170,8 @@ const useContent = () => {
       return { video: validBackgroundVideo, videoKey: validBackgroundVideoKey };
     } catch (error) {
       console.error(error);
-      return { video: validBackgroundVideo, videoKey: validBackgroundVideoKey };
+      /* If fails fallback to media with backdrop path */
+      return { video: validBackgroundVideo, videoKey: null };
     }
   };
 

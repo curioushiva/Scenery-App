@@ -24,6 +24,13 @@ const initialState = {
   },
   /* Profile selected */
   isProfileSelected: false,
+
+  /* Selected library section */
+  selectedLibrarySection: {
+    name: "Total Movies & TV Shows",
+    type: "totalMovies&TVShows",
+    data: null,
+  },
 };
 
 const AccountSlice = createSlice({
@@ -60,6 +67,10 @@ const AccountSlice = createSlice({
     setIsProfileSelected: (state, action) => {
       state.isProfileSelected = action.payload;
     },
+    /* Set selected library section */
+    setSelectedLibrarySection: (state, action) => {
+      state.selectedLibrarySection = action.payload;
+    },
     /* Remove account */
     removeAccount: () => {
       return initialState;
@@ -80,6 +91,8 @@ export const {
   appendSavedTVShow,
   /* Profile selected */
   setIsProfileSelected,
+  /* Selected libraray section */
+  setSelectedLibrarySection,
   /* Remove account */
   removeAccount,
 } = AccountSlice.actions;

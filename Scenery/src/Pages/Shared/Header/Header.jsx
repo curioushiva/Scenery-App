@@ -40,7 +40,7 @@ export const LandingHeader = () => {
 export const SystemHeader = () => {
   return (
     <div className="w-full border-b-1 border-br-primary py-5 px-8 lg:px-35">
-      <Link to="">
+      <Link to="/" className="flex w-fit">
         <img src={logo1} alt="logo1" className="w-10 sm:w-12" />
       </Link>
     </div>
@@ -51,7 +51,7 @@ export const SystemHeader = () => {
 export const AuthHeader = () => {
   return (
     <div className="w-full border-b-1 border-br-primary py-5 px-8 lg:px-35">
-      <Link to="/">
+      <Link to="/" className="flex w-fit">
         <img src={logo1} alt="logo1" className="w-10 sm:w-12" />
       </Link>
     </div>

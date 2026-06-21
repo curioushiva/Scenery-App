@@ -1,5 +1,6 @@
 import axios from "axios";
 import { IPINFO_BASE_URL } from "@/Utils/SceneryAPI/SceneryAPI";
+import useContent from "../useContent/useContent";
 import { onAuthStateChanged } from "firebase/auth";
 import {
   doc,
@@ -30,6 +31,9 @@ const useAppInit = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  /* To access get all genre */
+  const { getAllGenres } = useContent();
+
   /* To get user's profile */
   const profile = useSelector((store) => store.account.profile);
 
@@ -40,6 +44,11 @@ const useAppInit = () => {
   const { isProfileFetched, isProfileSelected } = useSelector(
     (store) => store.account,
   );
+
+  /* To get all genre effect */
+  useEffect(() => {
+    getAllGenres();
+  }, []);
 
   /* Firebase authentication effect */
   useEffect(() => {
@@ -79,8 +88,9 @@ const useAppInit = () => {
         const res = await axios.get(
           `${IPINFO_BASE_URL}${import.meta.env.VITE_IPINFO_IO_AUTH_TOKEN}`,
         );
-        fetchedUsersLocation = res?.data?.country;
-        /* In case of some failure */
+        /* If api fails fallback to 'IN' as prime loc */
+        fetchedUsersLocation = res?.data?.country || "IN";
+        /* In case of some firebase failure */
         dispatch(updateProfile({ Location: fetchedUsersLocation }));
       } catch (error) {
         console.log("Location fetch failed", error);
@@ -128,7 +138,7 @@ const useAppInit = () => {
               UID: snapshot?.data()?.PROFILE_UID ?? profile.UID,
               Email: snapshot?.data()?.PROFILE_EMAIL ?? profile.Email,
               CredChanged: snapshot?.data()?.PROFILE_CREDCHANGED ?? false,
-              Name: snapshot?.data()?.PROFILE_NAME ?? '',
+              Name: snapshot?.data()?.PROFILE_NAME ?? "",
               AvatarNum: snapshot?.data()?.PROFILE_AVATARNUM ?? 0,
               Location: snapshot?.data()?.PROFILE_LOCATION ?? profile.Location,
               CreatedAt: snapshot?.data()?.PROFILE_CREATEDAT ?? null,
@@ -151,9 +161,14 @@ const useAppInit = () => {
     /* Not logged in - guard these pages */
     if (!profile?.UID) {
       if (
-        !["/signin", "/signup", "/resetpassword", "/aboutus", "/privacy", "/whatsnew"].includes(
-          location.pathname,
-        )
+        ![
+          "/signin",
+          "/signup",
+          "/resetpassword",
+          "/aboutus",
+          "/privacy",
+          "/whatsnew",
+        ].includes(location.pathname)
       ) {
         navigate("/");
       }
@@ -312,7 +327,7 @@ const useAppInit = () => {
           );
         } catch (error) {
           console.log("Credential updation failed", error);
-        };
+        }
       },
       3 * 60 * 1000,
     );
@@ -325,7 +340,3 @@ const useAppInit = () => {
 };
 
 export default useAppInit;
-
-
-
-

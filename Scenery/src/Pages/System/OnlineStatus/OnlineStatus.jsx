@@ -8,7 +8,7 @@ const OnlineStatus = () => {
         <div className="max-w-xs text-center h-full flex flex-col justify-center items-center gap-8">
           <div className='flex flex-col gap-4'>
             <p className='text-sm font-regular text-text-secondary'>No Connection</p>
-            <h1 className='text-3xl sm:text-4xl font-medium bg-gradient-to-b from-text-primary to-text-secondary bg-clip-text text-transparent'>You're Offline</h1>
+            <h1 className='text-3xl sm:text-4xl font-regular bg-gradient-to-b from-text-primary to-text-secondary bg-clip-text text-transparent'>You're Offline</h1>
             <p className='text-sm text-text-secondary'>Scenery needs a connection to find your next watch. Check your network and try again</p>
           </div>
           <div className='flex flex-col gap-6'>

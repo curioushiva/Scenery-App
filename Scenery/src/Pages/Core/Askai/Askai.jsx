@@ -17,7 +17,7 @@ const Askai = () => {
   const dispatch = useDispatch();
 
   /* To call for normal scenery search */
-  const { getAskAI } = useDiscover();
+  const { getAskAI, askAILoader, askAIError, setAskAIError } = useDiscover();
 
   /* To select Name */
   const { Name } = useSelector((store) => store.account.profile);
@@ -33,32 +33,35 @@ const Askai = () => {
   /* To set query */
   const [query, setQuery] = useState(queryString);
 
-  /* To check is result were found */
-  const [noResultsFound, setNoResultsFound] = useState(false);
+  /* To show askai cards */
+  const [showAskiAICards, setShowAskAICards] = useState(true);
+
+  /* To jiggle text area when empty query passed */
+  const [isJiggleTextarea, setIsJiggleTextarea] = useState(false);
+  const triggerTextArea = () => {
+    setIsJiggleTextarea(false);
+    requestAnimationFrame(() => {
+      setIsJiggleTextarea(true);
+      setTimeout(() => {
+        setIsJiggleTextarea(false);
+      }, 200);
+    });
+  };
 
   /* To handle get ask ai */
   const handelGetAskAI = async () => {
-    const data = await getAskAI(query);
-    if (!data) {
-      setNoResultsFound(true);
-      dispatch(
-        addAskAIData({
-          queryString: "",
-          mediaResults: [],
-        }),
-      );
+    /* If query is empty */
+    if (!query.trim()) {
+      triggerTextArea();
       return;
     }
 
-    dispatch(
-      addAskAIData({
-        queryString: query,
-        mediaResults: data,
-      }),
-    );
+    /* Call fn if have value */
+    setShowAskAICards(false);
+    await getAskAI(query);
   };
 
-  /* Use effect for cleanup */
+  /* Use effect for page cleanup */
   useEffect(() => {
     if (!query.trim()) {
       dispatch(
@@ -67,8 +70,8 @@ const Askai = () => {
           queryString: "",
         }),
       );
-      setNoResultsFound(false);
-      return;
+      setShowAskAICards(true);
+      setAskAIError(false);
     }
   }, [query]);
 
@@ -102,12 +105,15 @@ const Askai = () => {
           <div className="w-full max-w-3xl flex flex-col gap-5">
             <div className="w-full flex flex-col gap-5">
               {/* Text area */}
-              <div className="relative w-full flex-col gap-0 bg-bg-inputColor border border-br-primary/80 rounded-sm">
+              <div
+                className={`relative w-full flex-col gap-0 bg-bg-inputColor border border-br-primary/80 rounded-sm ${isJiggleTextarea ? "jiggle" : ""}`}
+              >
                 <textarea
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   maxLength={200}
-                  className="w-full h-30 resize-none text-sm px-4 py-4 pr-15 280:pr-12 text-text-secondary placeholder-text-secondary focus:outline-none custom-scrollbar"
+                  className={`w-full h-30 resize-none text-sm px-4 py-4 pr-15 280:pr-12 text-text-secondary placeholder-text-secondary focus:outline-none custom-scrollbar 
+                    `}
                   type="text"
                   placeholder="e.g. show me some retro funny movies from the 80s..."
                 ></textarea>
@@ -152,8 +158,20 @@ const Askai = () => {
                 </div>
               </div>
 
+              {/* Loader */}
+              {askAILoader && (
+                <div className="w-full flex items-center justify-start">
+                  <div className="w-10 flex justify-center">
+                    <div className="loader"></div>
+                  </div>
+                  <h1 className="text-xs sm:text-sm text-text-secondary font-normal">
+                    Finding the best picks for you...
+                  </h1>
+                </div>
+              )}
+
               {/* Ask AI cards */}
-              {!mediaResults.length > 0 && !noResultsFound && (
+              {showAskiAICards && mediaResults.length <= 0 && (
                 <div className="w-full flex flex-col gap-4">
                   <h1 className="text-sm text-text-primary/80">TRY ASKING</h1>
                   <div className="flex flex-col gap-2">
@@ -223,7 +241,7 @@ const Askai = () => {
               )}
 
               {/* No media recommendation found */}
-              {noResultsFound && mediaResults.length <= 0 && (
+              {askAIError && mediaResults.length <= 0 && (
                 <div className="w-full flex flex-col justify-center gap-10">
                   <div className="w-full flex flex-col gap-2 border px-4 py-4 overflow-hidden bg-bg-inputColor border-br-primary/60 rounded-sm">
                     <h1 className="text-sm font-regular text-text-sixth">

@@ -14,32 +14,38 @@ body,
 
 /* Custom fonts */
 @font-face {
-  font-family: "Netflix_Sans_Regular_Bold";
-  src: url("../assets/fonts/NSansRb.otf") format("opentype");
+  font-family: "SceneryRegular";
+  src: url("../assets/fonts/SceneryR.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "Netflix_Sans_Medium_Bold";
-  src: url("../assets/fonts/NSansMb.otf") format("opentype");
+  font-family: "SceneryMedium";
+  src: url("../assets/fonts/SceneryM.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "Netflix_Sans_Bold_Bold";
-  src: url("../assets/fonts/NSansBb.otf") format("opentype");
+  font-family: "SceneryBold";
+  src: url("../assets/fonts/SceneryB.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "OGG_Cursive";
-  src: url("../assets/fonts/OGCursive.otf") format("opentype");
+  font-family: "OGGCursive";
+  src: url("../assets/fonts/OGGCursive.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "OGGSharp";
+  src: url("../assets/fonts/OGGSharp.otf") format("opentype");
 }
 
 /* Custom theme for tailwind */
 @theme {
   /* Fonts */
-  --font-regular: "Netflix_Sans_Regular_Bold", sans-serif;
-  --font-medium: "Netflix_Sans_Medium_Bold", sans-serif;
-  --font-bold: "Netflix_Sans_Bold_Bold", sans-serif;
-  --font-cursive: "OGG_Cursive", sans-serif;
+  --font-regular: "SceneryRegular", sans-serif;
+  --font-medium: "SceneryMedium", sans-serif;
+  --font-bold: "SceneryBold", sans-serif;
+  --font-cursive: "OGGCursive", sans-serif;
+  --font-sharp: "OGGSharp", sans-serif;
 
   /* Colors */
 
@@ -140,8 +146,8 @@ body,
   background: rgba(255, 255, 255, 0.4);
 }
 
-/* Dropdown for Movie Genre */
-.moviesGenreDropdown {
+/* Dropdown for genre */
+.genreDropdown {
   position: absolute;
   top: 120%;
   left: 0px;
@@ -149,44 +155,7 @@ body,
   transform: none;
 }
 
-.moviesGenreDropdown::before {
-  content: "";
-  position: absolute;
-  top: -8px;
-  left: 20px;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 8px solid #5f5e5e;
-}
-
-@media (min-width: 280px) {
-  .moviesGenreDropdown {
-    top: 180%;
-    left: 75px;
-  }
-
-  .moviesGenreDropdown::before {
-    top: -8px;
-    left: 108px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .moviesGenreDropdown {
-    left: 105px;
-  }
-}
-
-/* Dropdown for Shows Genre */
-.showsGenreDropdown {
-  position: absolute;
-  top: 120%;
-  left: 0px;
-  margin-top: 6px;
-  transform: none;
-}
-
-.showsGenreDropdown::before {
+.genreDropdown::before {
   content: "";
   position: absolute;
   top: -8px;
@@ -197,19 +166,18 @@ body,
 }
 
 @media (min-width: 350px) {
-  .showsGenreDropdown {
+  .genreDropdown {
     top: 180%;
     left: 115px;
   }
 
-  .showsGenreDropdown::before {
-    top: -8px;
-    left: 108px;
+  .genreDropdown::before {
+    left: 50%;
   }
 }
 
 @media (min-width: 1024px) {
-  .showsGenreDropdown {
+  .genreDropdown {
     left: 155px;
   }
 }
@@ -225,6 +193,86 @@ body,
   }
 }
 
+/* Jiggle animation */
+.jiggle {
+  animation: jiggle 0.4s ease-in-out 5;
+}
+
+@keyframes jiggle {
+  0% {
+    transform: translateX(0);
+  }
+
+  10% {
+    transform: translateX(-4px) rotate(-1deg);
+  }
+
+  20% {
+    transform: translateX(4px) rotate(1deg);
+  }
+
+  30% {
+    transform: translateX(-4px) rotate(-1deg);
+  }
+
+  40% {
+    transform: translateX(4px) rotate(1deg);
+  }
+
+  50% {
+    transform: translateX(-3px);
+  }
+
+  60% {
+    transform: translateX(3px);
+  }
+
+  70% {
+    transform: translateX(-2px);
+  }
+
+  80% {
+    transform: translateX(2px);
+  }
+
+  90% {
+    transform: translateX(-1px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Loader animation */
+.loader {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: l5 1s infinite linear alternate;
+}
+
+@keyframes l5 {
+  0% {
+    box-shadow: 10px 0 #5B6AF5, -10px 0 #5B6AF533;
+    background: #5B6AF5;
+  }
+
+  33% {
+    box-shadow: 10px 0 #5B6AF5, -10px 0 #5B6AF533;
+    background: #5B6AF533;
+  }
+
+  66% {
+    box-shadow: 10px 0 #5B6AF533, -10px 0 #5B6AF5;
+    background: #5B6AF533;
+  }
+
+  100% {
+    box-shadow: 10px 0 #5B6AF533, -10px 0 #5B6AF5;
+    background: #5B6AF5;
+  }
+}
 
 /* * {
   outline: 0.1px solid red;

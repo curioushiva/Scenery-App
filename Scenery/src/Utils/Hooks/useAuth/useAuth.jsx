@@ -81,7 +81,7 @@ export const useAuth = () => {
   };
 
   /* Email and password validation for signup page */
-  const validateSignupCred = (typedSignupEmail, typedSignupPassword) => {
+  const validateSignupCred = async (typedSignupEmail, typedSignupPassword) => {
     const invalidSignupEmailMsg = isEmailValid(typedSignupEmail);
     const invalidSignupPassMsg = isPasswordValid(typedSignupPassword);
     if (invalidSignupEmailMsg || invalidSignupPassMsg) {
@@ -102,44 +102,49 @@ export const useAuth = () => {
         }),
       );
       /* Firebase - Sign up new users */
-      createUserWithEmailAndPassword(
-        auth,
-        typedSignupEmail,
-        typedSignupPassword,
-      )
-        .then(() => { })
-        .catch((error) => {
-          dispatch(
-            setSignupPageErrors({
-              signupLoader: false,
-            }),
-          );
-          const errorCode = error.code;
-          const getSignupAuthError = (errorCode) => {
-            switch (errorCode) {
-              case "auth/email-already-in-use":
-                return "Email already registered.";
+      try {
+        await createUserWithEmailAndPassword(
+          auth,
+          typedSignupEmail,
+          typedSignupPassword,
+        );
+        dispatch(
+          setSignupPageErrors({
+            signupLoader: false,
+          }),
+        );
+      } catch (error) {
+        dispatch(
+          setSignupPageErrors({
+            signupLoader: false,
+          }),
+        );
+        const errorCode = error.code;
+        const getSignupAuthError = (errorCode) => {
+          switch (errorCode) {
+            case "auth/email-already-in-use":
+              return "Email already registered.";
 
-              case "auth/invalid-email":
-                return "Invalid email address.";
+            case "auth/invalid-email":
+              return "Invalid email address.";
 
-              case "auth/weak-password":
-                return "Password too weak.";
+            case "auth/weak-password":
+              return "Password too weak.";
 
-              case "auth/network-request-failed":
-                return "No internet connection.";
+            case "auth/network-request-failed":
+              return "No internet connection.";
 
-              default:
-                return "Something went wrong.";
-            }
-          };
-          const resultGetSignupAuthError = getSignupAuthError(errorCode);
-          dispatch(
-            setSignupPageErrors({
-              firebaseSignupError: resultGetSignupAuthError,
-            }),
-          );
-        });
+            default:
+              return "Something went wrong.";
+          }
+        };
+        const resultGetSignupAuthError = getSignupAuthError(errorCode);
+        dispatch(
+          setSignupPageErrors({
+            firebaseSignupError: resultGetSignupAuthError,
+          }),
+        );
+      }
     }
   };
 
@@ -164,7 +169,10 @@ export const useAuth = () => {
   };
 
   /* Password Validation for signin page */
-  const validateSigninPassword = (typedSigninPassword, typedSigninEmail) => {
+  const validateSigninPassword = async (
+    typedSigninPassword,
+    typedSigninEmail,
+  ) => {
     const invalidSigninPasswordMsg = isPasswordValid(typedSigninPassword);
     if (invalidSigninPasswordMsg) {
       dispatch(
@@ -182,42 +190,48 @@ export const useAuth = () => {
           signinLoader: true,
         }),
       );
+
       /* Firebase - Sign in user */
-      signInWithEmailAndPassword(auth, typedSigninEmail, typedSigninPassword)
-        .then(() => { })
-        .catch((error) => {
-          dispatch(setSigninPageErrors({ signinLoader: false }));
-          const errorCode = error.code;
-          const getSigninAuthError = (errorCode) => {
-            switch (errorCode) {
-              case "auth/invalid-credential":
-              case "auth/user-not-found":
-              case "auth/wrong-password":
-                return "Invalid email or password";
+      try {
+        await signInWithEmailAndPassword(
+          auth,
+          typedSigninEmail,
+          typedSigninPassword,
+        );
+        dispatch(setSigninPageErrors({ signinLoader: false }));
+      } catch (error) {
+        dispatch(setSigninPageErrors({ signinLoader: false }));
+        const errorCode = error.code;
+        const getSigninAuthError = (errorCode) => {
+          switch (errorCode) {
+            case "auth/invalid-credential":
+            case "auth/user-not-found":
+            case "auth/wrong-password":
+              return "Invalid email or password";
 
-              case "auth/invalid-email":
-                return "Invalid email format";
+            case "auth/invalid-email":
+              return "Invalid email format";
 
-              case "auth/user-disabled":
-                return "Account disabled. Contact support";
+            case "auth/user-disabled":
+              return "Account disabled. Contact support";
 
-              case "auth/too-many-requests":
-                return "Too many attempts. Try again later";
+            case "auth/too-many-requests":
+              return "Too many attempts. Try again later";
 
-              case "auth/network-request-failed":
-                return "Network error. Check your connection";
+            case "auth/network-request-failed":
+              return "Network error. Check your connection";
 
-              default:
-                return "Login failed. Try again";
-            }
-          };
-          const resultGetSigninAuthError = getSigninAuthError(errorCode);
-          dispatch(
-            setSigninPageErrors({
-              firebaseSigninError: resultGetSigninAuthError,
-            }),
-          );
-        });
+            default:
+              return "Login failed. Try again";
+          }
+        };
+        const resultGetSigninAuthError = getSigninAuthError(errorCode);
+        dispatch(
+          setSigninPageErrors({
+            firebaseSigninError: resultGetSigninAuthError,
+          }),
+        );
+      }
     }
   };
 
