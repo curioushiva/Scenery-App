@@ -2,40 +2,41 @@ import useContent from "@/Utils/Hooks/useContent/useContent";
 import {
   MediaCarouselVariantOne,
   MediaCarouselVariantTwo,
-} from "../../UI/MediaCarousel/MediaCarousel";
+} from "../../UI/MediaCarousel/MediaCarousel/MediaCarousel";
+import { FeaturedMediaVariantTwo } from "../../UI/FeaturedMedia/FeaturedMedia/FeaturedMedia";
+import { FeaturedMediaVariantTwoShimmerUI } from "../../UI/FeaturedMedia/ShimmerUI/FeaturedMediaShimmerUI";
+import { MediaCarouselVariantOneShimmerUI } from "../../UI/MediaCarousel/ShimmerUi/MediaCarouselShimmerUI";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addTvShowsGenre,
   addSelectedTvShowGenreIndex,
 } from "@/Utils/Redux/Slices/ContentSlice/ContentSlice";
-import { FeaturedMediaVariantTwo } from "../../UI/FeaturedMedia/FeaturedMedia";
+import { FetchError } from "../../UI/FetchError/FetchError";
 
 const TVShows = () => {
   /* To dispatch  */
   const dispatch = useDispatch();
 
-  /* To access Tv show's genre */
-  const tvShowsGenre = useSelector((store) => store.content.tvShowsGenre);
-
-  /* To get TV Shows Categorie's data */
-  const { getTvShowsCat } = useContent();
-  useEffect(() => {
-    if (tvShowsGenre.length === 0) {
-      getTvShowsCat();
-    }
-  }, [tvShowsGenre]);
-
-  /* To access tv shows & bg video */
-  const { tvShowsCat, tvShowsBGVideo } = useSelector((store) => store.content);
-
-  /* Selected genre for the TV Show */
-  const selectedTvShowGenreIndex = useSelector(
-    (store) => store.content.selectedTvShowGenreIndex,
-  );
+  /* Selecting values from content slice */
+  const { tvShowsCat, tvShowsBGVideo, tvShowsGenre, selectedTvShowGenreIndex } =
+    useSelector((store) => store.content);
 
   /* Accessing vales from useContent */
-  const { tvShowsGenreData, getTvShowsGenre } = useContent();
+  const {
+    tvShowsLoader,
+    tvShowsError,
+    getTvShowsCat,
+    tvShowsGenreData,
+    getTvShowsGenre,
+  } = useContent();
+
+  /* To fetch tvShows data effect */
+  useEffect(() => {
+    if (tvShowsCat.length === 0) {
+      getTvShowsCat();
+    }
+  }, []);
 
   /* Running getTvShowsGenre on when user clicks on type of genre */
   useEffect(() => {
@@ -47,11 +48,26 @@ const TVShows = () => {
     getTvShowsGenre(selectedTvShowGenreIndex);
   }, [selectedTvShowGenreIndex]);
 
-  /* Rendering on basis of categories loaded */
-  {
-    return tvShowsCat?.length === 0 ? (
-      <div></div>
-    ) : (
+  /* Loader state */
+  if (tvShowsLoader) {
+    return (
+      <div>
+        <FeaturedMediaVariantTwoShimmerUI />
+        {Array.from({ length: 7 }).map((_, index) => {
+          return <MediaCarouselVariantOneShimmerUI key={index} />;
+        })}
+      </div>
+    );
+  }
+
+  /* Error state */
+  if (tvShowsError) {
+    return <FetchError />;
+  }
+
+  /* Data loaded */
+  if (tvShowsCat?.length > 0) {
+    return (
       <div className="overflow-hidden">
         {/* Page 1 : video & content */}
         <FeaturedMediaVariantTwo
@@ -63,6 +79,7 @@ const TVShows = () => {
           onResetGenre={() => {
             dispatch(addTvShowsGenre([]));
             dispatch(addSelectedTvShowGenreIndex(null));
+            getTvShowsCat();
           }}
           onSelectGenre={(index) => {
             dispatch(addSelectedTvShowGenreIndex(index));

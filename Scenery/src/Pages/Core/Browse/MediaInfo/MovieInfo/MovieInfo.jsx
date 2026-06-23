@@ -1,45 +1,7 @@
 import useContent from "@/Utils/Hooks/useContent/useContent";
 import useAccount from "@/Utils/Hooks/useAccount/useAccount";
-import {
-  IMG_POSTER_BASE_URL,
-  IMG_HERO_BACKDROP_BASE_URL,
-  IMG_HERO_POSTER_BASE_URL,
-} from "@/Utils/SceneryAPI/SceneryAPI";
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  RiAddFill,
-  RiBookmarkFill,
-  RiBookmarkLine,
-  RiHeartFill,
-  RiHeartLine,
-  RiPlayFill,
-  RiCalendarEventLine,
-  RiMoneyDollarCircleLine,
-  RiWallet3Line,
-  RiFilmAiLine,
-  RiPlayLargeFill,
-  RiChatQuoteLine,
-  RiMovie2Line,
-  RiHashtag,
-  RiInstagramLine,
-  RiFacebookLine,
-  RiTwitterXLine,
-  RiFilmLine,
-  RiGlobalLine,
-  RiCloseFill,
-  RiCheckboxMultipleLine,
-  RiArrowUpWideLine,
-  RiArrowDownWideLine,
-  RiArrowLeftWideLine,
-  RiArrowRightWideLine,
-} from "@remixicon/react";
-import { Info, Wikipedia } from "react-bootstrap-icons";
-import NoProfile from "@/Assets/Imgs/Avatars/NoProfile.png";
-import NoProvider from "@/Assets/Imgs/Logo/NoProvider.png";
-import NoStudio from "@/Assets/Imgs/Logo/NoStudio.png";
-import NoPoster from "@/Assets/Imgs/Logo/NoPoster.png";
-import NoBackdrop from "@/Assets/Imgs/Logo/NoBackdrop.png";
 import { useParams } from "react-router";
 import { addMediaID } from "@/Utils/Redux/Slices/ContentSlice/ContentSlice";
 import {
@@ -51,8 +13,18 @@ import {
   MediaInfoCast,
   MediaInfoTrailers,
   MediaInfoBrowseMore,
-} from "@/Pages/Core/UI/MediaInfoUI/MediaInfoUI";
-import { MediaCarouselVariantFive } from "@/Pages/Core/UI/MediaCarousel/MediaCarousel";
+} from "@/Pages/Core/UI/MediaInfoUI/MediaInfoUI/MediaInfoUI";
+import { MediaCarouselVariantFive } from "@/Pages/Core/UI/MediaCarousel/MediaCarousel/MediaCarousel";
+import {
+  MediaGenricInfoShimmerUI,
+  MediaInfoBrowseMoreShimmerUI,
+  MediaInfoCastShimmerUI,
+  MediaInfoPosterShimmerUI,
+  MediaInfoTrailersShimmerUI,
+  MoreMediaInfoShimmerUI,
+} from "@/Pages/Core/UI/MediaInfoUI/ShimmerUI/MediaInfoShimmerUI";
+import { MediaCarouselVariantFiveShimmerUI } from "@/Pages/Core/UI/MediaCarousel/ShimmerUi/MediaCarouselShimmerUI";
+import { FetchError } from "@/Pages/Core/UI/FetchError/FetchError";
 
 const MovieInfo = () => {
   /* To dispatch and navigate */
@@ -62,8 +34,8 @@ const MovieInfo = () => {
   const { mediaID } = useParams();
   const mediaIDFromURL = Number(mediaID);
 
-  /* Get movie info */
-  const { getMovieInfo } = useContent();
+  /* Accessing vales from useContent */
+  const { movieInfoLoader, movieInfoError, getMovieInfo } = useContent();
 
   /* Calling to get movie info data */
   useEffect(() => {
@@ -74,14 +46,8 @@ const MovieInfo = () => {
   /* Selecting mediaInfo for movies here */
   const mediaInfo = useSelector((store) => store.content.mediaInfo);
 
-  /* Selecting all genres */
-  const allGenres = useSelector((store) => store.content.allGenres);
-
   /* Selcing profile location */
   const Location = useSelector((store) => store.account.profile.Location);
-
-  /* Media type (for info) */
-  const { mediaType } = useContent();
 
   /*  Save media (for saving watchlater & fav) & check if saved */
   const { saveProfileMedia, showSavedProfileMedia } = useAccount();
@@ -187,128 +153,172 @@ const MovieInfo = () => {
   const recScrollRefs = useRef({});
   const castScrollRefs = useRef({});
 
-  /* Rendering on the basis of avail of mediaInfo */
-  return Object.keys(mediaInfo).length === 0 ? (
-    <div className="w-full min-h-screen relative overflow-x-hidden"></div>
-  ) : (
-    /* Main Container */
-    <div className="w-full min-h-screen relative overflow-x-hidden">
-      {showTrailer && (
-        <ShowTrailerUI
-          playTrailerInitialVideoKey={playTrailerInitialVideoKey}
-          setShowTrailer={setShowTrailer}
-          playTrailerVideoKey={playTrailerVideoKey}
-        />
-      )}
-
-      {/* Background Media */}
-      {mediaInfo?.details?.backdrop_path && (
-        <MediaInfoBackground
-          backdropPathUrl={mediaInfo?.details?.backdrop_path}
-        />
-      )}
-
-      {/* Media Info */}
-      <div className="relative flex flex-col gap-10 p-8 pt-30">
-        {mediaInfo?.details && (
+  /* Loader state */
+  if (movieInfoLoader) {
+    return (
+      <div className="w-full min-h-screen relative overflow-x-hidden">
+        <div className="relative flex flex-col gap-10 p-8 pt-30 animate-pulse">
           <div className="w-full h-full flex flex-col gap-12">
             {/* Part 1 & 2 */}
             <div className="w-full h-full flex flex-col gap-12 items-stretch 880:flex-row">
-              {/* Part 1 : Media Poster */}
-              <MediaInfoPoster
-                posterPathUrl={mediaInfo?.details?.poster_path}
-                regionalWatchProviderFirstValue={
-                  regionalWatchProviderFirstValue
-                }
-              />
-
-              {/* Part 2 : Genric Info */}
-              <MediaGenricInfo
-                mediaDetails={mediaInfo?.details}
-                mediaInfoTitle={mediaInfo?.details?.title}
-                mediaCertification={mediaCertification}
-                mediaDate={mediaInfo?.details?.release_date}
-                mediaCountry={mediaInfo?.details?.origin_country?.[0]}
-                tvShowGenres={[]}
-                movieGenres={mediaInfo?.details?.genres}
-                movieRuntime={mediaInfo?.details?.runtime}
-                mediaRatings={mediaInfo?.details?.vote_average}
-                mediaVotes={mediaInfo?.details?.vote_count}
-                mediaTagline={mediaInfo?.details?.tagline}
-                mediaOverview={mediaInfo?.details?.overview}
-                tvShowCreator={[]}
-                movieDirector={findDirector?.original_name}
-                movieWriter={findWriter?.original_name}
-                videoTrailer={videoTrailer}
-                setPlayTrailerVideoKey={setPlayTrailerVideoKey}
-                playTrailerInitialVideoKey={
-                  playTrailerInitialVideoKey?.[0]?.key
-                }
-                setShowTrailer={setShowTrailer}
-                saveProfileMedia={saveProfileMedia}
-                showSavedProfileMedia={showSavedProfileMedia}
-              />
+              {/* Part 1  */}
+              <MediaInfoPosterShimmerUI />
+              {/* Part 2 */}
+              <MediaGenricInfoShimmerUI />
             </div>
 
-            {/* Part 3 : More about movie */}
-            <MoreMediaInfo
-              mediaDate={mediaInfo?.details?.release_date}
-              mediaSeasons={""}
-              mediaBudget={mediaInfo?.details?.budget}
-              mediaEpisodes={""}
-              mediaRevenue={mediaInfo?.details?.revenue}
-              mediaStatus={mediaInfo?.details?.status}
-            />
+            {/* Part 3 */}
+            <MoreMediaInfoShimmerUI />
 
-            {/* Part 4 : Top Cast */}
-            {mediaInfo?.credits?.cast?.length > 0 && (
-              <MediaInfoCast
-                mediaDetails={mediaInfo?.details}
-                mediaCast={mediaInfo?.credits?.cast}
-                castScrollRefs={castScrollRefs}
-                tvShowInfoCast={''}
-                movieInfoCast={'movieInfoCast'}
+            {/* Part 4  */}
+            <MediaInfoCastShimmerUI />
+
+            {/* Part 5 */}
+            <MediaInfoTrailersShimmerUI />
+
+            {/* Part 6 */}
+            <MediaInfoBrowseMoreShimmerUI />
+
+            {/* Part 7 */}
+            <MediaCarouselVariantFiveShimmerUI />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  /* Error state */
+  if (movieInfoError) {
+    return (
+      <FetchError
+        heading={"No movie found"}
+        tagline={"We dug through the archive, this movie isn't in our collection. Try another title."}
+      />
+    )
+  }
+
+  /* Data loaded */
+  if (Object.keys(mediaInfo).length > 0) {
+    return (
+      <div className="w-full min-h-screen relative overflow-x-hidden">
+        {showTrailer && (
+          <ShowTrailerUI
+            playTrailerInitialVideoKey={playTrailerInitialVideoKey}
+            setShowTrailer={setShowTrailer}
+            playTrailerVideoKey={playTrailerVideoKey}
+          />
+        )}
+
+        {/* Background Media */}
+        {mediaInfo?.details?.backdrop_path && (
+          <MediaInfoBackground
+            backdropPathUrl={mediaInfo?.details?.backdrop_path}
+          />
+        )}
+
+        {/* Media Info */}
+        <div className="relative flex flex-col gap-10 p-8 pt-30">
+          {mediaInfo?.details && (
+            <div className="w-full h-full flex flex-col gap-12">
+              {/* Part 1 & 2 */}
+              <div className="w-full h-full flex flex-col gap-12 items-stretch 880:flex-row">
+                {/* Part 1 : Media Poster */}
+                <MediaInfoPoster
+                  posterPathUrl={mediaInfo?.details?.poster_path}
+                  regionalWatchProviderFirstValue={
+                    regionalWatchProviderFirstValue
+                  }
+                />
+
+                {/* Part 2 : Genric Info */}
+                <MediaGenricInfo
+                  mediaDetails={mediaInfo?.details}
+                  mediaInfoTitle={mediaInfo?.details?.title}
+                  mediaCertification={mediaCertification}
+                  mediaDate={mediaInfo?.details?.release_date}
+                  mediaCountry={mediaInfo?.details?.origin_country?.[0]}
+                  tvShowGenres={undefined}
+                  movieGenres={mediaInfo?.details?.genres}
+                  movieRuntime={mediaInfo?.details?.runtime}
+                  mediaRatings={mediaInfo?.details?.vote_average}
+                  mediaVotes={mediaInfo?.details?.vote_count}
+                  mediaTagline={mediaInfo?.details?.tagline}
+                  mediaOverview={mediaInfo?.details?.overview}
+                  tvShowCreator={undefined}
+                  movieDirector={findDirector?.original_name}
+                  movieWriter={findWriter?.original_name}
+                  videoTrailer={videoTrailer}
+                  setPlayTrailerVideoKey={setPlayTrailerVideoKey}
+                  playTrailerInitialVideoKey={
+                    playTrailerInitialVideoKey?.[0]?.key
+                  }
+                  setShowTrailer={setShowTrailer}
+                  saveProfileMedia={saveProfileMedia}
+                  showSavedProfileMedia={showSavedProfileMedia}
+                />
+              </div>
+
+              {/* Part 3 : More about movie */}
+              <MoreMediaInfo
+                mediaDate={mediaInfo?.details?.release_date}
+                mediaSeasons={undefined}
+                mediaBudget={mediaInfo?.details?.budget}
+                mediaEpisodes={undefined}
+                mediaRevenue={mediaInfo?.details?.revenue}
+                mediaStatus={mediaInfo?.details?.status}
               />
-            )}
 
-            {/* Part 5 : Trailers & Videos */}
-            {videoArray?.length > 0 && videoTrailer?.length > 0 && (
-              <MediaInfoTrailers
-                videoTrailer={videoTrailer}
-                setPlayTrailerVideoKey={setPlayTrailerVideoKey}
-                setShowTrailer={setShowTrailer}
-              />
-            )}
+              {/* Part 4 : Top Cast */}
+              {mediaInfo?.credits?.cast?.length > 0 && (
+                <MediaInfoCast
+                  mediaDetails={mediaInfo?.details}
+                  mediaCast={mediaInfo?.credits?.cast}
+                  castScrollRefs={castScrollRefs}
+                  tvShowInfoCast={undefined}
+                  movieInfoCast={"movieInfoCast"}
+                />
+              )}
 
-            {/* Part 6 : Reviews, Production Companies, Watch Providers & Socials */}
-            <MediaInfoBrowseMore
-              mediaDetails={mediaInfo?.details}
-              mediaInfoTitle={mediaInfo?.details?.title}
-              mediaInfoOverview={mediaInfo?.details?.overview}
-              browseMoreSection={browseMoreSection}
-              setBrowseMoreSection={setBrowseMoreSection}
-              mediaInfoReviews={mediaInfo?.reviews?.results}
-              mediaInfoStudios={mediaInfo?.details?.production_companies}
-              mediaInfoRegionalWatchProviderType={regionalWatchProviderType}
-              mediaInfoWatchProviders={regionalWatchProvider?.watchProviders}
-              mediasSocialsCheck={mediasSocialsCheck}
-              mediaInfoSocialAccounts={mediaInfo?.external_ids}
-            />
+              {/* Part 5 : Trailers & Videos */}
+              {videoArray?.length > 0 && videoTrailer?.length > 0 && (
+                <MediaInfoTrailers
+                  videoTrailer={videoTrailer}
+                  setPlayTrailerVideoKey={setPlayTrailerVideoKey}
+                  setShowTrailer={setShowTrailer}
+                />
+              )}
 
-            {/* Part 7 : Recomendations */}
-            {mediaInfo?.recommendations?.results?.length > 0 && (
-              <MediaCarouselVariantFive
+              {/* Part 6 : Reviews, Production Companies, Watch Providers & Socials */}
+              <MediaInfoBrowseMore
                 mediaDetails={mediaInfo?.details}
                 mediaInfoTitle={mediaInfo?.details?.title}
-                recScrollRefs={recScrollRefs}
-                mediaInfoRecomendations={mediaInfo?.recommendations?.results}
+                mediaInfoOverview={mediaInfo?.details?.overview}
+                browseMoreSection={browseMoreSection}
+                setBrowseMoreSection={setBrowseMoreSection}
+                mediaInfoReviews={mediaInfo?.reviews?.results}
+                mediaInfoStudios={mediaInfo?.details?.production_companies}
+                mediaInfoRegionalWatchProviderType={regionalWatchProviderType}
+                mediaInfoWatchProviders={regionalWatchProvider?.watchProviders}
+                mediasSocialsCheck={mediasSocialsCheck}
+                mediaInfoSocialAccounts={mediaInfo?.external_ids}
               />
-            )}
-          </div>
-        )}
+
+              {/* Part 7 : Recomendations */}
+              {mediaInfo?.recommendations?.results?.length > 0 && (
+                <MediaCarouselVariantFive
+                  mediaDetails={mediaInfo?.details}
+                  mediaInfoTitle={mediaInfo?.details?.title}
+                  recScrollRefs={recScrollRefs}
+                  mediaInfoRecomendations={mediaInfo?.recommendations?.results}
+                />
+              )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    )
+  }
+
 };
 
 export default MovieInfo;

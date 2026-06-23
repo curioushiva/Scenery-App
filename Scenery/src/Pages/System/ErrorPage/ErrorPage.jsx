@@ -39,17 +39,17 @@ const ErrorPage = () => {
       <div className="w-full h-full flex justify-center items-center">
         <div className="max-w-xs text-center h-full flex flex-col justify-center items-center gap-8">
           <div className='flex flex-col gap-4'>
-            <h1 className='bg-red-300 text-6xl sm:text-7xl font-regular bg-gradient-to-b from-text-primary to-text-secondary bg-clip-text text-transparent'>{displayStatus}</h1>
+            <h1 className='text-6xl sm:text-7xl font-regular bg-gradient-to-b from-text-primary to-text-secondary bg-clip-text text-transparent'>{displayStatus}</h1>
             <p className='text-sm font-regular text-text-secondary'>{displayTitle}</p>
             <p className='text-sm font-regular text-text-primary/95'>{displayMessage}</p>
             {displayErrorMsg && <p className='text-sm text-text-secondary overflow-hidden'>{displayErrorMsg}</p>}
           </div>
-          <div className='w-full flex flex-col 295:flex-row justify-center gap-2'>
-            <div onClick={() => navigate(-1)} className='w-full 295:w-fit text-text-primary/80 flex flex-col 220:flex-row items-center justify-center gap-2 py-2 px-3 bg-cardColor-secondary border border-br-primary/60 rounded-md cursor-pointer transition duration-200 ease-in-out active:scale-95'>
+          <div className='w-full flex flex-wrap justify-center gap-2'>
+            <div onClick={() => navigate(-1)} className='w-full 295:w-fit text-text-primary/80 flex items-center justify-center gap-2 py-2 px-3 bg-cardColor-secondary border border-br-primary/60 rounded-md cursor-pointer transition duration-200 ease-in-out active:scale-95'>
               <RiArrowLeftLine className='w-4 h-4' />
               <h1 className='text-sm'>Go Back</h1>
             </div>
-            <Link to="/" className='w-full 295:w-fit text-text-primary/80 flex flex-col 220:flex-row items-center justify-center gap-2 py-2 px-3 bg-cardColor-secondary border border-br-primary/60 rounded-md cursor-pointer transition duration-200 ease-in-out active:scale-95'>
+            <Link to="/" className='w-full 295:w-fit text-text-primary/80 flex items-center justify-center gap-2 py-2 px-3 bg-cardColor-secondary border border-br-primary/60 rounded-md cursor-pointer transition duration-200 ease-in-out active:scale-95'>
               <RiHome5Line className='w-4 h-4' />
               <h1 className='text-sm'>Home</h1>
             </Link>

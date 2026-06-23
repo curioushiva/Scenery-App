@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   MediaCarouselVariantThree,
   MediaCarouselVariantFour,
-} from "../UI/MediaCarousel/MediaCarousel";
+} from "../UI/MediaCarousel/MediaCarousel/MediaCarousel";
 import { setSelectedLibrarySection } from "@/Utils/Redux/Slices/AccountSlice/AccountSlice";
 
 const Library = () => {

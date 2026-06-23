@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router";
-import logo1 from "@/Assets/Imgs/Logo/logo1.png";
+import sceneryLogo from "@/Assets/Images/Logo/sceneryLogo.png";
 import { useSelector } from "react-redux";
 import { AvatarsMockData } from "@/Utils/Mockdata/Mockdata";
 import {
@@ -21,7 +21,7 @@ export const LandingHeader = () => {
   return (
     <div className="w-full flex justify-between py-5 px-8 lg:px-35">
       <Link to="/">
-        <img src={logo1} alt="logo1" className="w-10 sm:w-12" />
+        <img src={sceneryLogo} alt="Logo" className="w-10 sm:w-12" />
       </Link>
       <Link to="/signin">
         <button
@@ -41,7 +41,7 @@ export const SystemHeader = () => {
   return (
     <div className="w-full border-b-1 border-br-primary py-5 px-8 lg:px-35">
       <Link to="/" className="flex w-fit">
-        <img src={logo1} alt="logo1" className="w-10 sm:w-12" />
+        <img src={sceneryLogo} alt="Logo" className="w-10 sm:w-12" />
       </Link>
     </div>
   );
@@ -52,7 +52,7 @@ export const AuthHeader = () => {
   return (
     <div className="w-full border-b-1 border-br-primary py-5 px-8 lg:px-35">
       <Link to="/" className="flex w-fit">
-        <img src={logo1} alt="logo1" className="w-10 sm:w-12" />
+        <img src={sceneryLogo} alt="Logo" className="w-10 sm:w-12" />
       </Link>
     </div>
   );
@@ -91,7 +91,7 @@ export const CoreHeader = () => {
         <div className="w-[88px] h-[100dvh] sticky top-0 z-100">
           <div className="w-full h-full flex flex-col items-center gap-5 text-text-secondary p-6">
             <Link to="/browse">
-              <img src={logo1} alt="logo1" className="w-10" />
+              <img src={sceneryLogo} alt="Logo" className="w-10" />
             </Link>
             <div className="w-full flex-1 flex flex-col justify-center items-center gap-9">
               <Link to="/browse" className={`${location.pathname === "/browse" && "text-text-primary scale-[1.10]"} transition duration-200 ease-in-out hover:scale-[1.10] hover:text-text-primary`}>
@@ -132,7 +132,7 @@ export const CoreHeader = () => {
         <div className="w-full">
           <div className="absolute top-0 left-0 z-30 w-full flex justify-between items-center px-8 py-8">
             <Link to="/browse">
-              <img src={logo1} alt="logo1" className="w-10" />
+              <img src={sceneryLogo} alt="Logo" className="w-10" />
             </Link>
             <Layers
               onClick={() => setIsMenuOpen(true)}

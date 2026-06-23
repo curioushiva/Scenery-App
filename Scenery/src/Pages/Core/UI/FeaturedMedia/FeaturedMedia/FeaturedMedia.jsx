@@ -8,7 +8,7 @@ import { useState } from "react";
 import useContent from "@/Utils/Hooks/useContent/useContent";
 import { useSelector } from "react-redux";
 
-/* Featured media variant one used in (browse) */
+/* Featured Media Variant one - used in (browse) */
 export const FeaturedMediaVariantOne = ({ backgroundVideo }) => {
   /* To access all genre */
   const { allGenres } = useSelector((store) => store.content);
@@ -84,14 +84,14 @@ export const FeaturedMediaVariantOne = ({ backgroundVideo }) => {
           </p>
           {(backgroundVideo?.video?.release_date ||
             backgroundVideo?.video?.first_air_date) && (
-            <h2 className="text-xm font-semibold lg:text-base">
-              Released in{" "}
-              {(
-                backgroundVideo?.video?.release_date ||
-                backgroundVideo?.video?.first_air_date
-              )?.slice(0, 4)}
-            </h2>
-          )}
+              <h2 className="text-xm font-semibold lg:text-base">
+                Released in{" "}
+                {(
+                  backgroundVideo?.video?.release_date ||
+                  backgroundVideo?.video?.first_air_date
+                )?.slice(0, 4)}
+              </h2>
+            )}
           <div className="flex flex-col gap-4 350:flex-row">
             {backgroundVideo?.videoKey && (
               <div
@@ -127,7 +127,7 @@ export const FeaturedMediaVariantOne = ({ backgroundVideo }) => {
   );
 };
 
-/* Featured media variant two used in (movies/tvshows) */
+/* Featured Media Variant Two - used in (movies/tvshows) */
 export const FeaturedMediaVariantTwo = ({
   backgroundVideo,
   genre,
@@ -283,14 +283,14 @@ export const FeaturedMediaVariantTwo = ({
           </p>
           {(backgroundVideo?.video?.release_date ||
             backgroundVideo?.video?.first_air_date) && (
-            <h2 className="text-xm font-semibold lg:text-base">
-              Released in{" "}
-              {(
-                backgroundVideo?.video?.release_date ||
-                backgroundVideo?.video?.first_air_date
-              )?.slice(0, 4)}
-            </h2>
-          )}
+              <h2 className="text-xm font-semibold lg:text-base">
+                Released in{" "}
+                {(
+                  backgroundVideo?.video?.release_date ||
+                  backgroundVideo?.video?.first_air_date
+                )?.slice(0, 4)}
+              </h2>
+            )}
           <div className="flex flex-col gap-4 350:flex-row">
             {backgroundVideo?.videoKey && (
               <div

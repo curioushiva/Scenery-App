@@ -1,11 +1,11 @@
-import Add from "@/Assets/Imgs/Avatars/Add.png";
+import Add from "@/Assets/Images/Placeholders/Add.png";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router";
 import { AvatarsMockData } from "@/Utils/Mockdata/Mockdata";
 import { RiPencilLine } from "@remixicon/react";
 import useAccount from "@/Utils/Hooks/useAccount/useAccount";
-import { setIsProfileSelected } from "@/Utils/Redux/Slices/AccountSlice/AccountSlice";
+import { setHasEnteredBrowse } from "@/Utils/Redux/Slices/AccountSlice/AccountSlice";
 
 const Create = () => {
 
@@ -178,7 +178,7 @@ const Create = () => {
                         <div className="flex flex-row items-center gap-5">
                             <div
                                 onClick={() => setShowCreateProfileForm(true)}
-                                className="w-22 group flex flex-col gap-2 justify-center items-center cursor-pointer rounded-sm hover:scale-[1.1] duration-300 ease-in-out sm:w-[clamp(6rem,10vw,10rem)]"
+                                className="w-22 sm:w-30 group flex flex-col gap-2 justify-center items-center cursor-pointer rounded-sm hover:scale-[1.1] duration-300 ease-in-out"
                             >
                                 <div className="relative w-full flex items-center justify-center">
                                     <img
@@ -186,7 +186,9 @@ const Create = () => {
                                         alt="avatar"
                                         className="w-full opacity-[0.90]"
                                     />
-                                    <RiPencilLine className="opacity-0 absolute text-text-primary/80 z-10 sm:w-8 sm:h-8 duration-300 ease-in-out group-hover:opacity-100" />
+                                    <div className="absolute z-10 transition-all duration-300 ease-in-out group-hover:-translate-y-8.5 group-hover:translate-x-8.5 sm:group-hover:-translate-y-11.5 sm:group-hover:translate-x-11.5">
+                                        <RiPencilLine className="text-text-primary/80 w-8 h-8 sm:w-10 sm:h-10" />
+                                    </div>
                                 </div>
                                 <h1 className="text-xs font-medium text-text-secondary sm:text-[clamp(0.80rem,1.1vw,1.20rem)]">
                                     {Name}
@@ -194,7 +196,9 @@ const Create = () => {
                             </div>
                         </div>
                         <Link
-                            onClick={() => dispatch(setIsProfileSelected(true))}
+                            onClick={() => {
+                                dispatch(setHasEnteredBrowse(true));
+                            }}
                             to="/browse"
                             className="mt-5 text-center font-medium text-sm text-text-secondary rounded-3xl cursor-pointer 
                                   border py-1 px-5 border-br-primary transition-colors duration-300 ease-in-out 

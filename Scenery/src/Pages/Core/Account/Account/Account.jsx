@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import useAccount from "@/Utils/Hooks/useAccount/useAccount";
 
 const Account = () => {
+
   /* To select Name */
   const { Name } = useSelector((store) => store.account.profile);
 

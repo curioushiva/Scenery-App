@@ -1,25 +1,46 @@
 import useContent from "@/Utils/Hooks/useContent/useContent";
-import { MediaCarouselVariantOne } from "../../UI/MediaCarousel/MediaCarousel";
-import { FeaturedMediaVariantOne } from "../../UI/FeaturedMedia/FeaturedMedia";
+import { MediaCarouselVariantOne } from "../../UI/MediaCarousel/MediaCarousel/MediaCarousel";
+import { FeaturedMediaVariantOne } from "../../UI/FeaturedMedia/FeaturedMedia/FeaturedMedia";
+import { FeaturedMediaVariantOneShimmerUI } from "../../UI/FeaturedMedia/ShimmerUI/FeaturedMediaShimmerUI";
+import { MediaCarouselVariantOneShimmerUI } from "../../UI/MediaCarousel/ShimmerUi/MediaCarouselShimmerUI";
+import { FetchError } from "../../UI/FetchError/FetchError";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 const Browse = () => {
-
-  /* To get explore Categorie's data */
-  const { getBrowseCat } = useContent();
-  useEffect(() => {
-    getBrowseCat();
-  }, []);
-
-  /* To access browse & bg video */
+  /* Accessing vales from content slice */
   const { browseCat, browseBGVideo } = useSelector((store) => store.content);
 
-  /* Rendering on basis of categories loaded */
-  {
-    return browseCat?.length === 0 ? (
-      <div></div>
-    ) : (
+  /* Accessing vales from useContent */
+  const { browseLoader, browseError, getBrowseCat } = useContent();
+
+  /* To fetch browse data effect */
+  useEffect(() => {
+    if (browseCat.length === 0) {
+      getBrowseCat();
+    }
+  }, []);
+
+  /* Loading state */
+  if (browseLoader) {
+    return (
+      <div>
+        <FeaturedMediaVariantOneShimmerUI />
+        {Array.from({ length: 20 }).map((_, index) => {
+          return <MediaCarouselVariantOneShimmerUI key={index} />;
+        })}
+      </div>
+    );
+  }
+
+  /* Error state */
+  if (browseError) {
+    return <FetchError />;
+  }
+
+  /* Data loaded */
+  if (browseCat?.length > 0) {
+    return (
       <div className="overflow-hidden">
         {/* Page 1 : Video & content */}
         <FeaturedMediaVariantOne backgroundVideo={browseBGVideo} />

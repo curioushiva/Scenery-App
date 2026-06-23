@@ -22,8 +22,11 @@ const initialState = {
       favourite: [],
     },
   },
-  /* Profile selected */
-  isProfileSelected: false,
+  /* Has entered browse */
+  hasEnteredBrowse: false,
+
+  /* Is update profile */
+  isUpdateProfile: false,
 
   /* Selected library section */
   selectedLibrarySection: {
@@ -63,9 +66,13 @@ const AccountSlice = createSlice({
       const { type, data } = action.payload;
       state.profile.savedTVShows[type].push(data);
     },
-    /* Set profile selected */
-    setIsProfileSelected: (state, action) => {
-      state.isProfileSelected = action.payload;
+    /* Set has entered browse */
+    setHasEnteredBrowse: (state, action) => {
+      state.hasEnteredBrowse = action.payload;
+    },
+    /* Set is update profile */
+    setIsUpdateProfile: (state, action) => {
+      state.isUpdateProfile = action.payload;
     },
     /* Set selected library section */
     setSelectedLibrarySection: (state, action) => {
@@ -89,8 +96,10 @@ export const {
   /* Saved tvshows */
   setSavedTVShows,
   appendSavedTVShow,
-  /* Profile selected */
-  setIsProfileSelected,
+  /* Has entered browse */
+  setHasEnteredBrowse,
+  /* Is update profile */
+  setIsUpdateProfile,
   /* Selected libraray section */
   setSelectedLibrarySection,
   /* Remove account */

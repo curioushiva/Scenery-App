@@ -20,6 +20,7 @@ import {
   addMediaID,
   addMediaInfo,
 } from "@/Utils/Redux/Slices/ContentSlice/ContentSlice";
+import { useState } from "react";
 
 const useContent = () => {
   /* For disptach & navigate */
@@ -35,6 +36,8 @@ const useContent = () => {
 
   /* Date today  */
   const today = new Date().toISOString().split("T")[0];
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   /* Data for landing page's poster */
   const landingContentData = [
@@ -60,18 +63,20 @@ const useContent = () => {
       );
 
       /* To get & dispatch landinga page's content */
-      const landingContentList = landingContentData.reduce((acc, content, i) => {
-        const res = responses[i];
-        if (res.status === "fulfilled") {
-          acc.push({
-            type: content.type,
-            content: res.value.data.results,
-          });
-        }
-        return acc;
-      }, []);
+      const landingContentList = landingContentData.reduce(
+        (acc, content, i) => {
+          const res = responses[i];
+          if (res.status === "fulfilled") {
+            acc.push({
+              type: content.type,
+              content: res.value.data.results,
+            });
+          }
+          return acc;
+        },
+        [],
+      );
       dispatch(addLandingContent(landingContentList));
-
     } catch (error) {
       console.error(error);
     }
@@ -279,9 +284,17 @@ const useContent = () => {
     },
   ];
 
+  /* Browse loader */
+  const [browseLoader, setBrowseLoader] = useState(false);
+
+  /* Browse error */
+  const [browseError, setBrowseError] = useState(false);
+
   /* Function to call browse page's categorie */
   const getBrowseCat = async () => {
     try {
+      setBrowseLoader(true);
+      setBrowseError(false);
       const responses = await Promise.allSettled(
         browseCatData.map((cat) =>
           axios.get(`${SCENERY_API_BASE_URL}${cat.url}`, {
@@ -289,6 +302,12 @@ const useContent = () => {
           }),
         ),
       );
+
+      /* Check if all requests failed */
+      if (responses.every((res) => res.status === "rejected" || res?.value?.data?.results?.length === 0)) {
+        setBrowseError(true);
+        return;
+      }
 
       /* To get & dispatch browse page's content */
       const browseCatList = browseCatData.reduce((acc, categorie, i) => {
@@ -312,7 +331,10 @@ const useContent = () => {
         dispatch(addBrowseBGVideo(resultedBackgroundVideo));
       }
     } catch (error) {
+      setBrowseError(true);
       console.error(error);
+    } finally {
+      setBrowseLoader(false);
     }
   };
 
@@ -355,9 +377,17 @@ const useContent = () => {
     },
   ];
 
+  /* Movies loader */
+  const [moviesLoader, setMoviesLoader] = useState(false);
+
+  /* Movies error */
+  const [moviesError, setMoviesError] = useState(false);
+
   /* Function to call movie page's categorie */
   const getMoviesCat = async () => {
     try {
+      setMoviesLoader(true);
+      setMoviesError(false);
       const responses = await Promise.allSettled(
         moviesCatData.map((cat) =>
           axios.get(`${SCENERY_API_BASE_URL}${cat.url}`, {
@@ -365,6 +395,12 @@ const useContent = () => {
           }),
         ),
       );
+
+      /* Check if all requests failed */
+      if (responses.every((res) => res.status === "rejected" || res?.value?.data?.results?.length === 0)) {
+        setMoviesError(true);
+        return;
+      }
 
       /* To get & dispatch movies */
       const moviesCatList = moviesCatData.reduce((acc, val, i) => {
@@ -389,6 +425,9 @@ const useContent = () => {
       }
     } catch (error) {
       console.error(error);
+      setMoviesError(true);
+    } finally {
+      setMoviesLoader(false);
     }
   };
 
@@ -852,9 +891,17 @@ const useContent = () => {
     },
   ];
 
+  /* TV Shows loader */
+  const [tvShowsLoader, setTVShowsLoader] = useState(false);
+
+  /* TV Shows error */
+  const [tvShowsError, setTVShowsError] = useState(false);
+
   /* Function to call TV SHows page's categorie */
   const getTvShowsCat = async () => {
     try {
+      setTVShowsLoader(true);
+      setTVShowsError(false);
       const responses = await Promise.allSettled(
         tvShowsCatData.map((cat) =>
           axios.get(`${SCENERY_API_BASE_URL}${cat.url}`, {
@@ -862,6 +909,12 @@ const useContent = () => {
           }),
         ),
       );
+
+      /* Check if all requests failed */
+      if (responses.every((res) => res.status === "rejected" || res?.value?.data?.results?.length === 0)) {
+        setTVShowsError(true);
+        return;
+      }
 
       /* To get & dispatch tvshows */
       const tvShowsCatList = tvShowsCatData.reduce((acc, val, i) => {
@@ -886,6 +939,9 @@ const useContent = () => {
       }
     } catch (error) {
       console.error(error);
+      setTVShowsError(true);
+    } finally {
+      setTVShowsLoader(false);
     }
   };
 
@@ -1340,9 +1396,17 @@ const useContent = () => {
     },
   ];
 
+  /* Popular loader */
+  const [popularLoader, setPopularLoader] = useState(false);
+
+  /* Popular error */
+  const [popularError, setPopularError] = useState(false);
+
   /* Function to get new & popular */
   const getPopularCat = async () => {
     try {
+      setPopularLoader(true);
+      setPopularError(false);
       const responses = await Promise.allSettled(
         popularCatData.map((cat) =>
           axios.get(`${SCENERY_API_BASE_URL}${cat.url}`, {
@@ -1350,6 +1414,12 @@ const useContent = () => {
           }),
         ),
       );
+
+      /* Check if all requests failed */
+      if (responses.every((res) => res.status === "rejected" || res?.value?.data?.results?.length === 0)) {
+        setPopularError(true);
+        return;
+      }
 
       /* To get & dispatch popolar page's content */
       const popularCatList = popularCatData.reduce((acc, val, i) => {
@@ -1366,6 +1436,9 @@ const useContent = () => {
       dispatch(addPopularCat(popularCatList));
     } catch (error) {
       console.error(error);
+      setPopularError(true);
+    } finally {
+      setPopularLoader(false);
     }
   };
 
@@ -1418,9 +1491,17 @@ const useContent = () => {
     },
   ];
 
+  /* MovieInfo loader */
+  const [movieInfoLoader, setMovieInfoLoader] = useState(false);
+
+  /* MovieInfo error */
+  const [movieInfoError, setMovieInfoError] = useState(false);
+
   /* Calling getMovieInfo */
   const getMovieInfo = async (mediaID) => {
     try {
+      setMovieInfoLoader(true);
+      setMovieInfoError(false);
       const responses = await Promise.allSettled(
         movieInfoData.map((val) =>
           axios.get(`${SCENERY_API_BASE_URL}/movie/${mediaID}${val.url}`, {
@@ -1428,6 +1509,12 @@ const useContent = () => {
           }),
         ),
       );
+
+      /* Check if all requests failed */
+      if (responses.every((res) => res.status === "rejected" || res?.value?.data?.results?.length === 0)) {
+        setMovieInfoError(true);
+        return;
+      }
 
       /* To get & dispatch movie info */
       const movieInfoList = movieInfoData.reduce((acc, val, i) => {
@@ -1440,6 +1527,9 @@ const useContent = () => {
       dispatch(addMediaInfo(movieInfoList));
     } catch (error) {
       console.log("Failed to fetch media info", error);
+      setMovieInfoError(true);
+    } finally {
+      setMovieInfoLoader(false);
     }
   };
 
@@ -1479,9 +1569,17 @@ const useContent = () => {
     },
   ];
 
-  /* Calling getMovieInfo */
+  /* TVShowInfo loader */
+  const [tvShowInfoLoader, setTVShowInfoLoader] = useState(false);
+
+  /* TVShowInfo error */
+  const [tvShowInfoError, setTVShowInfoError] = useState(false);
+
+  /* Calling getTVShowInfo */
   const getTVShowInfo = async (mediaID) => {
     try {
+      setTVShowInfoLoader(true);
+      setTVShowInfoError(false);
       const responses = await Promise.allSettled(
         tvShowInfoData.map((val) =>
           axios.get(`${SCENERY_API_BASE_URL}/tv/${mediaID}${val.url}`, {
@@ -1489,6 +1587,13 @@ const useContent = () => {
           }),
         ),
       );
+
+      /* Check if all requests failed */
+      if (responses.every((res) => res.status === "rejected" || res?.value?.data?.results?.length === 0)) {
+        setTVShowInfoError(true);
+        return;
+      }
+
       /* To get & dispatch tvshow info */
       const tvShowInfoList = tvShowInfoData.reduce((acc, val, i) => {
         const res = responses[i];
@@ -1498,31 +1603,48 @@ const useContent = () => {
         return acc;
       }, {});
       dispatch(addMediaInfo(tvShowInfoList));
-    } catch (error) { }
+    } catch (error) {
+      console.log(error)
+      setTVShowInfoError(true);
+    } finally {
+      setTVShowInfoLoader(false);
+    }
   };
 
   return {
+    /* All genres */
+    getAllGenres,
     /* Landing page */
     getLandingContentData,
     /* Browse page */
+    browseLoader,
+    browseError,
     getBrowseCat,
-    /* All genres */
-    getAllGenres,
     /* Movies page */
+    moviesLoader,
+    moviesError,
     getMoviesCat,
     moviesGenreData,
     getMoviesGenre,
     /* Tv shows page */
+    tvShowsLoader,
+    tvShowsError,
     getTvShowsCat,
     tvShowsGenreData,
     getTvShowsGenre,
     /* Popular page */
+    popularLoader,
+    popularError,
     getPopularCat,
     /* Media Type*/
     mediaType,
     /* Movie info page */
+    movieInfoLoader,
+    movieInfoError,
     getMovieInfo,
     /* Tvshow info page*/
+    tvShowInfoLoader,
+    tvShowInfoError,
     getTVShowInfo,
   };
 };

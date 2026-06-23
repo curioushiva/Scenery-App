@@ -108,17 +108,7 @@ export const useAuth = () => {
           typedSignupEmail,
           typedSignupPassword,
         );
-        dispatch(
-          setSignupPageErrors({
-            signupLoader: false,
-          }),
-        );
       } catch (error) {
-        dispatch(
-          setSignupPageErrors({
-            signupLoader: false,
-          }),
-        );
         const errorCode = error.code;
         const getSignupAuthError = (errorCode) => {
           switch (errorCode) {
@@ -142,6 +132,12 @@ export const useAuth = () => {
         dispatch(
           setSignupPageErrors({
             firebaseSignupError: resultGetSignupAuthError,
+          }),
+        );
+      } finally {
+        dispatch(
+          setSignupPageErrors({
+            signupLoader: false,
           }),
         );
       }
@@ -198,9 +194,7 @@ export const useAuth = () => {
           typedSigninEmail,
           typedSigninPassword,
         );
-        dispatch(setSigninPageErrors({ signinLoader: false }));
       } catch (error) {
-        dispatch(setSigninPageErrors({ signinLoader: false }));
         const errorCode = error.code;
         const getSigninAuthError = (errorCode) => {
           switch (errorCode) {
@@ -231,6 +225,8 @@ export const useAuth = () => {
             firebaseSigninError: resultGetSigninAuthError,
           }),
         );
+      } finally {
+        dispatch(setSigninPageErrors({ signinLoader: false }));
       }
     }
   };

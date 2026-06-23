@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { RiArrowLeftUpLine, RiCloseLine, RiSearchLine } from "@remixicon/react";
 import { IMG_POSTER_BASE_URL } from "@/Utils/SceneryAPI/SceneryAPI";
 import { addSearchData } from "@/Utils/Redux/Slices/DiscoverSlice/DiscoverSlice";
-import NoPoster from "@/Assets/Imgs/Logo/NoPoster.png";
+import NoPoster from "@/Assets/Images/Placeholders/NoPoster.png";
 
 const Search = () => {
   /* To dispatch */

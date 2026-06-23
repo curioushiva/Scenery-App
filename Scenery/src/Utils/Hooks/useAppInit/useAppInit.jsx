@@ -19,6 +19,7 @@ import {
   setSavedMovies,
   setSavedTVShows,
   setIsProfileFetched,
+  setIsUpdateProfile,
   removeAccount,
 } from "@/Utils/Redux/Slices/AccountSlice/AccountSlice";
 import useAccount from "../useAccount/useAccount";
@@ -40,8 +41,8 @@ const useAppInit = () => {
   /* To Sign out user */
   const { SignOut } = useAccount();
 
-  /* To check if profile fetched & selected */
-  const { isProfileFetched, isProfileSelected } = useSelector(
+  /* To access isProfileFetched, hasEnteredBrowse & isUpdateProfile */
+  const { isProfileFetched, hasEnteredBrowse, isUpdateProfile } = useSelector(
     (store) => store.account,
   );
 
@@ -178,8 +179,8 @@ const useAppInit = () => {
     /* Logged in - but data not fetched yet */
     if (!isProfileFetched) return;
 
-    /* Data fetched - but profile not selected yet */
-    if (!isProfileSelected) {
+    /* Data fetched - but did not entered browse yet */
+    if (!hasEnteredBrowse) {
       /*  Name exists and not on that page too */
       if (profile?.Name && location.pathname !== "/account/choose") {
         navigate("/account/choose");
@@ -192,8 +193,8 @@ const useAppInit = () => {
       }
     }
 
-    /* Profile selected */
-    if (isProfileSelected) {
+    /* Entered browse already */
+    if (hasEnteredBrowse) {
       /* Navigatin for different paths when both true */
       if (
         ["/", "/signin", "/signup", "/account/create"].includes(
@@ -204,7 +205,16 @@ const useAppInit = () => {
         return;
       }
     }
-  }, [profile?.UID, location.pathname, isProfileFetched, isProfileSelected]);
+  }, [profile?.UID, location.pathname, isProfileFetched, hasEnteredBrowse]);
+
+  /* To set is update profile effect */
+  useEffect(() => {
+    if (!hasEnteredBrowse) return;
+    if (isUpdateProfile) return;
+    if (location.pathname.includes("/browse")) {
+      dispatch(setIsUpdateProfile(true));
+    }
+  }, [hasEnteredBrowse, isUpdateProfile, location.pathname, dispatch]);
 
   /* Realtime watchlater & fav listener effect */
   useEffect(() => {

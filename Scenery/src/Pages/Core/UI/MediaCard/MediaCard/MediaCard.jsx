@@ -9,10 +9,10 @@ import {
 } from "@remixicon/react";
 import { Info } from "react-bootstrap-icons";
 import { useSelector } from "react-redux";
-import NoBackdrop from "@/Assets/Imgs/Logo/NoBackdrop.png";
-import NoPoster from "@/Assets/Imgs/Logo/NoPoster.png";
+import NoBackdrop from "@/Assets/Images/Placeholders/NoBackdrop.png";
+import NoPoster from "@/Assets/Images/Placeholders/NoPoster.png";
 
-/* Media Card Variant One - used in (browse/movies/tvshows/library) */
+/* Media Card Variant One - used in (browse/movies/tvshows/popular/library) */
 export const MediaCardVariantOne = ({ content }) => {
   /* To access all genres */
   const { allGenres } = useSelector((store) => store.content);
@@ -107,7 +107,7 @@ export const MediaCardVariantOne = ({ content }) => {
   );
 };
 
-/* Media Card Variant Two Part 1 - used in (movies/tvshows - popular) */
+/* Media Card Variant Two Part 1 - used in (movies/tvshows/popular - numbered) */
 export const MediaCardVariantTwoPartOne = ({ content, index }) => {
   /* To access all genres */
   const { allGenres } = useSelector((store) => store.content);
@@ -208,7 +208,7 @@ export const MediaCardVariantTwoPartOne = ({ content, index }) => {
   );
 };
 
-/* Media Card Variant Two Part 2 - used in (movies/tvshows - popular) */
+/* Media Card Variant Two Part 2 - used in (movies/tvshows/popular - numbered) */
 export const MediaCardVariantTwoPartTwo = ({ content, index }) => {
   /* To access all genres */
   const { allGenres } = useSelector((store) => store.content);

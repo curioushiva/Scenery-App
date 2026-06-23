@@ -2,40 +2,41 @@ import useContent from "@/Utils/Hooks/useContent/useContent";
 import {
   MediaCarouselVariantOne,
   MediaCarouselVariantTwo,
-} from "../../UI/MediaCarousel/MediaCarousel";
+} from "../../UI/MediaCarousel/MediaCarousel/MediaCarousel";
+import { FeaturedMediaVariantTwo } from "../../UI/FeaturedMedia/FeaturedMedia/FeaturedMedia";
+import { FeaturedMediaVariantTwoShimmerUI } from "../../UI/FeaturedMedia/ShimmerUI/FeaturedMediaShimmerUI";
+import { MediaCarouselVariantOneShimmerUI } from "../../UI/MediaCarousel/ShimmerUi/MediaCarouselShimmerUI";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addMoviesGenre,
   addSelectedMovieGenreIndex,
 } from "@/Utils/Redux/Slices/ContentSlice/ContentSlice";
-import { FeaturedMediaVariantTwo } from "../../UI/FeaturedMedia/FeaturedMedia";
+import { FetchError } from "../../UI/FetchError/FetchError";
 
 const Movies = () => {
   /* To dispatch  */
   const dispatch = useDispatch();
 
-  /* To access Movie's genre  */
-  const moviesGenre = useSelector((store) => store.content.moviesGenre);
-
-  /* To get Movies Categorie's data */
-  const { getMoviesCat } = useContent();
-  useEffect(() => {
-    if (moviesGenre.length === 0) {
-      getMoviesCat();
-    }
-  }, [moviesGenre]);
-
-  /* To access movie & bg video */
-  const { moviesCat, moviesBGVideo } = useSelector((store) => store.content);
-
-  /* Selected genre for the movie */
-  const selectedMovieGenreIndex = useSelector(
-    (store) => store.content.selectedMovieGenreIndex,
-  );
+  /* Selecting values from content slice */
+  const { moviesCat, moviesBGVideo, moviesGenre, selectedMovieGenreIndex } =
+    useSelector((store) => store.content);
 
   /* Accessing vales from useContent */
-  const { moviesGenreData, getMoviesGenre } = useContent();
+  const {
+    moviesLoader,
+    moviesError,
+    getMoviesCat,
+    moviesGenreData,
+    getMoviesGenre,
+  } = useContent();
+
+  /* To fetch movies data effect */
+  useEffect(() => {
+    if (moviesCat.length === 0) {
+      getMoviesCat();
+    }
+  }, []);
 
   /* Running getMoviesGenre on when user clicks on type of genre */
   useEffect(() => {
@@ -47,14 +48,28 @@ const Movies = () => {
     getMoviesGenre(selectedMovieGenreIndex);
   }, [selectedMovieGenreIndex]);
 
-  /* Rendering on basis of categorie loaded */
-  {
-    return moviesCat?.length === 0 ? (
-      <div></div>
-    ) : (
+  /* Loader state */
+  if (moviesLoader) {
+    return (
+      <div>
+        <FeaturedMediaVariantTwoShimmerUI />
+        {Array.from({ length: 7 }).map((_, index) => {
+          return <MediaCarouselVariantOneShimmerUI key={index} />;
+        })}
+      </div>
+    );
+  }
+
+  /* Error state */
+  if (moviesError) {
+    return <FetchError />;
+  }
+
+  /* Data loaded */
+  if (moviesCat?.length > 0) {
+    return (
       <div className="overflow-hidden">
         {/* Page 1 : video & content */}
-
         <FeaturedMediaVariantTwo
           backgroundVideo={moviesBGVideo}
           genre={moviesGenre}
@@ -64,6 +79,7 @@ const Movies = () => {
           onResetGenre={() => {
             dispatch(addMoviesGenre([]));
             dispatch(addSelectedMovieGenreIndex(null));
+            getMoviesCat();
           }}
           onSelectGenre={(index) => {
             dispatch(addSelectedMovieGenreIndex(index));

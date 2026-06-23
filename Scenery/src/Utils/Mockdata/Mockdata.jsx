@@ -12,18 +12,18 @@ import {
 } from "@remixicon/react";
 
 /* Avatars for users */
-import Avatar0 from "@/Assets/Imgs/Avatars/Avatar0.png";
-import Avatar1 from "@/Assets/Imgs/Avatars/Avatar1.png";
-import Avatar2 from "@/Assets/Imgs/Avatars/Avatar2.png";
-import Avatar3 from "@/Assets/Imgs/Avatars/Avatar3.png";
-import Avatar4 from "@/Assets/Imgs/Avatars/Avatar4.png";
-import Avatar5 from "@/Assets/Imgs/Avatars/Avatar5.png";
-import Avatar6 from "@/Assets/Imgs/Avatars/Avatar6.png";
-import Avatar7 from "@/Assets/Imgs/Avatars/Avatar7.png";
-import Avatar8 from "@/Assets/Imgs/Avatars/Avatar8.png";
-import Avatar9 from "@/Assets/Imgs/Avatars/Avatar9.png";
-import Avatar10 from "@/Assets/Imgs/Avatars/Avatar10.png";
-import Avatar11 from "@/Assets/Imgs/Avatars/Avatar11.png";
+import Avatar0 from "@/Assets/Images/Avatars/Avatar0.png";
+import Avatar1 from "@/Assets/Images/Avatars/Avatar1.png";
+import Avatar2 from "@/Assets/Images/Avatars/Avatar2.png";
+import Avatar3 from "@/Assets/Images/Avatars/Avatar3.png";
+import Avatar4 from "@/Assets/Images/Avatars/Avatar4.png";
+import Avatar5 from "@/Assets/Images/Avatars/Avatar5.png";
+import Avatar6 from "@/Assets/Images/Avatars/Avatar6.png";
+import Avatar7 from "@/Assets/Images/Avatars/Avatar7.png";
+import Avatar8 from "@/Assets/Images/Avatars/Avatar8.png";
+import Avatar9 from "@/Assets/Images/Avatars/Avatar9.png";
+import Avatar10 from "@/Assets/Images/Avatars/Avatar10.png";
+import Avatar11 from "@/Assets/Images/Avatars/Avatar11.png";
 
 /* Reasons to join mock data */
 export const ReasonToJoinMockData = [

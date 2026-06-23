@@ -6,11 +6,11 @@ import {
   MediaCardVariantTwoPartTwo,
   MediaCardVariantThree,
   MediaCardVariantFour,
-} from "../MediaCard/MediaCard";
+} from "../../MediaCard/MediaCard/MediaCard";
 import { useDispatch } from "react-redux";
 import { setSelectedLibrarySection } from "@/Utils/Redux/Slices/AccountSlice/AccountSlice";
 
-/* Media Carousel Variant One - used in (browse/movies/tvshows) */
+/* Media Carousel Variant One - used in (browse/movies/tvshows/popular) */
 export const MediaCarouselVariantOne = ({ categorie, media }) => {
   /* For scrolling in x */
   const scrollRefs = useRef({});
@@ -61,7 +61,7 @@ export const MediaCarouselVariantOne = ({ categorie, media }) => {
   );
 };
 
-/* Media Carousel Variant Two used in (movies/tvshows - popular) */
+/* Media Carousel Variant Two - used in (movies/tvshows/popular - numbered) */
 export const MediaCarouselVariantTwo = ({ categorie, media }) => {
   /* For scrolling in x */
   const scrollRefs = useRef({});
@@ -129,7 +129,7 @@ export const MediaCarouselVariantTwo = ({ categorie, media }) => {
   );
 };
 
-/* Media Carousel Variant Three used in (library - sections) */
+/* Media Carousel Variant Three - used in (library - sections) */
 export const MediaCarouselVariantThree = ({ section }) => {
   /* For dispatch */
   const dispatch = useDispatch();
@@ -205,7 +205,7 @@ export const MediaCarouselVariantThree = ({ section }) => {
   );
 };
 
-/* Media Carousel Variant Three used in (library - selected section)*/
+/* Media Carousel Variant Three - used in (library - selected section)*/
 export const MediaCarouselVariantFour = ({ selectedSection }) => {
   return (
     <div className="flex flex-col gap-6">
@@ -234,7 +234,7 @@ export const MediaCarouselVariantFour = ({ selectedSection }) => {
   );
 };
 
-/* Media Carousel Variant Five used in (movieInfo/tvShowInfo - recomendation ) */
+/* Media Carousel Variant Five - used in (movieInfo/tvShowInfo - recomendation ) */
 export const MediaCarouselVariantFive = ({
   mediaInfoTitle,
   recScrollRefs,

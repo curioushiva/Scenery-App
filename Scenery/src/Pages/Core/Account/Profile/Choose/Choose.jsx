@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { AvatarsMockData } from "@/Utils/Mockdata/Mockdata";
 import { RiPencilLine } from "@remixicon/react";
 import useAccount from "@/Utils/Hooks/useAccount/useAccount";
-import { setIsProfileSelected } from "@/Utils/Redux/Slices/AccountSlice/AccountSlice";
+import { setHasEnteredBrowse } from "@/Utils/Redux/Slices/AccountSlice/AccountSlice";
 
 const Choose = () => {
     /* For dispatch & navigate */
@@ -17,10 +17,8 @@ const Choose = () => {
     /* Selecting Name & Avatar number */
     const { Name, AvatarNum } = useSelector((store) => store.account.profile);
 
-    /* Check if profile is selected once or not */
-    const isProfileSelected = useSelector(
-        (store) => store.account.isProfileSelected,
-    );
+    /* Access has entered browse & is update profile */
+    const { hasEnteredBrowse, isUpdateProfile } = useSelector((store) => store.account);
 
     /* For profile updation form */
     const [showUpdateProfileForm, setShowUpdateProfileForm] = useState(false);
@@ -67,13 +65,13 @@ const Choose = () => {
         setNewName(Name);
     }, [Name]);
 
-    /* Naviation based on profile selected */
+    /* Naviation based on has entered browse */
     const chooseNavigationType = () => {
-        if (isProfileSelected) {
-            navigate("/account");
+        if (hasEnteredBrowse) {
+            navigate(-1);
         } else {
             navigate("/browse");
-            dispatch(setIsProfileSelected(true));
+            dispatch(setHasEnteredBrowse(true));
         }
     };
 
@@ -86,10 +84,10 @@ const Choose = () => {
                     <div className="w-full max-w-160 bg-cardColor-primary flex flex-col gap-4 justify-center items-center border border-br-primary rounded-3xl px-2 py-8 220:px-10">
                         {/* Headings */}
                         <h1 className="text-xl sm:text-2xl font-medium text-center">
-                            Update your profile
+                            Edit your profile
                         </h1>
                         <p className="text-xs sm:text-sm font-regular text-center">
-                            Give your profile a fresh look
+                            Update your profile with a new name or avatar
                         </p>
                         {/* Image */}
                         <div className="w-22 sm:w-26 flex justify-center items-center">
@@ -148,16 +146,16 @@ const Choose = () => {
                 <div className="w-full h-full flex flex-col justify-center items-center gap-6">
                     {/* Headings */}
                     <h1 className="text-2xl sm:text-3xl font-medium text-center">
-                        Ready to explore ?
+                        {isUpdateProfile ? "New look, same you?" : "Ready to explore ?"}
                     </h1>
                     <p className="max-w-60 lg:max-w-[18rem] text-center text-sm text-text-secondary">
-                        Continue with your profile and pick up where you left off
+                        {isUpdateProfile ? "Give your profile a fresh look and make it feel like your own" : "Continue with your profile and pick up where you left off"}
                     </p>
                     {/* Image */}
                     <div className="flex flex-row items-center gap-5">
                         <div
                             onClick={() => setShowUpdateProfileForm(true)}
-                            className="w-22 group flex flex-col gap-2 justify-center items-center cursor-pointer rounded-sm hover:scale-[1.1] duration-300 ease-in-out sm:w-[clamp(6rem,10vw,10rem)]"
+                            className="w-22 sm:w-30 group flex flex-col gap-2 justify-center items-center cursor-pointer rounded-sm hover:scale-[1.1] transition-all duration-300 ease-in-out"
                         >
                             <div className="relative w-full flex items-center justify-center">
                                 <img
@@ -165,7 +163,9 @@ const Choose = () => {
                                     alt="avatar"
                                     className="w-full opacity-[0.90]"
                                 />
-                                <RiPencilLine className="opacity-0 absolute text-text-primary/80 z-10 sm:w-8 sm:h-8 duration-300 ease-in-out group-hover:opacity-100" />
+                                <div className="absolute z-10 transition-all duration-300 ease-in-out group-hover:-translate-y-8.5 group-hover:translate-x-8.5 sm:group-hover:-translate-y-11.5 sm:group-hover:translate-x-11.5">
+                                    <RiPencilLine className="text-text-primary/80 w-8 h-8 sm:w-10 sm:h-10" />
+                                </div>
                             </div>
                             <h1 className="text-xs font-medium text-text-secondary sm:text-[clamp(0.80rem,1.1vw,1.20rem)]">
                                 {Name}

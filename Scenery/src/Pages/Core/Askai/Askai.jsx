@@ -9,7 +9,7 @@ import useDiscover from "@/Utils/Hooks/useDiscover/useDiscover";
 import { useDispatch } from "react-redux";
 import { addAskAIData } from "@/Utils/Redux/Slices/DiscoverSlice/DiscoverSlice";
 import { IMG_POSTER_BASE_URL } from "@/Utils/SceneryAPI/SceneryAPI";
-import NoPoster from "@/Assets/Imgs/Logo/NoPoster.png";
+import NoPoster from "@/Assets/Images/Placeholders/NoPoster.png";
 import useContent from "@/Utils/Hooks/useContent/useContent";
 
 const Askai = () => {
